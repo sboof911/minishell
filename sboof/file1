@@ -1,0 +1,17 @@
+total 120
+drwxr-xr-x  16 amaach  2019    544 Jul  1 12:45 .
+drwx------   6 amaach  2019    204 Jun 29 19:00 ..
+drwxr-xr-x   3 amaach  2019    102 Jun 29 17:18 .vscode
+-rw-r--r--   1 amaach  2019   1141 Jun 30 12:36 Makefile
+-rw-r--r--   1 amaach  2019      0 Jul  1 12:47 file1
+-rw-r--r--   1 amaach  2019    933 Jul  1 12:45 file2
+-rw-r--r--   1 amaach  2019   1017 Jun 30 12:35 ft_isalpha.c
+-rw-r--r--   1 amaach  2019   3660 Jun 29 15:59 ft_split.c
+-rw-r--r--   1 amaach  2019   1873 Jun 29 13:09 ft_split2.c
+-rw-r--r--   1 amaach  2019   1178 Jun 29 16:19 ft_strdup.c
+-rw-r--r--   1 amaach  2019   1038 Jun 29 16:22 ft_strlen.c
+-rwxr-xr-x   1 amaach  2019  13488 Jun 30 12:41 minishell
+-rw-r--r--   1 amaach  2019   3091 Jul  1 12:37 minishell.c
+-rw-r--r--   1 amaach  2019   1323 Jun 30 12:35 minishell.h
+-rw-r--r--   1 amaach  2019   1212 Jun 29 12:47 outils_help.c
+-rw-r--r--   1 amaach  2019   1144 Jun 29 14:27 split_pipe.c
