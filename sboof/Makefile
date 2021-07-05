@@ -6,14 +6,14 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 14:53:47 by amaach            #+#    #+#              #
-#    Updated: 2021/06/30 12:36:10 by amaach           ###   ########.fr        #
+#    Updated: 2021/07/05 17:01:53 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FLAGS =  -lreadline -ledit
 NAME = minishell
 SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c \
-		ft_isalpha.c
+		ft_isalpha.c ft_putchar.c ft_putstr.c
 
 all:	$(NAME)
 

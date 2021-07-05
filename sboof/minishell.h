@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:21:13 by amaach            #+#    #+#             */
-/*   Updated: 2021/06/30 12:35:29 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/05 17:29:15 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s);
 int		ft_strlen(char *str);
 int		ft_isalpha(int c);
+void	ft_putstr(char *s);
+void	ft_putchar(char c);
 
 #endif
