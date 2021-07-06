@@ -11,18 +11,26 @@
 # **************************************************************************** #
 
 FLAGS =  -Wall -Wextra -Werror -lreadline -ledit
-NAME = minishell
-SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c
 
-all:	$(NAME)
+NAME = minishell
+
+SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c\
+	   ../alchemist/*.c\
+
+all: $(NAME)
 
 $(NAME) : $(SRC)
-	gcc $(FLAGS) $(SRC) -o $(NAME)
+	@echo "\n"
+	@echo "\033[0;32mCompiling minishell..."
+	@gcc $(FLAGS) $(SRC) -o $(NAME)
+	@echo "\n\033[0mDone !"
 
 clean:
 	
 
 fclean:	clean
-	rm -f $(NAME)
+	@echo "\nDeleting executable..."
+	@rm -f $(NAME)
+	@echo "\033[0m"
 
 re:		fclean all

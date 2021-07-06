@@ -12,19 +12,12 @@
 
 #include "minishell.h"
 
-typedef struct	s_sashell 
-{
-	char	*command;
-	char	**options;
-	char	**arg;
-	char	**red;
-	int		in;
-	int		out;
-	struct s_sashell	*next;
-}				t_sashell;
 
-t_sashell	*fill_in_the_blank(t_sashell sashell, char *tab)
+
+t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab)
 {
+	char* tmp = tab; 
+	tmp = NULL;
 	return (sashell);
 }
 
@@ -37,7 +30,7 @@ t_sashell	*parse_time(char **tab)
 	if (!tab[0])
 		return (NULL);
 	sashell = (t_sashell *)malloc(sizeof(t_sashell));
-	tmp = (t_sashell *)maloc(sizeof(t_sashell));
+	tmp = (t_sashell *)malloc(sizeof(t_sashell));
 	i = 0;
 	if (!sashell)
 		return (NULL);
@@ -54,6 +47,7 @@ t_sashell	*parse_time(char **tab)
 		}
 		i++;
 	}
+	return NULL;
 }
 
 char	**delete_spaces(char **tab)
@@ -80,7 +74,7 @@ int	main(void)
 
 	while (1)
 	{
-		line = readline("SASHELL $");
+		line = readline("minishell ▸ ");
 		add_history(line);
 		tab = ft_split(line, '|');
 		tab = delete_spaces(tab);
