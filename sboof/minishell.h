@@ -49,55 +49,6 @@
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
-typedef struct	s_token
-{
-	char			*str;
-	int				type;
-	struct s_token	*prev;
-	struct s_token	*next;
-}				t_token;
-
-typedef struct	s_env
-{
-	char			*value;
-	struct s_env	*next;
-}				t_env;
-
-typedef struct	s_mini
-{
-	t_token			*start;
-	t_env			*env;
-	t_env			*secret_env;
-	int				in;
-	int				out;
-	int				fdin;
-	int				fdout;
-	int				pipin;
-	int				pipout;
-	int				pid;
-	int				charge;
-	int				parent;
-	int				last;
-	int				ret;
-	int				exit;
-	int				no_exec;
-}				t_mini;
-
-typedef struct	s_sig
-{
-	int				sigint;
-	int				sigquit;
-	int				exit_status;
-	pid_t			pid;
-}				t_sig;
-
-typedef struct	s_expansions
-{
-	char			*new_arg;
-	int				i;
-	int				j;
-}				t_expansions;
-
 /* THE MAIN STRUCT */
 
 typedef struct	s_sashell 
@@ -108,6 +59,11 @@ typedef struct	s_sashell
 	char	**red;
 	int		in;
 	int		out;
+    
+    int		ret;
+	int		exit;
+	int				no_exec;
+
 	struct s_sashell	*next;
 }				t_sashell;
 

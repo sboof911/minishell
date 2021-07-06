@@ -10,16 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-<<<<<<< HEAD
+
 FLAGS =  -Wall -Wextra -Werror -lreadline -ledit
 
 NAME = minishell
-=======
+
 FLAGS =  -lreadline -ledit
+
 NAME = minishell
+
+
 SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c \
 		ft_isalpha.c ft_putchar.c ft_putstr.c
->>>>>>> bb10c4b349bbc7dfcd391c3904c653d81c071784
 
 SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c\
 	   ../alchemist/*.c\
