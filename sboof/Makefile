@@ -6,40 +6,25 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 14:53:47 by amaach            #+#    #+#              #
-#    Updated: 2021/07/05 17:01:53 by amaach           ###   ########.fr        #
+#    Updated: 2021/07/06 16:21:01 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-FLAGS =  -Wall -Wextra -Werror -lreadline -ledit
-
+FLAGS =  -lreadline -ledit -fsanitize=address
 NAME = minishell
-
-FLAGS =  -lreadline -ledit
-
-NAME = minishell
-
-
 SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c \
-		ft_isalpha.c ft_putchar.c ft_putstr.c
+		ft_isalpha.c ft_putchar.c ft_putstr.c ft_strjoin.c ft_putnbr.c \
+		
 
-SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c\
-	   ../alchemist/*.c\
-
-all: $(NAME)
+all:	$(NAME)
 
 $(NAME) : $(SRC)
-	@echo "\n"
-	@echo "\033[0;32mCompiling minishell..."
-	@gcc $(FLAGS) $(SRC) -o $(NAME)
-	@echo "\n\033[0mDone !"
+	gcc $(FLAGS) $(SRC) -o $(NAME)
 
 clean:
 	
 
 fclean:	clean
-	@echo "\nDeleting executable..."
-	@rm -f $(NAME)
-	@echo "\033[0m"
+	rm -f $(NAME)
 
 re:		fclean all
