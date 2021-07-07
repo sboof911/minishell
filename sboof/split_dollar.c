@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_pipe.c                                       :+:      :+:    :+:   */
+/*   split_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:24:03 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/07 15:07:46 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/07 16:03:58 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,7 @@ int	ft_lw(char const *s, char c, int i)
 	return (j);
 }
 
-void	*ft_free(char **s, int i)
-{
-	while (i--)
-		free(s[i]);
-	free(s);
-	return (0);
-}
-
-char	**split_pipe(char const *s, char c)
+char	**split_dollar(char const *s, char c)
 {
 	char	**str;
 	int		i;
