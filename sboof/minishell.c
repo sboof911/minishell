@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/07 18:44:31 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/08 15:03:53 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,17 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, int i, t_env *env, int co
 		}
 		else
 		{
-			while (env->key)
+			while (env != NULL)
 			{
-				if (!ft_strncmp(env->key[j], tab, ft_strlen(tab)))
+				if (!ft_strncmp(env->key, tab, ft_strlen(env->key)))
 				{
-					sashell->tokens[i] = ft_strjoin(sashell->tokens[i], env->value[j]);
+					sashell->tokens[i] = ft_strjoin(sashell->tokens[i], env->value);
+					found = 1;
 					break ;
 				}
+				env = env->next;
 			}
-			sashell->compt.dollar += ft_strlen(tab);
+			sashell->compt.dollar += ft_strlen(tab) + 1;
 		}
 	}
 	return (sashell);
@@ -150,7 +152,6 @@ t_sashell	*check_dollar(t_sashell *sashell, char **tab, int i, t_env *env)
 			{
 				sashell->tokens[i] = ft_strjoin(sashell->tokens[i],
 					ft_substr(tab[sashell->compt.position], tmp, sashell->compt.dollar - tmp));
-				ft_putstr(tab[sashell->compt.position] + sashell->compt.dollar);
 				sashell = dollar_parse(sashell, tab[sashell->compt.position] + sashell->compt.dollar + 1, i, env, 0);
 			}
 		}
@@ -197,6 +198,8 @@ t_sashell	*command_parse(t_sashell *sashell, char **tab, t_env *env)
 		else
 			sashell = arg_parse(sashell, tab, i, env);
 	}
+	else
+		sashell->tokens[1] = 0;
 	return (sashell);
 }
 
@@ -246,8 +249,10 @@ t_sashell	*initialize(t_sashell *sashell)
 	sashell->has.red = 0;
 	sashell->has.option = 0;
 	sashell->has.arg = 0;
+	sashell->compt.tokens = 0;
 	sashell->compt.position = 0;
 	sashell->red = NULL;
+	sashell->tokens = NULL;
 	return (sashell);
 }
 
@@ -275,7 +280,15 @@ t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 	sashell->red[sashell->has.red] = 0;
 	while (sashell->tokens[i] != '\0')
 	{
-		printf("%s\n", sashell->tokens[i]);
+		if (i == 0)
+			printf("command = %s\n", sashell->tokens[i++]);
+		if (sashell->tokens[i] != '\0')
+		{
+			// printf("I M HERE");
+			printf("%s\n", sashell->tokens[i]);
+		}
+		else
+			break ;
 		i++;
 	}
 	i = 0;
@@ -350,9 +363,13 @@ t_env	*split_env(t_env *env, char **envp)
 	int		i;
 
 	env = (t_env *)malloc(sizeof(t_env));
-	tmp = (t_env *)malloc(sizeof(t_env));
 	i = 1;
-	tmp = fill_env(env, envp[0]);
+	env = fill_env(env, envp[0]);
+	tmp = env;
+	env->next = (t_env *)malloc(sizeof(t_env));
+		if (!env->next)
+			return (NULL);
+	env = env->next;
 	while (envp[i])
 	{
 		env = fill_env(env, envp[i]);
@@ -360,11 +377,13 @@ t_env	*split_env(t_env *env, char **envp)
 		{
 			env->next = (t_env *)malloc(sizeof(t_env));
 			if (!env->next)
-				return (NULL);
+				return NULL;
 			env = env->next;
 		}
 		i++;
 	}
+	env->next = NULL;
+	env = tmp;
 	return (env);
 }
 
