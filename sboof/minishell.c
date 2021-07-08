@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/08 17:03:59 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/08 17:06:47 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,27 +394,6 @@ int	main(int argc, char **argv, char **envp)
 		tab = delete_spaces(tab);
 		env = split_env(env, envp);
 		sashell = parse_time(tab, env);
-		while (sashell != 0)
-		{
-			i = 0;
-			while (sashell->tokens[i] != '\0')
-			{
-				if (i == 0)
-					printf("command = %s\n", sashell->tokens[i++]);
-				if (sashell->tokens[i] != '\0')
-					printf("%s\n", sashell->tokens[i]);
-				else
-					break ;
-				i++;
-			}
-			i = 0;
-			while (sashell->red[i] != '\0')
-			{
-				printf("red = %s\n", sashell->red[i]);
-				i++;
-			}
-			sashell = sashell->next;
-		}
 	}
 	return (0);
 }
