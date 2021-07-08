@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/08 15:03:53 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/08 17:03:59 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,26 +278,6 @@ t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 		sashell->compt.position++;
 	}
 	sashell->red[sashell->has.red] = 0;
-	while (sashell->tokens[i] != '\0')
-	{
-		if (i == 0)
-			printf("command = %s\n", sashell->tokens[i++]);
-		if (sashell->tokens[i] != '\0')
-		{
-			// printf("I M HERE");
-			printf("%s\n", sashell->tokens[i]);
-		}
-		else
-			break ;
-		i++;
-	}
-	i = 0;
-	while (sashell->red[i] != '\0')
-	{
-		printf("red = %s\n", sashell->red[i]);
-		i++;
-	}
-	
 	return (sashell);
 }
 
@@ -310,11 +290,20 @@ t_sashell	*parse_time(char **tab, t_env *env)
 	if (!tab[0])
 		return (NULL);
 	sashell = (t_sashell *)malloc(sizeof(t_sashell));
-	tmp = (t_sashell *)malloc(sizeof(t_sashell));
 	i = 1;
 	if (!sashell)
 		return (NULL);
-	tmp = fill_in_the_blank(sashell, tab[0], env);
+	sashell = fill_in_the_blank(sashell, tab[0], env);
+	tmp = sashell;
+	sashell->next = (t_sashell *)malloc(sizeof(t_sashell));
+	if (!sashell->next)
+		return (NULL);
+	if (!tab[i])
+	{
+		sashell->next = NULL;
+		return (sashell);
+	}
+	sashell = sashell->next;
 	while (tab[i])
 	{
 		sashell = fill_in_the_blank(sashell, tab[i], env);
@@ -327,6 +316,8 @@ t_sashell	*parse_time(char **tab, t_env *env)
 		}
 		i++;
 	}
+	sashell->next = NULL;
+	sashell = tmp;
 	return (sashell);
 }
 
@@ -367,8 +358,8 @@ t_env	*split_env(t_env *env, char **envp)
 	env = fill_env(env, envp[0]);
 	tmp = env;
 	env->next = (t_env *)malloc(sizeof(t_env));
-		if (!env->next)
-			return (NULL);
+	if (!env->next)
+		return (NULL);
 	env = env->next;
 	while (envp[i])
 	{
@@ -393,6 +384,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**tab;
 	t_sashell	*sashell;
 	t_env		*env;
+	int		i = 0;
 
 	while (1)
 	{
@@ -402,6 +394,27 @@ int	main(int argc, char **argv, char **envp)
 		tab = delete_spaces(tab);
 		env = split_env(env, envp);
 		sashell = parse_time(tab, env);
+		while (sashell != 0)
+		{
+			i = 0;
+			while (sashell->tokens[i] != '\0')
+			{
+				if (i == 0)
+					printf("command = %s\n", sashell->tokens[i++]);
+				if (sashell->tokens[i] != '\0')
+					printf("%s\n", sashell->tokens[i]);
+				else
+					break ;
+				i++;
+			}
+			i = 0;
+			while (sashell->red[i] != '\0')
+			{
+				printf("red = %s\n", sashell->red[i]);
+				i++;
+			}
+			sashell = sashell->next;
+		}
 	}
 	return (0);
 }
