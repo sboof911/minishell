@@ -11,7 +11,7 @@
     [_]◦ exit with no options
 
 
-## abort :
+## abort + SEG + ERRORS :
     
     - "-g ls"
     - empty line or no command 
