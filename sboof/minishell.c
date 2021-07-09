@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/09 13:41:35 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/09 15:33:19 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env, int compt)
 	char	*help;
 	int		j;
 	int		found;
+	int		tmp;
 
 	j = 0;
 	found = 0;
@@ -102,7 +103,7 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env, int compt)
 	{
 		if (ft_strchr(tab, '$'))
 		{
-
+			// sashell = dollar_parse(sashell, ft_substr(tab[sashell->compt.position], tmp, sashell->compt.dollar - tmp)) + sashell->compt.dollar + 1, env, 0));
 		}
 		else
 		{
@@ -376,10 +377,20 @@ t_env	*split_env(t_env *env, char **envp)
 	return (env);
 }
 
+t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
+{
+	char	**tab;
+
+	tab = split_pipe(line, '|');
+	tab = delete_spaces(tab);
+	sashell = parse_time(tab, env);
+	return (sashell);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	char	**tab;
+	
 	t_sashell	*sashell;
 	t_env		*env;
 	t_sashell	*tmp;
@@ -390,10 +401,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("SASHELL $");
 		add_history(line);
-		tab = split_pipe(line, '|');
-		tab = delete_spaces(tab);
 		env = split_env(env, envp);
-		sashell = parse_time(tab, env);
+		sashell = parse_function(sashell, env, line);
 		// tmp = sashell;
 		// compt = 1;
 		// while (sashell)
@@ -405,7 +414,7 @@ int	main(int argc, char **argv, char **envp)
 		// 	i = -1;
 		// 	while (sashell->red[++i])
 		// 		printf("pipe[%d]...red[%d] = %s\n", compt, i, sashell->red[i]);
-		// 	sashell = sashell->next;
+		// sashell = sashell->next;
 		// 	compt++;
 		// }
 		// printf("*********************************\n");
