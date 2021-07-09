@@ -6,44 +6,11 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/09 15:33:19 by amaach           ###   ########.fr       */
+/*   Updated: 2021/07/09 20:07:34 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct	s_has
-{
-	int		red;
-	int		arg;
-	int		option;
-}				t_has;
-
-typedef struct s_compt
-{
-	int		red;
-	int		dollar;
-	int		tokens;
-	int		position;
-}				t_compt;
-
-typedef struct	s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}				t_env;
-
-typedef struct	s_sashell 
-{
-	char				**tokens;
-	char				**red;
-	int					in;
-	int					out;
-	struct s_has		has;
-	struct s_compt		compt;
-	struct s_sashell	*next;
-}				t_sashell;
 
 t_sashell	*check_file(t_sashell *sashell, char **tab, int i)
 {
@@ -337,46 +304,6 @@ char	**delete_spaces(char **tab)
 	return (tab);
 }
 
-t_env	*fill_env(t_env *env, char *envp)
-{
-	char	**help;
-
-	help = ft_split(envp, '=');
-	env->key = ft_strdup(help[0]);
-	env->value = ft_strdup(help[1]);
-	return (env);
-}
-
-t_env	*split_env(t_env *env, char **envp)
-{
-	t_env	*tmp;
-	int		i;
-
-	env = (t_env *)malloc(sizeof(t_env));
-	i = 1;
-	env = fill_env(env, envp[0]);
-	tmp = env;
-	env->next = (t_env *)malloc(sizeof(t_env));
-	if (!env->next)
-		return (NULL);
-	env = env->next;
-	while (envp[i])
-	{
-		env = fill_env(env, envp[i]);
-		if (envp[i + 1])
-		{
-			env->next = (t_env *)malloc(sizeof(t_env));
-			if (!env->next)
-				return NULL;
-			env = env->next;
-		}
-		i++;
-	}
-	env->next = NULL;
-	env = tmp;
-	return (env);
-}
-
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 {
 	char	**tab;
@@ -387,38 +314,38 @@ t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 	return (sashell);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	char	*line;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	char	*line;
 	
-	t_sashell	*sashell;
-	t_env		*env;
-	t_sashell	*tmp;
-	int		i;
-	int		compt;
+// 	t_sashell	*sashell;
+// 	t_env		*env;
+// 	t_sashell	*tmp;
+// 	int		i;
+// 	int		compt;
 
-	while (1)
-	{
-		line = readline("SASHELL $");
-		add_history(line);
-		env = split_env(env, envp);
-		sashell = parse_function(sashell, env, line);
-		// tmp = sashell;
-		// compt = 1;
-		// while (sashell)
-		// {
-		// 	i = -1;
-		// 	printf("*********************************\n");
-		// 	while (sashell->tokens[++i])
-		// 		printf("pipe[%d]...tokens[%d] = %s\n", compt, i, sashell->tokens[i]);
-		// 	i = -1;
-		// 	while (sashell->red[++i])
-		// 		printf("pipe[%d]...red[%d] = %s\n", compt, i, sashell->red[i]);
-		// sashell = sashell->next;
-		// 	compt++;
-		// }
-		// printf("*********************************\n");
-		// sashell = tmp;
-	}
-	return (0);
-}
+// 	while (1)
+// 	{
+// 		line = readline("SASHELL $");
+// 		add_history(line);
+// 		env = split_env(env, envp);
+// 		sashell = parse_function(sashell, env, line);
+// 		// tmp = sashell;
+// 		// compt = 1;
+// 		// while (sashell)
+// 		// {
+// 		// 	i = -1;
+// 		// 	printf("*********************************\n");
+// 		// 	while (sashell->tokens[++i])
+// 		// 		printf("pipe[%d]...tokens[%d] = %s\n", compt, i, sashell->tokens[i]);
+// 		// 	i = -1;
+// 		// 	while (sashell->red[++i])
+// 		// 		printf("pipe[%d]...red[%d] = %s\n", compt, i, sashell->red[i]);
+// 		// sashell = sashell->next;
+// 		// 	compt++;
+// 		// }
+// 		// printf("*********************************\n");
+// 		// sashell = tmp;
+// 	}
+// 	return (0);
+// }
