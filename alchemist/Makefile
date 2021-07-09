@@ -14,7 +14,7 @@ FLAGS =  -lreadline -ledit -fsanitize=address
 NAME = minishell
 SRC =  minishell.c ../sboof/ft_split.c ../sboof/outils_help.c ../sboof/ft_strdup.c ../sboof/ft_strlen.c \
 		../sboof/ft_isalpha.c ../sboof/ft_putchar.c ../sboof/ft_putstr.c ../sboof/ft_strjoin.c ../sboof/ft_putnbr.c \
-		../sboof/split_pipe.c ../sboof/ft_strchr.c ../sboof/ft_substr.c ../sboof/ft_strncmp.c
+		../sboof/split_pipe.c ../sboof/ft_strchr.c ../sboof/ft_substr.c ../sboof/ft_strncmp.c builtin.c
 
 all:	$(NAME)
 

@@ -401,21 +401,29 @@ void print_sashell(t_sashell *sashell)
 	}
 }
 
-void start_execution(t_sashell *sashell)
+
+
+void exec_cmd(t_sashell *sashell)
 {
-	char *cmd;
-	cmd = sashell->tokens[0];
-	
-	if(fork() == 0)
-	{
-		char * argv[2];
+	char **cmd;
+	int ret;
 
-		argv[0] = "pwd";
-		argv[1] = NULL;
+	cmd = sashell->tokens;
 
-		if(execv(argv[0], argv) == -1)
-			printf("Error in calling exec!\n");
-    }
+	if (cmd && is_builtin(cmd[0]))
+		ret = exec_builtin(cmd);
+
+
+}
+
+void minishell(t_sashell *sashell)
+{
+	// fuction to handle error on the sashell structure
+
+	// condition to check if it's a built-in 
+	exec_cmd(sashell);
+
+
 
 
 }
@@ -438,10 +446,7 @@ int	main(int argc, char **argv, char **envp)
 
 		//print_sashell(sashell);
 		
-		//start_execution(sashell);
-
-
-
+		minishell(sashell);
 	}
 	return (0);
 }
