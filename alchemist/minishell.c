@@ -1,17 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/09 20:10:05 by amaach           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../sboof/minishell.h"
-#include <string.h>
 
 t_env	*fill_env(t_env *env, char *envp)
 {
@@ -53,7 +41,7 @@ t_env	*split_env(t_env *env, char **envp)
 	return (env);
 }
 
-void print_sashell(t_sashell *sashell)
+void 	print_sashell(t_sashell *sashell)
 {
 	int i = 0;
 
@@ -69,9 +57,7 @@ void print_sashell(t_sashell *sashell)
 	}
 }
 
-
-
-void exec_cmd(t_sashell *sashell)
+void 	exec_cmd(t_sashell *sashell, t_env *env)
 {
 	char **cmd;
 	int ret;
@@ -79,54 +65,41 @@ void exec_cmd(t_sashell *sashell)
 	cmd = sashell->tokens;
 
 	if (cmd && is_builtin(cmd[0]))
-		ret = exec_builtin(cmd);
+		ret = exec_builtin(cmd, env);
+
 
 
 }
 
-void minishell(t_sashell *sashell)
+void minishell(t_sashell *sashell, t_env *env)
 {
 	// fuction to handle error on the sashell structure
 
 	// condition to check if it's a built-in 
-	exec_cmd(sashell);
-
-
+	exec_cmd(sashell, env);
 
 
 }
 
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	char	**tab;
 	t_sashell	*sashell;
 	t_env		*env;
 
 	while (1)
 	{
-		line = readline("SASHELL $");
+		line = readline("SASHELL $> ");
+
 		add_history(line);
 		env = split_env(env, envp);
 		sashell = parse_function(sashell, env, line);
-	
-		minishell(sashell);
-		// tmp = sashell;
-		// compt = 1;
-		// while (sashell)
-		// {
-		// 	i = -1;
-		// 	printf("*********************************\n");
-		// 	while (sashell->tokens[++i])
-		// 		printf("pipe[%d]...tokens[%d] = %s\n", compt, i, sashell->tokens[i]);
-		// 	i = -1;
-		// 	while (sashell->red[++i])
-		// 		printf("pipe[%d]...red[%d] = %s\n", compt, i, sashell->red[i]);
-		// sashell = sashell->next;
-		// 	compt++;
-		// }
-		// printf("*********************************\n");
-		// sashell = tmp;
+
+
+		minishell(sashell, env);
+
 	}
 	return (0);
 }

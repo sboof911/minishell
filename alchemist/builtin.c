@@ -1,5 +1,7 @@
 #include "../sboof/minishell.h"
 
+
+
 int		is_builtin(char *command)
 {
 	if (strcmp(command, "echo") == 0)
@@ -17,25 +19,19 @@ int		is_builtin(char *command)
 	return (0);
 }
 
-int		ft_pwd(void)
-{
-	char	cwd[PATH_MAX];
-
-	if (getcwd(cwd, PATH_MAX))
-	{
-		printf("%s\n", cwd);
-		return (SUCCESS);
-	}
-	else
-		return (ERROR);
-}
-
-int exec_builtin(char **cmd)
+int exec_builtin(char **cmd, t_env *env)
 {
 	int result = 0;
 
 	if (!strcmp(cmd[0], "pwd"))
 		result = ft_pwd();
+
+	if (!strcmp(cmd[0], "echo"))
+		result = ft_echo(cmd);
+
+	if (!strcmp(cmd[0], "cd"))
+		result = ft_cd(cmd, env);
+	
 
 
 	return result;

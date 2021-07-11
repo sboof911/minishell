@@ -104,6 +104,11 @@ t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
 
 int		is_builtin(char *command);
 int		ft_pwd(void);
-int     exec_builtin(char **cmd);
+int     exec_builtin(char **cmd, t_env *env);
+
+int 	nb_args(char **argv);
+int		ft_echo(char **args);
+void	ft_putstr_fd(char *s, int fd);
+int 	ft_cd(char  **cmd, t_env *env);
 
 #endif
