@@ -1,5 +1,35 @@
 #include "../sboof/minishell.h"
 
+char	*ft_sstrjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+		i++;
+	while (s2[j] != '\0')
+		j++;
+	if (!(new = malloc(sizeof(char) * (i + j + 1))))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+		new[i++] = s2[j++];
+	new[i] = '\0';
+	return (new);
+}
+
+
 void	*ft_memdel(void *ptr)
 {
 	if (ptr)
@@ -141,7 +171,7 @@ static int		update_oldpwd(t_env *env)
 
 	if (getcwd(cwd, PATH_MAX) == NULL)
 		return (ERROR);
-	if (!(oldpwd = ft_strjoin("OLDPWD=", cwd)))
+	if (!(oldpwd = ft_sstrjoin("OLDPWD=", cwd)))
 		return (ERROR);
 	if (is_in_env(env, oldpwd) == 0)
 		env_add(oldpwd, env);
