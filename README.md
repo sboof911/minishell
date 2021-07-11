@@ -2,8 +2,8 @@
 
 ## the builtins:
     
-    [_]◦ pwd with no options
-    [_]◦ echo with option -n
+    [x]◦ pwd with no options
+    [x]◦ echo with option -n
     [_]◦ cd with only a relative or absolute path
     [_]◦ export with no options
     [_]◦ unset with no options
