@@ -144,18 +144,15 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 
 	while (env && env->next != NULL)
 	{
-		if (ft_strncmp(env->value, var, len) == 0)
+		if (strcmp(env->key, var) == 0)
 		{
-			s_alloc = strlen(env->value) - len;
+			s_alloc = strlen(env->value);
 			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
 				return (NULL);
 			i = 0;
 			j = 0;
-			while (env->value[i++])
-			{
-				if (i > (int)len)
-					oldpwd[j++] = env->value[i];
-			}
+			while (env->value[i])
+				oldpwd[j++] = env->value[i++];
 			oldpwd[j] = '\0';
 			return (oldpwd);
 		}
@@ -197,11 +194,14 @@ static int		go_to_path(int option, t_env *env)
 	else if (option == 1)
 	{
 		env_path = get_env_path(env, "OLDPWD", 6);
+		printf("old=%s\n", env_path);
+
 		if (!env_path)
 			ft_putendl_fd("minishell : cd: OLDPWD not set", STDERR);
 		if (!env_path)
 			return (ERROR);
 		update_oldpwd(env);
+	
 	}
 	ret = chdir(env_path);
 	ft_memdel(env_path);
