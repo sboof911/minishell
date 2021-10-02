@@ -1,9 +1,7 @@
-# TO_DO_LIST:
-
-## the builtins:
+## builtins:
     
-    [x]◦ pwd with no options
-    [x]◦ echo with option -n
+    [ ]◦ pwd with no options
+    [ ]◦ echo with option -n
     [_]◦ cd with only a relative or absolute path
     [_]◦ export with no options
     [_]◦ unset with no options
@@ -15,3 +13,11 @@
     
     - "-g ls"
     - empty line or no command 
+
+
+# PLANNIFICATAION : 
+
+
+# TEAM NOTES : 
+
+#### _file : EXECTION FILES

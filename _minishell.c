@@ -1,5 +1,5 @@
 
-#include "../sboof/minishell.h"
+#include "minishell.h"
 
 t_env	*fill_env(t_env *env, char *envp)
 {
@@ -73,14 +73,18 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 
 void minishell(t_sashell *sashell, t_env *env)
 {
+
+
 	// fuction to handle error on the sashell structure
 
 	// condition to check if it's a built-in 
 	exec_cmd(sashell, env);
+	//print(env);
+
+
 
 
 }
-
 
 
 int	main(int argc, char **argv, char **envp)
@@ -92,14 +96,15 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("SASHELL $> ");
-
-		add_history(line);
-		env = split_env(env, envp);
-		sashell = parse_function(sashell, env, line);
-
-
-		minishell(sashell, env);
-
+		if ( strcmp(line ,"") == 0)
+			continue;
+		else 
+			{
+				add_history(line);
+				env = split_env(env, envp);
+				sashell = parse_function(sashell, env, line);
+				minishell(sashell, env);
+			}
 	}
 	return (0);
 }

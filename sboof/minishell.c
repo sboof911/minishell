@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_sashell	*check_file(t_sashell *sashell, char **tab, int i)
 {

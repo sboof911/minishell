@@ -1,4 +1,4 @@
-#include "../sboof/minishell.h"
+#include "minishell.h"
 
 char	*ft_sstrjoin(char const *s1, char const *s2)
 {
@@ -34,7 +34,7 @@ void	*ft_memdel(void *ptr)
 {
 	if (ptr)
 	{
-		free(ptr);
+		///free(ptr);
 		ptr = NULL;
 	}
 	return (NULL);
@@ -110,14 +110,13 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-
-
 /* Print all the elements in the linked list */
 void print(t_env *head) {
     t_env *current_node = head;
 
-   	while ( current_node != NULL) {
-        printf("%s = %s\n", current_node->key, current_node->value);
+   	while ( current_node != NULL)
+	{
+        printf("%s=%s\n", current_node->key, current_node->value);
         current_node = current_node->next;
     }
 }
@@ -135,7 +134,7 @@ static void		print_error(char **args)
 	ft_putendl_fd(args[1], 2);
 }
 
-static char		*get_env_path(t_env *env, const char *var, size_t len)
+char		*get_env_path(t_env *env, const char *var, size_t len)
 {
 	char	*oldpwd;
 	int		i;
@@ -146,15 +145,11 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 	{
 		if (strcmp(env->key, var) == 0)
 		{
+			//printf("%s=%s\n",env->key , env->value);
 			s_alloc = strlen(env->value);
 			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
 				return (NULL);
-			i = 0;
-			j = 0;
-			while (env->value[i])
-				oldpwd[j++] = env->value[i++];
-			oldpwd[j] = '\0';
-			return (oldpwd);
+			return (strcpy(oldpwd, env->value));
 		}
 		env = env->next;
 	}
@@ -168,8 +163,10 @@ static int		update_oldpwd(t_env *env)
 
 	if (getcwd(cwd, PATH_MAX) == NULL)
 		return (ERROR);
+
 	if (!(oldpwd = ft_sstrjoin("OLDPWD=", cwd)))
 		return (ERROR);
+	printf("{%s}\n", oldpwd);
 	if (is_in_env(env, oldpwd) == 0)
 		env_add(oldpwd, env);
 	ft_memdel(oldpwd);
@@ -194,7 +191,7 @@ static int		go_to_path(int option, t_env *env)
 	else if (option == 1)
 	{
 		env_path = get_env_path(env, "OLDPWD", 6);
-		printf("old=%s\n", env_path);
+		//printf("old=%s\n", env_path);
 
 		if (!env_path)
 			ft_putendl_fd("minishell : cd: OLDPWD not set", STDERR);

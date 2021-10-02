@@ -1,4 +1,4 @@
-#include "../sboof/minishell.h"
+#include "minishell.h"
 
 int		ft_pwd(void)
 {

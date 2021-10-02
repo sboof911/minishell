@@ -110,5 +110,6 @@ int 	nb_args(char **argv);
 int		ft_echo(char **args);
 void	ft_putstr_fd(char *s, int fd);
 int 	ft_cd(char  **cmd, t_env *env);
+void print(t_env *head);
 
 #endif
