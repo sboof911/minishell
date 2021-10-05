@@ -110,6 +110,13 @@ int 	nb_args(char **argv);
 int		ft_echo(char **args);
 void	ft_putstr_fd(char *s, int fd);
 int 	ft_cd(char  **cmd, t_env *env);
-void print(t_env *head);
+void 	print(t_env *head);
+
+char			*ft_sstrjoin(char const *s1, char const *s2);
+void			*ft_memdel(void *ptr);
+void			ft_putendl_fd(char *s, int fd);
+void 			print(t_env *head);
+static void		print_error(char **args);
+
 
 #endif

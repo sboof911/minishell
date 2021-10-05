@@ -1,43 +1,16 @@
 #include "minishell.h"
 
-char	*ft_sstrjoin(char const *s1, char const *s2)
+static void		print_error(char **args)
 {
-	int		i;
-	int		j;
-	char	*new;
-
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
-		j++;
-	if (!(new = malloc(sizeof(char) * (i + j + 1))))
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
+	ft_putstr_fd("cd: ", 2);
+	if (args[2])
+		ft_putstr_fd("string not in pwd: ", 2);
+	else
 	{
-		new[i] = s1[i];
-		i++;
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd(": ", 2);
 	}
-	while (s2[j] != '\0')
-		new[i++] = s2[j++];
-	new[i] = '\0';
-	return (new);
-}
-
-
-void	*ft_memdel(void *ptr)
-{
-	if (ptr)
-	{
-		///free(ptr);
-		ptr = NULL;
-	}
-	return (NULL);
+	ft_putendl_fd(args[1], 2);
 }
 
 int			env_add(const char *value, t_env *env)
@@ -95,44 +68,6 @@ int			is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (s == NULL)
-		return ;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	write(fd, "\n", 1);
-}
-
-/* Print all the elements in the linked list */
-void print(t_env *head) {
-    t_env *current_node = head;
-
-   	while ( current_node != NULL)
-	{
-        printf("%s=%s\n", current_node->key, current_node->value);
-        current_node = current_node->next;
-    }
-}
-
-static void		print_error(char **args)
-{
-	ft_putstr_fd("cd: ", 2);
-	if (args[2])
-		ft_putstr_fd("string not in pwd: ", 2);
-	else
-	{
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd(": ", 2);
-	}
-	ft_putendl_fd(args[1], 2);
-}
 
 char		*get_env_path(t_env *env, const char *var, size_t len)
 {
@@ -191,8 +126,6 @@ static int		go_to_path(int option, t_env *env)
 	else if (option == 1)
 	{
 		env_path = get_env_path(env, "OLDPWD", 6);
-		//printf("old=%s\n", env_path);
-
 		if (!env_path)
 			ft_putendl_fd("minishell : cd: OLDPWD not set", STDERR);
 		if (!env_path)
