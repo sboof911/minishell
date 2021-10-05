@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 12:34:58 by amaach            #+#    #+#             */
-/*   Updated: 2021/06/30 12:35:08 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/05 18:18:06 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 int	ft_isalpha(int c)
 {
 	if ((c > 64 && c < 91) || (c > 96 && c < 123))
+		return (1);
+	return (0);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c > 47 && c < 58)
+		return (1);
+	return (0);
+}
+
+int	ft_isalnum(int c)
+{
+	int a;
+	int b;
+
+	a = ft_isalpha(c);
+	b = ft_isdigit(c);
+	if (a || b)
 		return (1);
 	return (0);
 }

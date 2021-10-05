@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/12 11:42:21 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/05 18:05:22 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ t_sashell	*rederiction_parse(t_sashell *sashell, char **tab)
 
 t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 {
-	int		tmp;
-
 	while (env != NULL)
 	{
 		if (ft_strncmp(env->key, tab, ft_strlen(tab)) == 0
@@ -72,58 +70,53 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 		}
 		env = env->next;
 	}
-	sashell->compt.dollar += ft_strlen(tab);
+	sashell->compt.dollar++;
 	return (sashell);
 }
 
-t_sashell	*check_dollar(t_sashell *sashell, char **tab, t_env *env)
+t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env)
 {
-	int		tmp;
-	char	*help;
 	int		compt;
+	int		compt_help;
+	char	*help;
 
 	compt = 0;
 	if (sashell->compt.dollar == 0)
 		sashell->tokens[sashell->compt.tokens] = ft_strdup("");
-	while (tab[sashell->compt.position][sashell->compt.dollar] != '\0')
+	while (ft_isalnum(tab[compt]))
+		compt++;
+	sashell->tokens[sashell->compt.tokens] = ft_strjoin(sashell->tokens[sashell->compt.tokens],
+		ft_substr(tab, 0, compt));
+	if (tab[compt] == '$')
 	{
-		tmp = sashell->compt.dollar;
-		while (tab[sashell->compt.position][sashell->compt.dollar] != '\0' && tab[sashell->compt.position][sashell->compt.dollar] != '$'
-		&& tab[sashell->compt.position][sashell->compt.dollar] != '\'' && tab[sashell->compt.position][sashell->compt.dollar] != '"')
-			sashell->compt.dollar++;
-		sashell->tokens[sashell->compt.tokens] = ft_strjoin(sashell->tokens[sashell->compt.tokens],
-			ft_substr(tab[sashell->compt.position], tmp, sashell->compt.dollar - tmp));
-		if (tab[sashell->compt.position][sashell->compt.dollar] == '$')
+		compt++;
+		if (tab[compt] == '"')
 		{
-			sashell->compt.dollar++;
-			if (ft_strchr(tab[sashell->compt.position], '$'))
-			{
-				while (tab[sashell->compt.position][sashell->compt.dollar] != '\0' && tab[sashell->compt.position][sashell->compt.dollar] != '$'
-					&& tab[sashell->compt.position][sashell->compt.dollar] != '\'' && tab[sashell->compt.position][sashell->compt.dollar] != '"')
-				{
-					compt++;
-					sashell->compt.dollar++;
-				}
-				sashell->compt.dollar -= compt;
-				help = ft_substr(tab[sashell->compt.position], sashell->compt.dollar, compt);
-				sashell = dollar_parse(sashell, help, env);
-				free(help);
-				check_dollar(sashell, tab, env);
-			}
-			else
-				sashell = dollar_parse(sashell, tab[sashell->compt.position] + sashell->compt.dollar + 1, env);
+			
+		}
+		else if (tab[compt] == '\'')
+		{
+
 		}
 		else
 		{
-			if (tab[sashell->compt.position][sashell->compt.dollar] == '\'')
-			{
-
-			}
-			if (tab[sashell->compt.position][sashell->compt.dollar] == '"')
-			{
-				
-			}
+			compt_help = compt;
+			while (ft_isalnum(tab[compt_help]))
+				compt_help++;
+			help = ft_substr(tab, compt, compt_help - 1);
+			sashell = dollar_parse(sashell, help, env);
+			free(help);
+			if (ft_strchr(tab + compt_help, '$'))
+				sashell = check_dollar(sashell, tab + compt_help, env);
 		}
+	}
+	else if (tab[compt] == '"')
+	{
+		
+	}
+	else if (tab[compt] == '\'')
+	{
+		
 	}
 	return (sashell);
 }
@@ -134,7 +127,7 @@ t_sashell	*arg_parse(t_sashell *sashell, char **tab, t_env *env)
 		&& tab[sashell->compt.position][0] != '<')
 	{
 		if (ft_strchr(tab[sashell->compt.position], '$'))
-			sashell = check_dollar(sashell, tab, env);
+			sashell = check_dollar(sashell, tab[sashell->compt.position], env);
 		else
 			sashell->tokens[sashell->compt.tokens] = ft_strdup(tab[sashell->compt.position]);
 		sashell->compt.tokens++;
