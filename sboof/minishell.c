@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/08 13:04:47 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/08 13:20:16 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env)
 			else
 				s_quotes = 0;
 		}
-		else if (tab[i] == '$')
+		else if (tab[i] == '$' && s_quotes == 0)
 		{
 			i++;
-			if (s_quotes == 0 && tab[i] != '\0')
+			if (tab[i] != '\0')
 			{
 				compt = i;
 				while (ft_isalnum(tab[i]))
@@ -120,14 +120,10 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env)
 					free(help);
 				}
 			}
-			else if (tab[i] == '\0')
+			else
 			{
 				sashell->tokens[sashell->compt.tokens] = ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
 				return (sashell);
-			}
-			else
-			{
-				
 			}
 		}
 		else
