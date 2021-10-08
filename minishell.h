@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:21:13 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/09 20:03:42 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/08 11:57:44 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,17 @@ char	    **split_pipe(char const *s, char c);
 char	    *ft_strdup(const char *s);
 int		    ft_strlen(char *str);
 int		    ft_isalpha(int c);
+int			ft_isalnum(int c);
 void	    ft_putstr(char *s);
 void	    ft_putchar(char c);
+char		*ft_charjoin(char *str, char c);
 char	    *ft_strjoin(char *s1, char *s2);
 void	    ft_putnbr(int n);
 char	    *ft_strchr(const char *s, int c);
 char	    *ft_substr(char const *s, unsigned int start, size_t len);
 int		    ft_strncmp(const char *s1, const char *s2, size_t n);
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
+
 
 
 int		is_builtin(char *command);

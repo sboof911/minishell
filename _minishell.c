@@ -104,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 				env = split_env(env, envp);
 				sashell = parse_function(sashell, env, line);
 				minishell(sashell, env);
+				print_sashell(sashell);
 			}
 	}
 	return (0);
