@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_charjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/29 16:21:43 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/08 12:12:33 by amaach           ###   ########.fr       */
+/*   Created: 2021/10/08 11:52:42 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/08 11:56:51 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_strlen(char *str)
+#include "../minishell.h"
+
+char	*ft_charjoin(char *str, char c)
 {
-    int		i;
-    
-    i = 0;
-    if (str[i])
-    {
-        while (str[i] != '\0')
-            i++;
-    }
-    return (i);
+	char	*help;
+	int		i;
+
+	i = 0;
+	help = malloc(ft_strlen(str) + 2);
+	while (str[i] != '\0')
+	{
+		help[i] = str[i];
+		i++;
+	}
+	help[i] = c;
+	help[i + 1] = '\0';
+	free (str);
+	return (help);
 }
