@@ -6,54 +6,81 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/15 12:26:51 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/15 15:41:04 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_sashell	*check_file(t_sashell *sashell, char **tab, int i)
+t_sashell	*check_file(t_sashell *sashell, char *tab, int i)
 {
-	if (ft_strlen(tab[sashell->compt.position]) <= 2 &&
-		(tab[sashell->compt.position][1] == '>' || tab[sashell->compt.position][1] == '<'
-		|| ft_strlen(tab[sashell->compt.position]) == 1))
+	if (ft_strlen(tab) <= 2 &&
+		(tab[1] == '>' || tab[1] == '<'
+		|| ft_strlen(tab) == 1))
 	{
-		sashell->compt.position++;
 		sashell->red[sashell->has.red] = ft_strjoin(sashell->red[sashell->has.red], " ");
-		sashell->red[sashell->has.red] = ft_strjoin(sashell->red[sashell->has.red], tab[sashell->compt.position]);
+		sashell->red[sashell->has.red] = ft_strjoin(sashell->red[sashell->has.red], tab);
 	}
 	else
 	{
 		sashell->red[sashell->has.red] = ft_strjoin(sashell->red[sashell->has.red], " ");
-		sashell->red[sashell->has.red] = ft_strjoin(sashell->red[sashell->has.red], tab[sashell->compt.position] + i);
+		sashell->red[sashell->has.red] = ft_strjoin(sashell->red[sashell->has.red], tab + i);
 	}
 	return (sashell);
 }
 
-t_sashell	*rederiction_parse(t_sashell *sashell, char **tab)
+t_sashell	*rederiction_parse(t_sashell *sashell, char *tab)
 {
-	if (tab[sashell->compt.position][0] == '>' && tab[sashell->compt.position][1] != '>')
+	if (tab[0] == '>' && tab[1] != '>')
 	{
 		sashell->red[sashell->has.red] = ft_strdup("1>");
 		sashell = check_file(sashell, tab, 1);
 	}
-	else if (tab[sashell->compt.position][0] == '<' && tab[sashell->compt.position][1] != '<')
+	else if (tab[0] == '<' && tab[1] != '<')
 	{
 		sashell->red[sashell->has.red] = ft_strdup("1<");
 		sashell = check_file(sashell, tab, 1);
 	}
-	if (tab[sashell->compt.position][0] == '>' && tab[sashell->compt.position][1] == '>')
+	if (tab[0] == '>' && tab[1] == '>')
 	{
 		sashell->red[sashell->has.red] = ft_strdup("2>");
 		sashell = check_file(sashell, tab, 2);
 	}
-	else if (tab[sashell->compt.position][0] == '<' && tab[sashell->compt.position][1] == '<')
+	else if (tab[0] == '<' && tab[1] == '<')
 	{
 		sashell->red[sashell->has.red] = ft_strdup("2<");
 		sashell = check_file(sashell, tab, 2);
 	}
 	if (sashell->has.red < sashell->compt.red)
 		sashell->has.red++;
+	return (sashell);
+}
+
+t_sashell	*parse_rederiction(t_sashell *sashell, char *tab)
+{
+	char	*help;
+	int		i;
+	int		remember;
+
+	i = 1;
+	remember = 0;
+	while (tab[i] != '\0')
+	{
+		if (tab[i] == '>' || tab[i] == '<')
+			i++;
+		while (tab[i] != '<' && tab[i] != '>' && tab[i] != '\0')
+			i++;
+		help = ft_substr(tab, remember, i - remember);
+		sashell = rederiction_parse(sashell, help);
+		free(help);
+		if (tab[i] != '\0')
+		{
+			remember = i;
+			i++;
+			if (tab[i] == '>' || tab[i] == '<')
+				i++;
+		}
+	}
 	sashell->compt.position++;
 	return (sashell);
 }
@@ -226,6 +253,7 @@ t_sashell	*count_every(t_sashell *sashell, char **tab)
 	int		quotes;
 	int		compt_options;
 	int		compt_arg;
+	int		j;
 
 	quotes = 0;
 	compt_arg = -1;
@@ -240,10 +268,14 @@ t_sashell	*count_every(t_sashell *sashell, char **tab)
 		}
 		if ((tab[i][0] == '>' || tab[i][0] == '<') && quotes == 0)
 		{
-			if (ft_strlen(tab[i]) <= 2 && (ft_strlen(tab[i]) == 1
-				|| tab[i][1] == '>' || tab[i][1] == '<'))
-				i++;
 			sashell->compt.red++;
+			j = 1;
+			while (tab[i][j] != '\0')
+			{
+				if ((tab[i][j] == '>' || tab[i][j] == '<') && ft_isalnum(tab[i][j - 1]))
+					sashell->compt.red++;
+				j++;
+			}
 		}
 		else if (tab[i][0] == '-' && i >= 1 && tab[i - 1][0] && quotes == 0)
 			compt_options++;
@@ -285,7 +317,7 @@ t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 	while (help[sashell->compt.position])
 	{
 		if (help[sashell->compt.position][0] == '<' || help[sashell->compt.position][0] == '>')
-			sashell = rederiction_parse(sashell, help);
+			sashell = parse_rederiction(sashell, help[sashell->compt.position]);
 		else if (ft_isalpha(help[sashell->compt.position][0]) || sashell->compt.tokens > 0)
 			sashell = command_parse(sashell, help, env);
 		else
