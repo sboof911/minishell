@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/08 13:20:16 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/15 12:26:51 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,52 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env)
 			sashell->tokens[sashell->compt.tokens] = ft_charjoin(sashell->tokens[sashell->compt.tokens], tab[i]);
 		i++;
 	}
+	if (s_quotes == 1 || d_quotes == 1)
+		ft_putstr("Quotes not closed");
 	return (sashell);
+}
+
+int		count_quotes(char *tab)
+{
+	int		i;
+	int		compt1;
+	int		compt2;
+
+	i = 0;
+	compt1 = 0;
+	compt2 = 0;
+	while (tab[i] != '\0')
+	{
+		if (tab[i] == '"')
+			compt1++;
+		if (tab[i] == '\'')
+			compt2++;
+		i++;
+	}
+	if (compt1 % 2 == 1 || compt2 % 2 == 1)
+		ft_putstr("quotes non fermer");
+	return (compt1 + compt2);
+}
+
+char	*delete_quotes(char *tab)
+{
+	int		i;
+	int		compt;
+	int		j;
+	char	*str;
+
+	j = -1;
+	compt = 0;
+	compt = count_quotes(tab);
+	str = (char *)malloc(ft_strlen(tab) - compt + 1);
+	i = -1;
+	while (tab[++i] != '\0')
+	{
+		if (tab[i] != '"' && tab[i] != '\'')
+			str[++j] = tab[i];
+	}
+	str[++j] = '\0';
+	return (str);
 }
 
 t_sashell	*arg_parse(t_sashell *sashell, char **tab, t_env *env)
@@ -141,7 +186,10 @@ t_sashell	*arg_parse(t_sashell *sashell, char **tab, t_env *env)
 		if (ft_strchr(tab[sashell->compt.position], '$'))
 			sashell = check_dollar(sashell, tab[sashell->compt.position], env);
 		else
+		{
 			sashell->tokens[sashell->compt.tokens] = ft_strdup(tab[sashell->compt.position]);
+			sashell->tokens[sashell->compt.tokens] = delete_quotes(sashell->tokens[sashell->compt.tokens]);
+		}
 		sashell->compt.tokens++;
 		sashell->compt.position++;
 	}

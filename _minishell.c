@@ -44,17 +44,25 @@ t_env	*split_env(t_env *env, char **envp)
 void 	print_sashell(t_sashell *sashell)
 {
 	int i = 0;
+	t_sashell	*tmp;
+	int compt;
 
-	while (sashell->tokens[i] != '\0')
+	tmp = sashell;
+	compt = 1;
+	while (sashell)
 	{
-		if (i == 0)
-			printf("command = %s\n", sashell->tokens[i++]);
-		if (sashell->tokens[i] != '\0')
-			printf("arg %s\n", sashell->tokens[i]);
-		else
-			break;
-		i++;
+		i = -1;
+		printf("*********************************\n");
+		while (sashell->tokens[++i])
+			printf("pipe[%d]...tokens[%d] = %s\n", compt, i, sashell->tokens[i]);
+		i = -1;
+		while (sashell->red[++i])
+			printf("pipe[%d]...red[%d] = %s\n", compt, i, sashell->red[i]);
+		sashell = sashell->next;
+		compt++;
 	}
+	printf("*********************************\n");
+	sashell = tmp;
 }
 
 void 	exec_cmd(t_sashell *sashell, t_env *env)
@@ -103,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(line);
 				env = split_env(env, envp);
 				sashell = parse_function(sashell, env, line);
-				minishell(sashell, env);
+				// minishell(sashell, env);
 				print_sashell(sashell);
 			}
 	}

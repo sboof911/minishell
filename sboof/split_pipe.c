@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:24:03 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/07 15:07:46 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/14 11:16:38 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@ int	ft_count_words(char const *s, char c)
 		if (s[i] == '\'' && compt1 == 0)
 			compt2++;
 		if (((s[i] == c && s[i + 1] != c && s[i + 1]) || (i == 0 && s[i] != c))
-			&& (compt1 == 2 || compt1 == 0) && (compt2 == 2 || compt2 == 0))
+			&& (compt1 % 2 == 0) && (compt2 % 2 == 0))
 			j++;
-		if (compt1 == 2)
-			compt1 = 0;
-		if (compt2 == 2)
-			compt2 = 0;
 		i++;
 	}
+	if (j == 0)
+		j = 1;
 	return (j);
 }
 
