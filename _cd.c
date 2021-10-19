@@ -68,7 +68,6 @@ int			is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
-
 char		*get_env_path(t_env *env, const char *var, size_t len)
 {
 	char	*oldpwd;
@@ -101,7 +100,7 @@ static int		update_oldpwd(t_env *env)
 
 	if (!(oldpwd = ft_sstrjoin("OLDPWD=", cwd)))
 		return (ERROR);
-	printf("{%s}\n", oldpwd);
+	//printf("{%s}\n", oldpwd);
 	if (is_in_env(env, oldpwd) == 0)
 		env_add(oldpwd, env);
 	ft_memdel(oldpwd);

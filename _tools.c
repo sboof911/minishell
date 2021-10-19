@@ -55,8 +55,7 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-/* Print all the elements in the linked list */
-void print(t_env *head) {
+int		print(t_env *head) {
     t_env *current_node = head;
 
    	while ( current_node != NULL)
@@ -64,5 +63,6 @@ void print(t_env *head) {
         printf("%s=%s\n", current_node->key, current_node->value);
         current_node = current_node->next;
     }
+	return 1;
 }
 
