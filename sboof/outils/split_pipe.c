@@ -6,11 +6,11 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:24:03 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/14 11:16:38 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 11:32:08 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	ft_count_words(char const *s, char c)
 {

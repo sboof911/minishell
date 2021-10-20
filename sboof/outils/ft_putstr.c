@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_charjoin.c                                      :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 11:52:42 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/08 11:56:51 by amaach           ###   ########.fr       */
+/*   Created: 2021/07/05 17:00:35 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/20 11:32:07 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char	*ft_charjoin(char *str, char c)
+void	ft_putstr(char *s)
 {
-	char	*help;
 	int		i;
 
 	i = 0;
-	help = malloc(ft_strlen(str) + 2);
-	while (str[i] != '\0')
+	if (!s)
+		return ;
+	while (s[i] != '\0')
 	{
-		help[i] = str[i];
+		ft_putchar(s[i]);
 		i++;
 	}
-	help[i] = c;
-	help[i + 1] = '\0';
-	free (str);
-	return (help);
 }

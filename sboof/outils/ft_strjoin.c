@@ -6,11 +6,11 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 14:28:23 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/06 14:32:47 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 11:35:17 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {

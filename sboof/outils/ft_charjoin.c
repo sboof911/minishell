@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_charjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/29 16:18:48 by amaach            #+#    #+#             */
-/*   Updated: 2021/06/29 16:19:00 by amaach           ###   ########.fr       */
+/*   Created: 2021/10/08 11:52:42 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/20 11:32:23 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_charjoin(char *str, char c)
 {
-	char	*temp;
-	char	*s1;
+	char	*help;
 	int		i;
 
 	i = 0;
-	s1 = (char *)s;
-	if (!(temp = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1))))
-		return (0);
-	while (s1[i] != '\0')
+	help = malloc(ft_strlen(str) + 2);
+	while (str[i] != '\0')
 	{
-		temp[i] = s1[i];
+		help[i] = str[i];
 		i++;
 	}
-	temp[i] = '\0';
-	return (temp);
+	help[i] = c;
+	help[i + 1] = '\0';
+	free (str);
+	return (help);
 }

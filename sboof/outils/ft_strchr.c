@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 17:00:35 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/05 17:32:13 by amaach           ###   ########.fr       */
+/*   Created: 2021/07/07 15:40:59 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/20 11:34:48 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	ft_putstr(char *s)
+char	*ft_strchr(const char *s, int c)
 {
-	int		i;
+	size_t			i;
+	unsigned char	j;
+	char			*str;
 
+	str = (char *)s;
+	j = (unsigned char)c;
 	i = 0;
-	if (!s)
-		return ;
-	while (s[i] != '\0')
+	if (j == '\0')
+		return (str + ft_strlen(str));
+	while (str[i] != '\0')
 	{
-		ft_putchar(s[i]);
+		if (str[i] == j)
+			return (str + i);
 		i++;
 	}
+	return (NULL);
 }

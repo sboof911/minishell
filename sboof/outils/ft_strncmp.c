@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 17:58:26 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/07 18:05:23 by amaach           ###   ########.fr       */
+/*   Created: 2021/07/07 18:30:03 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/20 11:34:39 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char			*temp;
-	size_t			j;
-	unsigned int	start1;
+	unsigned int	i;
 
-	start1 = start;
-	if (!s)
+	i = 0;
+	if (n == 0)
 		return (0);
-	j = 0;
-	if (start > ft_strlen((char *)s))
-		len = 0;
-	if (!(temp = (char *)malloc(sizeof(char) * len + 1)))
-		return (0);
-	while (start < start1 + (unsigned int)len && s[start])
-	{
-		temp[j] = s[start];
-		start++;
-		j++;
-	}
-	temp[j] = '\0';
-	return (temp);
+	while (s1[i] != '\0' && i < n - 1 && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

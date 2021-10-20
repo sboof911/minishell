@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 15:40:59 by amaach            #+#    #+#             */
-/*   Updated: 2021/07/07 15:41:09 by amaach           ###   ########.fr       */
+/*   Created: 2021/06/29 16:21:43 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/20 11:35:44 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+int		ft_strlen(char *str)
 {
-	size_t			i;
-	unsigned char	j;
-	char			*str;
-
-	str = (char *)s;
-	j = (unsigned char)c;
-	i = 0;
-	if (j == '\0')
-		return (str + ft_strlen(str));
-	while (str[i] != '\0')
-	{
-		if (str[i] == j)
-			return (str + i);
-		i++;
-	}
-	return (NULL);
+    int		i;
+    
+    i = 0;
+    if (str[i])
+    {
+        while (str[i] != '\0')
+            i++;
+    }
+    return (i);
 }

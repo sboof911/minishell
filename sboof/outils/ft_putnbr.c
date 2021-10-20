@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/30 12:34:58 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/05 18:18:06 by amaach           ###   ########.fr       */
+/*   Created: 2021/07/06 14:38:15 by amaach            #+#    #+#             */
+/*   Updated: 2021/10/20 11:32:11 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-int	ft_isalpha(int c)
+void	ft_putnbr(int n)
 {
-	if ((c > 64 && c < 91) || (c > 96 && c < 123))
-		return (1);
-	return (0);
-}
-
-int	ft_isdigit(int c)
-{
-	if (c > 47 && c < 58)
-		return (1);
-	return (0);
-}
-
-int	ft_isalnum(int c)
-{
-	int a;
-	int b;
-
-	a = ft_isalpha(c);
-	b = ft_isdigit(c);
-	if (a || b)
-		return (1);
-	return (0);
+	if (n < -2147483648 || n > 2147483647)
+		return ;
+	if (n == -2147483648)
+	{
+		ft_putstr("-2147483648");
+		return ;
+	}
+	if (n < 0)
+	{
+		ft_putchar('-');
+		n = n * -1;
+	}
+	if (n >= 10)
+	{
+		ft_putnbr(n / 10);
+		ft_putchar(n % 10 + '0');
+	}
+	else
+		ft_putchar(n + '0');
+	return ;
 }
