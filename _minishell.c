@@ -94,6 +94,35 @@ void minishell(t_sashell *sashell, t_env *env)
 
 }
 
+void	free_sashell(t_sashell *sashell)
+{
+	t_sashell	*tmp;
+
+	while (sashell)
+	{
+		tmp = sashell->next;
+		ft_free(sashell->tokens, ft_count_tab(sashell->tokens));
+		ft_free(sashell->red, sashell->has.red);
+		free(sashell);
+		sashell = tmp;
+	}
+	// free(sashell);
+}
+
+void		free_env(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = tmp;
+	}
+	// free(env);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -101,19 +130,27 @@ int	main(int argc, char **argv, char **envp)
 	t_sashell	*sashell;
 	t_env		*env;
 
+	env = split_env(env, envp);
 	while (1)
 	{
 		line = readline("SASHELL $> ");
 		if ( strcmp(line ,"") == 0)
 			continue;
 		else 
+		{
+			add_history(line);
+			sashell = parse_function(sashell, env, line);
+			if (sashell)
 			{
-				add_history(line);
-				env = split_env(env, envp);
-				sashell = parse_function(sashell, env, line);
-				minishell(sashell, env);
-				//print_sashell(sashell);
+				if (sashell->error == 0)
+				{
+					minishell(sashell, env);
+					//print_sashell(sashell);
+				}
+				free_sashell(sashell);
 			}
+		}
 	}
+	free_env(env);
 	return (0);
 }
