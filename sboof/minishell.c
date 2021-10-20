@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:22:08 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 18:00:25 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,15 +175,10 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env)
 			sashell->tokens[sashell->compt.tokens] = ft_charjoin(sashell->tokens[sashell->compt.tokens], tab[i]);
 		i++;
 	}
-	if (s_quotes == 1 || d_quotes == 1)
-	{
-		sashell->error = 1;
-		ft_putstr("SASHELL : Quotes not closed\n");
-	}
 	return (sashell);
 }
 
-int		count_quotes(char *tab, t_sashell *sashell)
+int		count_quotes(char *tab)
 {
 	int		i;
 	int		compt1;
@@ -194,36 +189,38 @@ int		count_quotes(char *tab, t_sashell *sashell)
 	compt2 = 0;
 	while (tab[i] != '\0')
 	{
-		if (tab[i] == '"')
+		if (tab[i] == '"' && compt2 % 2 != 1)
 			compt1++;
-		if (tab[i] == '\'')
+		if (tab[i] == '\'' && compt1 % 2 != 1)
 			compt2++;
 		i++;
-	}
-	if (compt1 % 2 == 1 || compt2 % 2 == 1)
-	{
-		sashell->error = 1;
-		ft_putstr("SASHELL : Quotes not closed\n");
 	}
 	return (compt1 + compt2);
 }
 
-char	*delete_quotes(char *tab, t_sashell *sashell)
+char	*delete_quotes(char *tab)
 {
 	int		i;
-	int		compt;
+	int		compt1;
+	int		compt2;
 	int		j;
 	char	*str;
 
 	j = -1;
-	compt = 0;
-	compt = count_quotes(tab, sashell);
-	str = (char *)malloc(ft_strlen(tab) - compt + 1);
+	compt1 = 0;
+	compt2 = 0;
+	str = (char *)malloc(ft_strlen(tab) - count_quotes(tab) + 1);
 	i = -1;
 	while (tab[++i] != '\0')
 	{
-		if (tab[i] != '"' && tab[i] != '\'')
+		if (tab[i] != '"' && compt1 % 2 == 1)
 			str[++j] = tab[i];
+		else if (tab[i] != '\'' && compt2 % 2 == 1)
+			str[++j] = tab[i];
+		if (tab[i] == '"' && compt2 % 2 != 1)
+			compt1++;
+		else if (tab[i] == '\'' && compt1 % 2 != 1)
+			compt2++;
 	}
 	str[++j] = '\0';
 	free(tab);
@@ -240,7 +237,7 @@ t_sashell	*arg_parse(t_sashell *sashell, char **tab, t_env *env)
 		else
 		{
 			sashell->tokens[sashell->compt.tokens] = ft_strdup(tab[sashell->compt.position]);
-			sashell->tokens[sashell->compt.tokens] = delete_quotes(sashell->tokens[sashell->compt.tokens], sashell);
+			sashell->tokens[sashell->compt.tokens] = delete_quotes(sashell->tokens[sashell->compt.tokens]);
 		}
 		sashell->compt.tokens++;
 		sashell->compt.position++;
@@ -343,14 +340,8 @@ t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 	{
 		if (help[sashell->compt.position][0] == '<' || help[sashell->compt.position][0] == '>')
 			sashell = parse_rederiction(sashell, help);
-		else if (ft_isalpha(help[sashell->compt.position][0]) || sashell->compt.tokens > 0)
-			sashell = command_parse(sashell, help, env);
 		else
-		{
-			printf("SASHELL: %s: command not found\n", help[0]);
-			sashell->error = 1;
-			break ;
-		}
+			sashell = command_parse(sashell, help, env);
 	}
 	ft_free(help, sashell->compt.position);
 	sashell->red[sashell->has.red] = 0;
@@ -365,13 +356,13 @@ t_sashell	*parse_time(char **tab, t_env *env)
 
 	if (!tab[0])
 		return (NULL);
-	sashell = (t_sashell *)malloc(sizeof(t_sashell));				// leaks here
+	sashell = (t_sashell *)malloc(sizeof(t_sashell));
 	i = 1;
 	if (!sashell)
 		return (NULL);
 	sashell = fill_in_the_blank(sashell, tab[0], env);
 	tmp = sashell;
-	sashell->next = (t_sashell *)malloc(sizeof(t_sashell));			// or here
+	sashell->next = (t_sashell *)malloc(sizeof(t_sashell));
 	if (!sashell->next)
 		return (NULL);
 	if (tab[i] == NULL)
@@ -420,34 +411,83 @@ char	**delete_spaces(char **tab)
 	return (tmp);
 }
 
-int			check_sytaxerr(char *line)
+int			check_quotes(char *line)
+{
+	int	i;
+	int	compt1;
+	int	compt2;
+
+	i = 0;
+	compt1 = 0;
+	compt2 = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '"' && compt2 % 2 != 1)
+			compt1++;
+		if (line[i] == '\'' && compt1 % 2 != 1)
+			compt2++;
+		i++;
+	}
+	if ((compt1 % 2 == 1) || (compt2 % 2 == 1))
+		return (0);
+	return (1);
+}
+
+int			check_sytaxerr(char *line)					// check for all errors
 {
 	int		i;
 	int		pipe;
 	int		red1;
 	int		red2;
+	int		compt1;
+	int		compt2;
 
+	compt1 = 0;
+	compt2 = 0;
 	pipe = 0;
 	red1 = 0;
 	red2 = 0;
 	i = 0;
+	if (check_quotes(line) != 1)
+	{
+		ft_putstr("SASHELL : Synatx Error // quotes not closed\n");
+		return (0);
+	}
 	while (line[i] != '\0' && line[i] == ' ')
 		i++;
-	if (line[i] == '|')
+	if (line[i] != '>' && line[i] != '<')
 	{
-		ft_putstr("SASHELL : Syntax Error '|'\n");
-		return (0);
+		if (!ft_isalnum(line[i]))
+		{
+			ft_putstr("SASHELL : Syntax Error\n");
+			return (0);
+		}
 	}
 	while (line[i] != '\0')
 	{
-		if (line[i] == '|')
-			pipe++;
+		if (i > 0)
+		{
+			if (line[i - 1] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0)
+			{
+				while (line[i] != '\0' && line[i] == ' ')
+					i++;
+				if (line[i] != '>' && line[i] != '<')
+				{
+					if (!ft_isalnum(line[i]))
+					{
+						ft_putstr("SASHELL : Syntax Error\n");
+						return (0);
+					}
+				}
+			}
+		}
+		compt1 += (line[i] == '"');
+		compt2 += (line[i] == '\'');
+		pipe += (line[i] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0);
 		if (ft_isalnum(line[i]) && pipe < 2)
 			pipe = 0;
-		if (line[i] == '<')
-			red1++;
-		if (line[i] == '>')
-			red2++;
+		red1 += (line[i] == '<' && compt1 % 2 == 0 && compt2 % 2 == 0);
+		red2 += (line[i] == '>' && compt1 % 2 == 0 && compt2 % 2 == 0);
 		if (pipe > 0 && (red1 > 0 || red2 > 0))
 		{
 			ft_putstr("SASHELL : Syntax Error '<> & |'\n");

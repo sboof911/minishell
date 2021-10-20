@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 12:34:58 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:32:19 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 12:25:20 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	ft_isdigit(int c)
 
 int	ft_isalnum(int c)
 {
-	int a;
-	int b;
+	int	a;
+	int	b;
 
 	a = ft_isalpha(c);
 	b = ft_isdigit(c);

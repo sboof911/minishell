@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:24:03 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:32:08 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 17:21:04 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	ft_count_words(char const *s, char c)
 int	ft_lw(char const *s, char c, int i)
 {
 	size_t	j;
-	int	compt1;
-	int	compt2;
+	int		compt1;
+	int		compt2;
 
 	compt2 = 0;
 	compt1 = 0;
@@ -73,46 +73,44 @@ void	*ft_free(char **s, int i)
 	return (0);
 }
 
-char	**split_pipe(char const *s, char c)
+char	**boucle_help(char **str, char const *s, char c, int i)
 {
-	char	**str;
-	int		i;
-	int		j;
-	int		k;
-	int		compt1;
-	int		compt2;
+	int	j;
+	int	compt1;
+	int	compt2;
+	int	k;
 
-	i = 0;
 	k = 0;
-	compt1 = 0;
 	compt2 = 0;
-	if (!s)
-		return (0);
-	if (!(str = (char **)malloc(sizeof(char *) * ((ft_count_words(s, c) + 1)))))
-		return (NULL);
+	compt1 = 0;
 	while (s[k] != '\0' && i < ft_count_words(s, c))
 	{
 		j = 0;
 		while (s[k] == c)
 			k++;
-		if (!(str[i] = (char *)malloc(sizeof(char) * ((ft_lw(s, c, k) + 1)))))
-			return (ft_free(str, i));
-		while ((s[k] != c && s[k] != '\0') || (compt1 == 1 && s[k] != '\0')
-			|| (compt2 == 1 && s[k] != '\0'))
+		str[i] = (char *)malloc(sizeof(char) * ((ft_lw(s, c, k) + 1)));
+		while ((s[k] != c && s[k] != '\0') || (compt1 % 2 == 1 && s[k] != '\0')
+			|| (compt2 % 2 == 1 && s[k] != '\0'))
 		{
-			if (s[k] == '"' && compt2 == 0)
-				compt1++;
-			if (s[k] == '\'' && compt1 == 0)
-				compt2++;
+			compt1 += (s[k] == '"' && compt2 % 2 == 0);
+			compt2 += (s[k] == '\'' && compt1 % 2 == 0);
 			str[i][j++] = s[k++];
-			if (compt1 == 2)
-				compt1 = 0;
-			if (compt2 == 2)
-				compt2 = 0;
 		}
-		str[i][j] = '\0';
-		i++;
+		str[i++][j] = '\0';
 	}
 	str[i] = 0;
+	return (str);
+}
+
+char	**split_pipe(char const *s, char c)
+{
+	char	**str;
+	int		i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	str = (char **)malloc(sizeof(char *) * ((ft_count_words(s, c) + 1)));
+	str = boucle_help(str, s, c, i);
 	return (str);
 }

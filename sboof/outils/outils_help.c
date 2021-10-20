@@ -6,11 +6,11 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:14:11 by amaach            #+#    #+#             */
-/*   Updated: 2021/06/29 12:47:02 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 13:24:02 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 char	**protection_malloc2(char **str, int compt)
 {

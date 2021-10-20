@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:58:26 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:35:54 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 12:33:43 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	j = 0;
 	if (start > ft_strlen((char *)s))
 		len = 0;
-	if (!(temp = (char *)malloc(sizeof(char) * len + 1)))
-		return (0);
+	temp = (char *)malloc(sizeof(char) * len + 1);
 	while (start < start1 + (unsigned int)len && s[start])
 	{
 		temp[j] = s[start];

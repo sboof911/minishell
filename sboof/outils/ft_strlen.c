@@ -6,21 +6,21 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 16:21:43 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:35:44 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 12:33:23 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int		ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int		i;
-    
-    i = 0;
-    if (str[i])
-    {
-        while (str[i] != '\0')
-            i++;
-    }
-    return (i);
+	int	i;
+
+	i = 0;
+	if (str[i])
+	{
+		while (str[i] != '\0')
+			i++;
+	}
+	return (i);
 }

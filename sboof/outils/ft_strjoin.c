@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 14:28:23 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:35:17 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 12:30:58 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
 	t = -1;
-	if (!(temp = (char *)malloc(sizeof(char) * (i + j + 1))))
-		return (0);
+	temp = (char *)malloc(sizeof(char) * (i + j + 1));
 	if (!temp)
 		return (NULL);
 	while (++t < i + j)
@@ -38,6 +37,6 @@ char	*ft_strjoin(char *s1, char *s2)
 			temp[t] = s2[t - i];
 	}
 	temp[t] = '\0';
-    free (s1);
+	free (s1);
 	return (temp);
 }
