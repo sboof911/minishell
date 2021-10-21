@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 18:00:25 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/21 11:04:52 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -536,6 +536,7 @@ t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 		tab = delete_spaces(tab);
 		sashell = parse_time(tab, env);
 		ft_free(tab, ft_count_tab(tab));
+		system("leaks minishell");
 		return (sashell);
 	}
 	return (NULL);

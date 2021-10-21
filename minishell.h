@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:21:13 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 11:49:47 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/20 15:45:48 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct	s_sashell
 	char				**tokens;
 	char				**red;
 	int					error;
+	int					count;
+	struct s_sashell	*first;
 	struct s_has		has;
 	struct s_compt		compt;
 	struct s_sashell	*next;
@@ -101,6 +103,7 @@ char	    *ft_strchr(const char *s, int c);
 char	    *ft_substr(char const *s, unsigned int start, size_t len);
 int		    ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_count_tab(char **tab);
+void		free_sashell(t_sashell *sashell);
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
 
 
