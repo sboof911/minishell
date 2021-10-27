@@ -6,11 +6,11 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/29 14:53:47 by amaach            #+#    #+#              #
-#    Updated: 2021/10/27 16:55:42 by amaach           ###   ########.fr        #
+#    Updated: 2021/10/27 19:38:41 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAGS =  -lreadline -ledit -g -fsanitize=address
+FLAGS =  -lreadline -ledit -g #-fsanitize=address
 NAME = minishell
 SRC =  _minishell.c _builtin.c _echo.c _pwd.c  _cd.c _tools.c\
 		 sboof/outils/ft_split.c  sboof/outils/outils_help.c  sboof/outils/ft_strdup.c  sboof/outils/ft_strlen.c \
