@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/21 11:04:52 by amaach           ###   ########.fr       */
+/*   Updated: 2021/10/21 13:15:55 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,6 +433,35 @@ int			check_quotes(char *line)
 	return (1);
 }
 
+int			check_red(char *line, int i) // send i - 1
+{
+	int	compt1;
+	int	compt2;
+	int	red1;
+	int	red2;
+
+	red1 = 0;
+	red2 = 0;
+	compt1 = 0;
+	compt2 = 0;
+	while (line[++i] != '\0')
+	{
+		compt1 += (line[i] == '"');
+		compt2 += (line[i] == '\'');
+		red1 += (line[i] == '<' && compt1 % 2 == 0 && compt2 % 2 == 0);
+		red2 += (line[i] == '>' && compt1 % 2 == 0 && compt2 % 2 == 0);
+		if (red1 > 0 && red2 > 0)
+			return (0);
+		if (ft_isalnum(line[i]) && red1 < 3)
+			red1 = 0;
+		if (ft_isalnum(line[i]) && red2 < 3)
+			red2 = 0;
+	}
+	if (red1 > 0 || red2 > 0)
+		return (0);
+	return (1);
+}
+
 int			check_sytaxerr(char *line)					// check for all errors
 {
 	int		i;
@@ -450,11 +479,16 @@ int			check_sytaxerr(char *line)					// check for all errors
 	i = 0;
 	if (check_quotes(line) != 1)
 	{
-		ft_putstr("SASHELL : Synatx Error // quotes not closed\n");
+		ft_putstr("SASHELL : Syntax Error // quotes not closed\n");
 		return (0);
 	}
 	while (line[i] != '\0' && line[i] == ' ')
 		i++;
+	if (check_red(line, i - 1) != 1)
+	{
+		ft_putstr("SASHELL : Syntax Error // redirections\n");
+		return (0);
+	}
 	if (line[i] != '>' && line[i] != '<')
 	{
 		if (!ft_isalnum(line[i]))
@@ -486,22 +520,22 @@ int			check_sytaxerr(char *line)					// check for all errors
 		pipe += (line[i] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0);
 		if (ft_isalnum(line[i]) && pipe < 2)
 			pipe = 0;
-		red1 += (line[i] == '<' && compt1 % 2 == 0 && compt2 % 2 == 0);
-		red2 += (line[i] == '>' && compt1 % 2 == 0 && compt2 % 2 == 0);
-		if (pipe > 0 && (red1 > 0 || red2 > 0))
-		{
-			ft_putstr("SASHELL : Syntax Error '<> & |'\n");
-			return (0);
-		}
-		if (red1 > 0 && red2 > 0)
-		{
-			ft_putstr("SASHELL : Syntax Error '<>'\n");
-			return (0);
-		}
-		if (ft_isalnum(line[i]) && red1 < 3)
-			red1 = 0;
-		if (ft_isalnum(line[i]) && red2 < 3)
-			red2 = 0;
+		// red1 += (line[i] == '<' && compt1 % 2 == 0 && compt2 % 2 == 0);
+		// red2 += (line[i] == '>' && compt1 % 2 == 0 && compt2 % 2 == 0);
+		// if (pipe > 0 && (red1 > 0 || red2 > 0))
+		// {
+		// 	ft_putstr("SASHELL : Syntax Error '<> & |'\n");
+		// 	return (0);
+		// }
+		// if (red1 > 0 && red2 > 0)
+		// {
+		// 	ft_putstr("SASHELL : Syntax Error '<>'\n");
+		// 	return (0);
+		// }
+		// if (ft_isalnum(line[i]) && red1 < 3)
+		// 	red1 = 0;
+		// if (ft_isalnum(line[i]) && red2 < 3)
+		// 	red2 = 0;
 		i++;
 	}
 	if (pipe > 0 || red1 > 0 || red2 > 0)
@@ -536,7 +570,7 @@ t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 		tab = delete_spaces(tab);
 		sashell = parse_time(tab, env);
 		ft_free(tab, ft_count_tab(tab));
-		system("leaks minishell");
+		// system("leaks minishell");
 		return (sashell);
 	}
 	return (NULL);
