@@ -143,9 +143,12 @@ int	main(int argc, char **argv, char **envp)
 			{
 				add_history(line);
 				sashell = parse_function(sashell, env, line);
-				minishell(sashell, env);
-				print_sashell(sashell);
-				free_sashell(sashell);
+				if (sashell)
+				{
+					minishell(sashell, env);
+					print_sashell(sashell);
+					free_sashell(sashell);
+				}
 				// system("leaks minishell");
 			}
 	}
