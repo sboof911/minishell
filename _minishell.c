@@ -8,7 +8,7 @@ t_env	*fill_env(t_env *env, char *envp)
 	help = ft_split(envp, '=');
 	env->key = ft_strdup(help[0]);
 	env->value = ft_strdup(help[1]);
-	ft_free(help, ft_count_tab(help));
+	ft_free(help, 0);
 	return (env);
 }
 
@@ -22,8 +22,8 @@ t_env	*split_env(t_env *env, char **envp)
 	env = fill_env(env, envp[0]);
 	tmp = env;
 	env->next = (t_env *)malloc(sizeof(t_env));
-	if (!env->next)
-		return (NULL);
+		if (!env->next)
+			return (NULL);
 	env = env->next;
 	while (envp[i])
 	{
@@ -95,24 +95,6 @@ void minishell(t_sashell *sashell, t_env *env)
 
 }
 
-void	free_sashell(t_sashell *sashell)
-{
-	t_sashell	*tmp;
-	int			i;
-
-	i = 0;
-	while (i < sashell->count)
-	{
-		tmp = sashell->next;
-		ft_free(sashell->tokens, ft_count_tab(sashell->tokens));
-		ft_free(sashell->red, sashell->has.red);
-		free(sashell);
-		sashell = tmp;
-		i++;
-	}
-	// free(sashell);
-}
-
 void		free_env(t_env *env)
 {
 	t_env	*tmp;
@@ -128,6 +110,23 @@ void		free_env(t_env *env)
 	// free(env);
 }
 
+void	free_sashell(t_sashell *sashell)
+{
+	t_sashell	*tmp;
+	int			i;
+
+	i = 0;
+	while (sashell)
+	{
+		tmp = sashell->next;
+		ft_free(sashell->tokens, 1024);
+		ft_free(sashell->red, 1024);
+		free(sashell);
+		sashell = tmp;
+	}
+	// free(sashell);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -141,19 +140,14 @@ int	main(int argc, char **argv, char **envp)
 		if ( strcmp(line ,"") == 0)
 			continue;
 		else 
-		{
-			add_history(line);
-			sashell = parse_function(sashell, env, line);
-			if (sashell)
 			{
-				if (sashell->error == 0)
-				{
-					minishell(sashell, env);
-					print_sashell(sashell);
-				}
+				add_history(line);
+				sashell = parse_function(sashell, env, line);
+				minishell(sashell, env);
+				print_sashell(sashell);
 				free_sashell(sashell);
+				// system("leaks minishell");
 			}
-		}
 	}
 	free_env(env);
 	return (0);
