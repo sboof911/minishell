@@ -29,29 +29,39 @@ int ft_error(char *s)
 
 int 	ft_export(char **cmd,t_env *env)
 {
-	int i = 0;
+	int i = -1;
 	char **name;
  	int index = 0;
 
-	while (cmd[i])
-		printf("%s\n", cmd[i++]);
-
-	if (i > 2)
-		return ft_error("Error: invalid parametre");
-	if (i == 1)
-		{
-			print(env);
-			return (1);
-		}
-	name = ft_split(cmd[1], '=');
+	while (cmd[++i])
+		printf("- %s\n", cmd[i]);
+	
+	if (i != 0)
+	{
+		// name = ft_split((const char *)cmd[i],'=');
 
 	i = 0;
-
 	while (name[i])
-		printf("%s | ", name[i++]);
+		printf("%s\n", name[i++]);
 
-	if (i <= 1)
-		name[i] = "";
+	}
+	
+	// if (i > 2)
+	// 	return ft_error("Error: invalid parametre");
+	// if (i == 1)
+	// 	{
+	// 		print(env);
+	// 		return (1);
+	// 	}
+	// name = ft_split(cmd[1], '=');
+
+	// i = 0;
+
+	// while (name[i])
+	// 	printf("%s | ", name[i++]);
+
+	// if (i <= 1)
+	// 	name[i] = "";
 
 	/* check if the key of env already exist if yes the replace the value if no wait until the last key then change it */
 
