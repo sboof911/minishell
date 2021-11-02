@@ -32,19 +32,38 @@ int 	ft_export(char **cmd,t_env *env)
 	int i = -1;
 	char **name;
  	int index = 0;
+    t_env *current_node = env;
+
 
 	while (cmd[++i])
 		printf("- %s\n", cmd[i]);
-	
-	if (i != 0)
-	{
-		// name = ft_split((const char *)cmd[i],'=');
 
+	name = ft_split(cmd[1] ,'=');
+	
 	i = 0;
+
 	while (name[i])
 		printf("%s\n", name[i++]);
 
-	}
+   	while (current_node != NULL)
+	{	
+		printf("%s=%s\n", current_node->key, current_node->value);
+        current_node = current_node->next;
+    }
+
+	// current_node = current_node->next;
+	// current_node->key = ft_strdup(name[0]);
+	// current_node->value = ft_strdup(name[1]);
+
+	// printf("%s=%s\n", current_node->key, current_node->value);
+
+	// printf("-------------------------------------\n");
+	// print(env);
+
+	// if (i != 0)
+	// {
+
+	// i = 0;
 	
 	// if (i > 2)
 	// 	return ft_error("Error: invalid parametre");
