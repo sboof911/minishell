@@ -29,62 +29,71 @@ int ft_error(char *s)
 
 int 	ft_export(char **cmd,t_env *env)
 {
-	int i = -1;
+	int i = 0;
 	char **name;
  	int index = 0;
     t_env *current_node = env;
 
 
-	while (cmd[++i])
-		printf("- %s\n", cmd[i]);
-
-	name = ft_split(cmd[1] ,'=');
+	while (cmd[i])
+		printf("- %s\n", cmd[i++]);
 	
-	i = 0;
+	if (i == 1)
+	{
+		print(env); 
+		return 0;
+	}
+	else
+	{
 
-	while (name[i])
-		printf("%s\n", name[i++]);
+		name = ft_split(cmd[1] ,'=');
 
-   	while (current_node != NULL)
-	{	
-		printf("%s=%s\n", current_node->key, current_node->value);
-        current_node = current_node->next;
-    }
+		i = 0;
 
-	// current_node = current_node->next;
-	// current_node->key = ft_strdup(name[0]);
-	// current_node->value = ft_strdup(name[1]);
+		while (name[i])
+			printf("%s\n", name[i++]);
 
-	// printf("%s=%s\n", current_node->key, current_node->value);
+		while (current_node != NULL)
+		{	
+			printf("%s=%s\n", current_node->key, current_node->value);
+			current_node = current_node->next;
+		}
 
-	// printf("-------------------------------------\n");
-	// print(env);
+		// current_node = current_node->next;
+		// current_node->key = ft_strdup(name[0]);
+		// current_node->value = ft_strdup(name[1]);
 
-	// if (i != 0)
-	// {
+		// printf("%s=%s\n", current_node->key, current_node->value);
 
-	// i = 0;
-	
-	// if (i > 2)
-	// 	return ft_error("Error: invalid parametre");
-	// if (i == 1)
-	// 	{
-	// 		print(env);
-	// 		return (1);
-	// 	}
-	// name = ft_split(cmd[1], '=');
+		// printf("-------------------------------------\n");
+		// print(env);
 
-	// i = 0;
+		// if (i != 0)
+		// {
 
-	// while (name[i])
-	// 	printf("%s | ", name[i++]);
+		// i = 0;
 
-	// if (i <= 1)
-	// 	name[i] = "";
+		// if (i > 2)
+		// 	return ft_error("Error: invalid parametre");
+		// if (i == 1)
+		// 	{
+		// 		print(env);
+		// 		return (1);
+		// 	}
+		// name = ft_split(cmd[1], '=');
 
-	/* check if the key of env already exist if yes the replace the value if no wait until the last key then change it */
+		// i = 0;
 
- 	return 1;
+		// while (name[i])
+		// 	printf("%s | ", name[i++]);
+
+		// if (i <= 1)
+		// 	name[i] = "";
+
+		/* check if the key of env already exist if yes the replace the value if no wait until the last key then change it */
+
+		return 1;
+	}
 }
 
 int exec_builtin(char **cmd, t_env *env)
