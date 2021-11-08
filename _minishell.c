@@ -136,7 +136,7 @@ int	main(int argc, char **argv, char **envp)
 	env = split_env(env, envp);
 	while (1)
 	{
-		line = readline("SASHELL $> ");
+		line = readline("\033[0;34mSASHELL $> \033[0m");
 		if ( strcmp(line ,"") == 0)
 			continue;
 		else 
@@ -145,8 +145,11 @@ int	main(int argc, char **argv, char **envp)
 				sashell = parse_function(sashell, env, line);
 				if (sashell)
 				{
+					printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
+					print_sashell(sashell);
+					printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
 					minishell(sashell, env);
-				//	print_sashell(sashell);
+
 					free_sashell(sashell);
 				}
 				//system("leaks minishell");
