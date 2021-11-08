@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/27 19:39:13 by amaach           ###   ########.fr       */
+/*   Updated: 2021/11/08 10:01:48 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ int	help_rederiction(t_sashell *sashell, char **tab, int i)
 	return (i);
 }
 
+int	help_red(char **tab, int i, t_sashell *sashell, int remember)
+{
+	if (tab[sashell->compt.position][i] != '\0')
+		remember = i;
+	return (remember);
+}
+
 t_sashell	*parse_red(t_sashell *sashell, char **tab, int i, int remember)
 {
 	char	*help;
@@ -111,8 +118,7 @@ t_sashell	*parse_red(t_sashell *sashell, char **tab, int i, int remember)
 		}
 		sashell = rederiction_parse(sashell, help, red);
 		free(help);
-		if (tab[sashell->compt.position][i] != '\0')
-			remember = i;
+		remember = help_red(tab, i, sashell, remember);
 	}
 	return (sashell);
 }
@@ -477,7 +483,7 @@ int	check_quotes(char *line)
 	return (1);
 }
 
-int	help_check_pipe(char *line, int	i, int compt1, int compt2)
+int	help_check_pipe(char *line, int i, int compt1, int compt2)
 {
 	if (line[i - 1] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0)
 	{
