@@ -34,14 +34,15 @@ int 	ft_export(char **cmd,t_env *env)
  	int index = 0;
     t_env *current_node = env;
 
-
+	printf("\033[1;31m-------------------------------|     CMD     |--------------------------------------\033[0m\n\n");
 	while (cmd[i])
 		printf("- %s\n", cmd[i++]);
-	
+	printf("\033[1;31m-------------------------------| End of CMD  |--------------------------------------\033[0m\n\n");
+
 	if (i == 1)
 	{
 		print(env); 
-		return 0;
+		return (0);
 	}
 	else
 	{
@@ -49,49 +50,14 @@ int 	ft_export(char **cmd,t_env *env)
 		name = ft_split(cmd[1] ,'=');
 
 		i = 0;
-
 		while (name[i])
 			printf("%s\n", name[i++]);
-
+		printf("\n------------------------------\n");
 		while (current_node != NULL)
 		{	
-			printf("%s=%s\n", current_node->key, current_node->value);
+			//printf("%s=%s\n", current_node->key, current_node->value);
 			current_node = current_node->next;
 		}
-
-		// current_node = current_node->next;
-		// current_node->key = ft_strdup(name[0]);
-		// current_node->value = ft_strdup(name[1]);
-
-		// printf("%s=%s\n", current_node->key, current_node->value);
-
-		// printf("-------------------------------------\n");
-		// print(env);
-
-		// if (i != 0)
-		// {
-
-		// i = 0;
-
-		// if (i > 2)
-		// 	return ft_error("Error: invalid parametre");
-		// if (i == 1)
-		// 	{
-		// 		print(env);
-		// 		return (1);
-		// 	}
-		// name = ft_split(cmd[1], '=');
-
-		// i = 0;
-
-		// while (name[i])
-		// 	printf("%s | ", name[i++]);
-
-		// if (i <= 1)
-		// 	name[i] = "";
-
-		/* check if the key of env already exist if yes the replace the value if no wait until the last key then change it */
-
 		return 1;
 	}
 }
