@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/11/16 21:39:30 by amaach           ###   ########.fr       */
+/*   Updated: 2021/11/16 21:49:46 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -631,20 +631,27 @@ t_sashell	*red_open(t_sashell *sashell)
 {
 	int		i;
 	char	*tmp;
+	t_sashell	*help;
 
-	i = 0;
-	while (sashell->red[i] != '\0')
+	help = sashell;
+	while (sashell)
 	{
-		if (sashell->red[i][0] == '2' && sashell->red[i][1] == '<')
+		i = 0;
+		while (sashell->red[i] != '\0')
 		{
-			tmp = heredoc(sashell, i);
-			free(sashell->red[i]);
-			sashell->red[i] = ft_strdup("1< ");
-			sashell->red[i] = ft_strjoin(sashell->red[i], tmp);
-			free(tmp);
+			if (sashell->red[i][0] == '2' && sashell->red[i][1] == '<')
+			{
+				tmp = heredoc(sashell, i);
+				free(sashell->red[i]);
+				sashell->red[i] = ft_strdup("1< ");
+				sashell->red[i] = ft_strjoin(sashell->red[i], tmp);
+				free(tmp);
+			}
+			i++;
 		}
-		i++;
+		sashell = sashell->next;
 	}
+	sashell = help;
 	return (sashell);
 }
 
