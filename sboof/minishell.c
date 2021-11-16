@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/27 19:39:13 by amaach           ###   ########.fr       */
+/*   Updated: 2021/11/16 21:39:30 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ int	help_rederiction(t_sashell *sashell, char **tab, int i)
 	return (i);
 }
 
+int	help_red(char **tab, int i, t_sashell *sashell, int remember)
+{
+	if (tab[sashell->compt.position][i] != '\0')
+		remember = i;
+	return (remember);
+}
+
 t_sashell	*parse_red(t_sashell *sashell, char **tab, int i, int remember)
 {
 	char	*help;
@@ -111,8 +118,7 @@ t_sashell	*parse_red(t_sashell *sashell, char **tab, int i, int remember)
 		}
 		sashell = rederiction_parse(sashell, help, red);
 		free(help);
-		if (tab[sashell->compt.position][i] != '\0')
-			remember = i;
+		remember = help_red(tab, i, sashell, remember);
 	}
 	return (sashell);
 }
@@ -160,23 +166,38 @@ int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 	return (i);
 }
 
-int	help_dollar_quotes(char *tab, int i, int d_q, int s_q)
+int	help_dollar_quotes(int d_q)
 {
-	if (tab[i] == '"' && s_q == 0)
+	if (d_q == 0)
+		d_q = 1;
+	else
+		d_q = 0;
+	return (d_q);
+}
+
+t_sashell	*help_norm_dollar(t_sashell *sashell, char *tab, int i)
+{
+	if (tab[i] == '\0')
 	{
-		if (d_q == 0)
-			d_q = 1;
-		else
-			d_q = 0;
+		sashell->tokens[sashell->compt.tokens]
+			= ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
 	}
-	else if (tab[i] == '\'' && d_q == 0)
+	return (sashell);
+}
+
+int	some_shit(int *d_quotes, int *s_quotes, char *tab, int i)
+{
+	if (tab[i] == '"' && *s_quotes == 0)
 	{
-		if (s_q == 0)
-			s_q = 1;
-		else
-			s_q = 0;
+		*d_quotes = help_dollar_quotes(*d_quotes);
+		return (1);
 	}
-	return (s_q);
+	else if (tab[i] == '\'' && *d_quotes == 0)
+	{
+		*s_quotes = help_dollar_quotes(*s_quotes);
+		return (1);
+	}
+	return (0);
 }
 
 t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
@@ -189,8 +210,9 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 	sashell->tokens[sashell->compt.tokens] = ft_strdup("");
 	while (tab[++i] != '\0')
 	{
-		s_quotes = help_dollar_quotes(tab, i, d_quotes, s_quotes);
-		if (tab[i] == '$' && s_quotes == 0)
+		if (some_shit(&d_quotes, &s_quotes, tab, i))
+			continue ;
+		else if (tab[i] == '$' && s_quotes == 0)
 		{
 			i = help_check_dollar(sashell, tab, env, i + 1);
 			if (tab[i] == '\0')
@@ -477,7 +499,7 @@ int	check_quotes(char *line)
 	return (1);
 }
 
-int	help_check_pipe(char *line, int	i, int compt1, int compt2)
+int	help_check_pipe(char *line, int i, int compt1, int compt2)
 {
 	if (line[i - 1] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0)
 	{
@@ -560,6 +582,72 @@ int	check_sytaxerr(char *line)
 	return (1);
 }
 
+char	*generate_random_value(void)
+{
+	int				fd;
+	unsigned int	randval;
+	char			*rand_string;
+	char			*r_string;
+	char			*tmp;
+
+	fd = open("/dev/random", O_RDONLY);
+	read(fd, &randval, sizeof(randval));
+	close(fd);
+	rand_string = ft_itoa(randval);
+	tmp = ft_strdup("/tmp/heredoc-");
+	r_string = ft_strjoin(tmp, rand_string);
+	free (rand_string);
+	return (r_string);
+}
+
+char	*heredoc(t_sashell *sashell, int i)
+{
+	int		fd;
+	char	*line;
+	char	*random_string;
+
+	random_string = generate_random_value();
+	fd = open(random_string, O_CREAT | O_RDWR, S_IRWXU);
+	while (420)
+	{	
+		line = readline("> ");
+		if (!line || !ft_strncmp(line, sashell->red[i] + 3,
+				ft_strlen(sashell->red[i] + 3)))
+		{
+			if (line)
+				free(line);
+			close(fd);
+			return (random_string);
+		}
+		ft_putendl_fd(line, fd);
+		free(line);
+	}
+	free(line);
+	close(fd);
+	return (NULL);
+}
+
+t_sashell	*red_open(t_sashell *sashell)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (sashell->red[i] != '\0')
+	{
+		if (sashell->red[i][0] == '2' && sashell->red[i][1] == '<')
+		{
+			tmp = heredoc(sashell, i);
+			free(sashell->red[i]);
+			sashell->red[i] = ft_strdup("1< ");
+			sashell->red[i] = ft_strjoin(sashell->red[i], tmp);
+			free(tmp);
+		}
+		i++;
+	}
+	return (sashell);
+}
+
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 {
 	char	**tab;
@@ -570,6 +658,7 @@ t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 		tab = delete_spaces(tab);
 		sashell = parse_time(tab, env);
 		ft_free(tab, ft_count_tab(tab));
+		red_open(sashell);
 		free(line);
 		return (sashell);
 	}

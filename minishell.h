@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:21:13 by amaach            #+#    #+#             */
-/*   Updated: 2021/10/20 15:45:48 by amaach           ###   ########.fr       */
+/*   Updated: 2021/11/15 23:35:43 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ char	    *ft_substr(char const *s, unsigned int start, size_t len);
 int		    ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_count_tab(char **tab);
 void		free_sashell(t_sashell *sashell);
+char		*ft_itoa(int n);
+char		*ft_strrev(char *str);
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
 
 

@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/07 18:30:03 by amaach            #+#    #+#             */
-/*   Updated: 2021/11/15 23:54:50 by amaach           ###   ########.fr       */
+/*   Created: 2021/11/08 14:18:07 by amaach            #+#    #+#             */
+/*   Updated: 2021/11/08 14:18:19 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strrev(char *str)
 {
-	unsigned int	i;
+	int		i;
+	int		j;
+	char	e;
 
 	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] != '\0' && i < n && s1[i] == s2[i])
+	while (str[i] != '\0')
+	{
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	j = 0;
+	while (j < i / 2)
+	{
+		e = str[j];
+		str[j] = str[i - j - 1];
+		str[i - j - 1] = e;
+		j++;
+	}
+	return (str);
 }
