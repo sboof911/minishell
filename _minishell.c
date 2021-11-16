@@ -75,6 +75,10 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 
 	if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
+	
+	// executable
+	//if ()
+	//	ret = 
 
 
 
@@ -88,9 +92,6 @@ void minishell(t_sashell *sashell, t_env *env)
 
 	// condition to check if it's a built-in 
 	exec_cmd(sashell, env);
-	//print(env);
-
-
 
 
 }
@@ -137,7 +138,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("\033[0;34mSASHELL $> \033[0m");
-		if ( strcmp(line ,"") == 0)
+		if ( strcmp(line ,"") == 0 || !line)
 			continue;
 		else 
 			{
@@ -145,9 +146,12 @@ int	main(int argc, char **argv, char **envp)
 				sashell = parse_function(sashell, env, line);
 				if (sashell)
 				{
+					//printing data
 					printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
 					print_sashell(sashell);
 					printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
+					
+					// main-execution-process
 					minishell(sashell, env);
 
 					free_sashell(sashell);

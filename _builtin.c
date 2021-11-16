@@ -27,13 +27,24 @@ int ft_error(char *s)
 	return -1;
 }
 
+t_env *ft_add_last_node(char *key, char *value)
+{
+	t_env *new;
+
+	new = (t_env*)malloc(sizeof(t_env));
+	new->key = ft_strdup(key);
+	new->value = ft_strdup(value);
+	new->next = NULL;
+	return (new);
+}
+
 int 	ft_export(char **cmd,t_env *env)
 {
 	int i = 0;
 	char **name;
  	int index = 0;
     t_env *current_node = env;
-
+	t_env *head = current_node;
 	printf("\033[1;31m-------------------------------|     CMD     |--------------------------------------\033[0m\n\n");
 	while (cmd[i])
 		printf("- %s\n", cmd[i++]);
@@ -53,10 +64,25 @@ int 	ft_export(char **cmd,t_env *env)
 		while (name[i])
 			printf("%s\n", name[i++]);
 		printf("\n------------------------------\n");
-		while (current_node != NULL)
+		
+		while (current_node) 
 		{	
-			//printf("%s=%s\n", current_node->key, current_node->value);
+
+			printf("%s=%s\n", current_node->key, current_node->value);
+			if (!current_node->next)
+			{
+				// printf("==================================");
+				// printf("\nlast node = {%s=%s}\n", current_node->key, current_node->value);
+			}
 			current_node = current_node->next;
+		}
+		current_node = ft_add_last_node(name[0], name[1]);
+		env = current_node;
+
+		while (head)
+		{
+			printf("%s=%s\n", head->key, head->value);
+			head = head->next;
 		}
 		return 1;
 	}
