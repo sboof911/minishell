@@ -75,7 +75,7 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 
 	if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
-	
+
 	// executable
 	//if ()
 	//	ret = 

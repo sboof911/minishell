@@ -43,12 +43,14 @@ int 	ft_export(char **cmd,t_env *env)
 	int i = 0;
 	char **name;
  	int index = 0;
-    t_env *current_node = env;
-	t_env *head = current_node;
-	printf("\033[1;31m-------------------------------|     CMD     |--------------------------------------\033[0m\n\n");
+	t_env *head = env;
+	t_env *new;
+
+	//printf("\033[1;31m-------------------------------|     CMD     |--------------------------------------\033[0m\n\n");
 	while (cmd[i])
-		printf("- %s\n", cmd[i++]);
-	printf("\033[1;31m-------------------------------| End of CMD  |--------------------------------------\033[0m\n\n");
+		i++;
+		//printf("- %s\n", cmd[i++]);
+	//printf("\033[1;31m-------------------------------| End of CMD  |--------------------------------------\033[0m\n\n");
 
 	if (i == 1)
 	{
@@ -57,35 +59,31 @@ int 	ft_export(char **cmd,t_env *env)
 	}
 	else
 	{
-
 		name = ft_split(cmd[1] ,'=');
 
 		i = 0;
-		while (name[i])
+		while (name[i])	
 			printf("%s\n", name[i++]);
-		printf("\n------------------------------\n");
-		
-		while (current_node) 
+		//printf("\n------------------------------\n");
+		while (env != NULL) 
 		{	
-
-			printf("%s=%s\n", current_node->key, current_node->value);
-			if (!current_node->next)
-			{
-				// printf("==================================");
-				// printf("\nlast node = {%s=%s}\n", current_node->key, current_node->value);
-			}
-			current_node = current_node->next;
+			//printf("%s=%s\n", current_node->key, current_node->value);
+			if (!(env->next))
+				{
+					
+					new = (t_env*)malloc(sizeof(t_env));
+					new->key = ft_strdup(name[0]);
+					new->value = ft_strdup(name[1]);
+					new->next = NULL;
+				}
 		}
-		current_node = ft_add_last_node(name[0], name[1]);
-		env = current_node;
+		env = new;
 
-		while (head)
-		{
-			printf("%s=%s\n", head->key, head->value);
-			head = head->next;
-		}
-		return 1;
+		printf("-------f---------\n");
+		print(env);
+			return 1;
 	}
+
 }
 
 int exec_builtin(char **cmd, t_env *env)
@@ -102,7 +100,7 @@ int exec_builtin(char **cmd, t_env *env)
 		result = print(env);
 
 	else if (!strcmp(cmd[0], "export"))
-		result = ft_export(cmd ,env);
+		result = ft_export(cmd , env);
 
 	return result;
 }
