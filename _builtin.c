@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-
-
 int		is_builtin(char *command)
 {
 	if (strcmp(command, "echo") == 0)
@@ -27,64 +25,87 @@ int ft_error(char *s)
 	return -1;
 }
 
-t_env *ft_add_last_node(char *key, char *value)
+char	*ft_strrchr(const char *str, int c)
 {
-	t_env *new;
+	char	*s;
+	int		len;
 
-	new = (t_env*)malloc(sizeof(t_env));
-	new->key = ft_strdup(key);
-	new->value = ft_strdup(value);
-	new->next = NULL;
-	return (new);
+	s = (char *)str;
+	len = strlen(str);
+	s += len;
+	while (len >= 0)
+	{
+		if (*s == (char)c)
+			return (s);
+		s--;
+		len--;
+	}
+	return (0);
 }
 
-int 	ft_export(char **cmd,t_env *env)
+t_env 	*ft_export(char **cmd,t_env *env)
 {
 	int i = 0;
 	char **name;
- 	int index = 0;
-	t_env *head = env;
-	t_env *new;
+	t_env* last = env;
+	t_env* new_node;
+	int y = 0;
 
-	//printf("\033[1;31m-------------------------------|     CMD     |--------------------------------------\033[0m\n\n");
+
+	/* count commande + args */
 	while (cmd[i])
 		i++;
-		//printf("- %s\n", cmd[i++]);
-	//printf("\033[1;31m-------------------------------| End of CMD  |--------------------------------------\033[0m\n\n");
 
+	/* if only there is "export " without args */
 	if (i == 1)
 	{
 		print(env); 
-		return (0);
+		return (env);
 	}
-	else
+	else if (i > 1)
 	{
-		name = ft_split(cmd[1] ,'=');
-
-		i = 0;
-		while (name[i])	
-			printf("%s\n", name[i++]);
-		//printf("\n------------------------------\n");
-		while (env != NULL) 
-		{	
-			//printf("%s=%s\n", current_node->key, current_node->value);
-			if (!(env->next))
-				{
-					
-					new = (t_env*)malloc(sizeof(t_env));
-					new->key = ft_strdup(name[0]);
-					new->value = ft_strdup(name[1]);
-					new->next = NULL;
-				}
+		t_env* new_node = ( t_env*)malloc((sizeof(env)));
+		while(cmd[++y])
+		{
+			// look for "=" if exist in cmd[y]
+			if (!ft_strrchr(cmd[y], '='))
+				return (NULL);
+		
+			// parse each argument 'key=value'
+			name = ft_split(cmd[y] ,'=');
+			// count all keys and values
+			i = 0;
+			while (name[i])
+				i++;
+			/* protect case "mehdi=mehdh=d"	*/
+			if (i < 1 && i > 1)
+				return NULL;
+			/* putting data */
+			new_node->key = name[0];
+			new_node->value = name[1];
+			new_node->next = NULL;
+			while (last->next != NULL)
+				last = last->next;
+			last->next = new_node;
+			while (last->next != NULL)
+				last = last->next;
+			last->next  = NULL;
 		}
-		env = new;
+	}	
+	return env;
 
-		printf("-------f---------\n");
-		print(env);
-			return 1;
-	}
 
+	// parse each argument 'key=value'
+	//name = ft_split(cmd[1] ,'=');
+
+	/*   update if its already exist */
+
+
+	/* add it if it's doesn't exist */
+
+/*.........................................*/
 }
+
 
 int exec_builtin(char **cmd, t_env *env)
 {
@@ -100,7 +121,13 @@ int exec_builtin(char **cmd, t_env *env)
 		result = print(env);
 
 	else if (!strcmp(cmd[0], "export"))
-		result = ft_export(cmd , env);
+		env = ft_export(cmd , env);
 
+	if (!env)
+		return -1;
+
+	//printf("------- all envs ---------\n");
+	//print(env);
+	
 	return result;
 }

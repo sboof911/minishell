@@ -51,7 +51,10 @@
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
-typedef struct	s_has
+/* TO REMOVE */
+
+typedef 
+struct	s_has
 {
 	int		red;
 	int		arg;
@@ -125,5 +128,17 @@ void			ft_putendl_fd(char *s, int fd);
 int 			print(t_env *head);
 static void		print_error(char **args);
 
+
+/*	tool execution */
+int		tab_len(char **tab);
+char	*ft_substr(const char *str, unsigned int start, size_t len);
+char	*ft_strchr(const char *str, int c);
+int		set_env(char *key, char *value);
+int		string_equal(char *s1, char *s2);
+int			max_v(int a, int b);
+int			min_v(int a, int b);
+int		ft_isdigit(int c);
+void	export_env(void);
+char	*is_special(char c);
 
 #endif

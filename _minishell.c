@@ -66,37 +66,7 @@ void 	print_sashell(t_sashell *sashell)
 	sashell = tmp;
 }
 
-void 	exec_cmd(t_sashell *sashell, t_env *env)
-{
-	char **cmd;
-	int ret;
-
-	cmd = sashell->tokens;
-
-	if (cmd && is_builtin(cmd[0]))
-		ret = exec_builtin(cmd, env);
-
-	// executable
-	//if ()
-	//	ret = 
-
-
-
-}
-
-void minishell(t_sashell *sashell, t_env *env)
-{
-
-
-	// fuction to handle error on the sashell structure
-
-	// condition to check if it's a built-in 
-	exec_cmd(sashell, env);
-
-
-}
-
-void		free_env(t_env *env)
+void	free_env(t_env *env)
 {
 	t_env	*tmp;
 
@@ -126,6 +96,39 @@ void	free_sashell(t_sashell *sashell)
 		sashell = tmp;
 	}
 	// free(sashell);
+}
+
+void 	exec_cmd(t_sashell *sashell, t_env *env)
+{
+	char **cmd;
+	int ret;
+
+	cmd = sashell->tokens;
+
+	if (cmd && is_builtin(cmd[0]))
+		ret = exec_builtin(cmd, env);
+
+	printf("ret = %d ", ret);
+	if (ret == -1)
+		perror("Error: exec cmd");
+
+
+	// executable
+	//if ()
+	//	ret = 
+
+}
+
+void minishell(t_sashell *sashell, t_env *env)
+{
+
+
+	// fuction to handle error on the sashell structure
+
+	// condition to check if it's a built-in 
+	exec_cmd(sashell, env);
+
+
 }
 
 int	main(int argc, char **argv, char **envp)
