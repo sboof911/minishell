@@ -108,7 +108,7 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 	if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
 
-	printf("ret = %d ", ret);
+	//printf("ret = %d ", ret);
 	if (ret == -1)
 		perror("Error: exec cmd");
 
