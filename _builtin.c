@@ -84,6 +84,8 @@ t_env 	*ft_export(char **cmd,t_env *env)
 	{
 		while(cmd[++y])
 		{
+			new_node = ( t_env*)malloc((sizeof(env)));
+			
 			// look for "=" if exist in cmd[y]
 			if (!ft_strrchr(cmd[y], '='))
 				return (NULL);
@@ -103,7 +105,6 @@ t_env 	*ft_export(char **cmd,t_env *env)
 			name[1] = ft_strl((cmd[y]) + u, strlen(cmd[y]) - u);
 			printf("[%s]=[%s]\n",name[0],  name[1]);
 
-			new_node = ( t_env*)malloc((sizeof(env)));
 
 
 
