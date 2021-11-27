@@ -7,12 +7,12 @@
 ----------------------------------------------------------------------------------------------------------------------
 ## BUILT-INS
 
- - ## cd            [done]
- - ## export        [done]
- - ## echo + -n     [done]
- - ## pwd           [done]
- - ## unset         [done]
- - ## exit          [ ]
+ - ##### cd            [done]
+ - ##### export        [done]
+ - ##### echo + -n     [done]
+ - ##### pwd           [done]
+ - ##### unset         [done]
+ - ##### exit          [ ]
 
 ----------------------------------------------------------------------------------------------------------------------
 ## Search and launch the right executable (based on the PATH variable or by using relative or absolute path) 
