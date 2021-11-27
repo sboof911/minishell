@@ -133,14 +133,18 @@ void	 minishell(t_sashell *sashell, t_env *env)
 
 int		main(int argc, char **argv, char **envp)
 {
-	char	*line;
+	char		*line;
 	t_sashell	*sashell;
 	t_env		*env;
+	char		cwd[PATH_MAX];
 
 	env = split_env(env, envp);
 	while (1)
 	{
-		line = readline("\033[0;34mSASHELL $> \033[0m");
+
+		getcwd(cwd, PATH_MAX);
+		printf("\e[48;5;098m~%s", cwd);
+		line = readline("\e[48;5;098m $> \033[0m");
 		if ( strcmp(line ,"") == 0 || !line)
 			continue;
 		else 

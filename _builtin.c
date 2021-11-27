@@ -14,6 +14,8 @@ int		is_builtin(char *command)
 		return (1);
 	if (strcmp(command, "unset") == 0)
 		return (1);
+	if (strcmp(command, "exit") == 0)
+		return (1);
 	return (0);
 }
 
@@ -50,6 +52,8 @@ int	 	exec_builtin(char **cmd, t_env *env)
 	else if (!strcmp(cmd[0], "export"))
 		ft_export(cmd, env);
 	else if (!strcmp(cmd[0], "unset"))
-		cmd_unset(cmd, env);
+		ft_unset(cmd, env);
+	else if (!strcmp(cmd[0], "exit"))
+		ft_exit(cmd);
 	return 1;
 }

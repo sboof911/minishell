@@ -178,8 +178,12 @@ void 			ft_export(char **cmd, t_env *env);
 
 /* ---------------------------- cmd_unset -------------------------- */
 
-void			cmd_unset(char **argv, t_env *envs);
+void			ft_unset(char **argv, t_env *envs);
 static void		delete_key(char *argv, t_env *envs);
 
+/* ---------------------------- cmd_exit -------------------------- */
+void			ft_exit(char **argv);
+static int		ft_isdigit_str(char *str);
+int				ft_atoi(const char *str);
 
 #endif

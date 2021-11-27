@@ -21,7 +21,7 @@ static void		delete_key(char *argv, t_env *envs)
 	}
 }
 
-void			cmd_unset(char **argv, t_env *envs)
+void			ft_unset(char **argv, t_env *envs)
 {
 	argv++;
 	while (*argv)
