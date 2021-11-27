@@ -119,7 +119,7 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 
 }
 
-void minishell(t_sashell *sashell, t_env *env)
+void	 minishell(t_sashell *sashell, t_env *env)
 {
 
 
@@ -131,7 +131,7 @@ void minishell(t_sashell *sashell, t_env *env)
 
 }
 
-int	main(int argc, char **argv, char **envp)
+int		main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_sashell	*sashell;

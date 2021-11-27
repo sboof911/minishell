@@ -19,7 +19,7 @@ SRC =  _minishell.c _builtin.c _echo.c _pwd.c  _cd.c _tools.c\
 		 sboof/outils/ft_putnbr.c  sboof/outils/split_pipe.c  sboof/outils/ft_strchr.c  sboof/outils/ft_substr.c \
 		 sboof/outils/ft_strncmp.c  sboof/minishell.c sboof/outils/ft_charjoin.c sboof/outils/ft_itoa.c\
 		 sboof/outils/ft_strrev.c\
-		 execution_tool/tool1.c\
+		  cmd_export.c cmd_export_outil.c\
 
 all:	$(NAME)
 

@@ -24,7 +24,7 @@ int 	nb_args(char **argv)
 	return (i);
 }
 
-int		ft_echo(char **args)
+int		ft_echo(char **args, int fd)
 {
 	int		i;
 	int		n_option;
@@ -43,12 +43,12 @@ int		ft_echo(char **args)
 		{
 			ft_putstr_fd(args[i], 1);
 			if (args[i + 1] && args[i][0] != '\0')
-				write(1, " ", 1);
+				write(fd, " ", 1);
 			i++;
 		}
 	}
 
 	if (n_option == 0)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 	return (SUCCESS);
 }

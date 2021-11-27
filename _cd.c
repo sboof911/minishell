@@ -13,7 +13,7 @@ static void		print_error(char **args)
 	ft_putendl_fd(args[1], 2);
 }
 
-int			env_add(const char *value, t_env *env)
+int				env_add(const char *value, t_env *env)
 {
 	t_env	*new;
 	t_env	*tmp;
@@ -34,7 +34,7 @@ int			env_add(const char *value, t_env *env)
 	return (SUCCESS);
 }
 
-char		*get_env_name(char *dest, const char *src)
+char			*get_env_name(char *dest, const char *src)
 {
 	int		i;
 
@@ -48,7 +48,7 @@ char		*get_env_name(char *dest, const char *src)
 	return (dest);
 }
 
-int			is_in_env(t_env *env, char *args)
+int				is_in_env(t_env *env, char *args)
 {
 	char	var_name[BUFF_SIZE];
 	char	env_name[BUFF_SIZE];
@@ -68,7 +68,7 @@ int			is_in_env(t_env *env, char *args)
 	return (SUCCESS);
 }
 
-char		*get_env_path(t_env *env, const char *var, size_t len)
+char			*get_env_path(t_env *env, const char *var, size_t len)
 {
 	char	*oldpwd;
 	int		i;
