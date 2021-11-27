@@ -1,10 +1,11 @@
-# PART : EXECUTION NOTES : 
+#  NOTES PART : EXECUTION  : 
  
  --segfault when change the path with cd and use env or export--  [solved]
  - g_exit_status [not-yet]
 
+## EXECUTION SIDE TASKS:
 ----------------------------------------------------------------------------------------------------------------------
-# BUILT-INS
+## BUILT-INS
 
  - ## cd            [done]
  - ## export        [done]
@@ -14,7 +15,7 @@
  - ## exit          [ ]
 
 ----------------------------------------------------------------------------------------------------------------------
-# Search and launch the right executable (based on the PATH variable or by using relative or absolute path) 
+## Search and launch the right executable (based on the PATH variable or by using relative or absolute path) 
   ### - [next_step]
 
 ----------------------------------------------------------------------------------------------------------------------
