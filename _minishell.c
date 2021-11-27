@@ -118,10 +118,23 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 
 	if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
-
-	//printf("ret = %d ", ret);
-	if (ret == -1)
+	else if (cmd && is_executable(cmd[0]))
+		exec_others(line, envs);
+	else if (ret == -1)
 		perror("Error: exec cmd");
+
+	/*
+	if (has_pipe(line))
+		exec_pipe(line, envs);
+	else if (has_redir(line))
+		exec_redir(line, envs);
+	else if (!exec_dollar(line) && !exec_builtin(line, envs))
+		exec_others(line, envs);
+	*/
+	
+	//printf("ret = %d ", ret);
+	
+
 
 
 	// executable
@@ -175,7 +188,7 @@ int		main(int argc, char **argv, char **envp)
 
 					free_sashell(sashell);
 				}
-				system("leaks minishell");
+				//system("leaks minishell");
 			}
 	}
 	free_env(env);

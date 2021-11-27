@@ -118,11 +118,9 @@ void 			ft_export(char **cmd, t_env *env)
     if (cmd[1] == NULL)
     {
         tmp = convert_env_to_arr(env);
-
         sort_double_arr(tmp);
-				print_arr(tmp);
-
         add_declare_for_export(tmp);
+		print_arr(tmp);
 		free_arr(tmp);
         return ;
     }
@@ -139,12 +137,4 @@ void 			ft_export(char **cmd, t_env *env)
 		add_env_or_modify_value(cmd, &env);
 		cmd++;
 	}
-
-
-
-
-
-
-
-
 }
