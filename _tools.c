@@ -66,3 +66,21 @@ int		print(t_env *head) {
 	return 1;
 }
 
+char	*ft_strrchr(const char *str, int c)
+{
+	char	*s;
+	int		len;
+
+	s = (char *)str;
+	len = strlen(str);
+	s += len;
+	while (len >= 0)
+	{
+		if (*s == (char)c)
+			return (s);
+		s--;
+		len--;
+	}
+	return (0);
+}
+

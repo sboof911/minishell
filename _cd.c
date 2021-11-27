@@ -137,22 +137,37 @@ static int		go_to_path(int option, t_env *env)
 	return (ret);
 }
 
-int				ft_cd(char **args, t_env *env)
+char		*find_value(char *key, t_env *envs)
 {
-	int		cd_ret;
-
-	if (!args[1])
-		return (go_to_path(0, env));
-	if (strcmp(args[1], "-") == 0)
-		cd_ret = go_to_path(1, env);
-	else
+	while (envs)
 	{
-		update_oldpwd(env);
-		cd_ret = chdir(args[1]);
-		if (cd_ret < 0)
-			cd_ret *= -1;
-		if (cd_ret != 0)
-			print_error(args);
+		if (is_exist_key(key, envs))
+			return (envs->value);
+		envs = envs->next;
 	}
-	return (cd_ret);
+	return ("");
+}
+
+void				ft_cd(char **argv, t_env *envs) 
+{
+	char	*path;
+
+	path = 0;
+	if (argv[1] == NULL || ((argv[1] != NULL) &&
+		(ft_strlen(argv[1]) == 1) && (argv[1][0] == '~')))
+	{
+		path = find_value("HOME", envs);
+		if (chdir(path) == -1)
+			ft_putendl_fd(strerror(errno), 2);
+		return ;
+	}
+	else if (*argv[1] == '$')
+	{
+		path = find_value(argv[1] + 1, envs);
+		if (chdir(path) == -1)
+			ft_putendl_fd(strerror(errno), 2);
+		return ;
+	}
+	if (chdir(argv[1]) == -1)
+		ft_putendl_fd(strerror(errno), 2);
 }

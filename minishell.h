@@ -51,10 +51,9 @@
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
-/* TO REMOVE */
+int g_exit_value;
 
-typedef 
-struct	s_has
+typedef struct	s_has
 {
 	int		red;
 	int		arg;
@@ -126,6 +125,7 @@ int				ft_echo(char **args, int fd);
 int		ft_pwd(void);
 
 /* ----------------------- 	ft_cd	------------------------------ */
+void 			ft_cd(char  **cmd, t_env *env);
 
 
 /* ----------------------- 	tools	------------------------------ */
@@ -134,11 +134,11 @@ char			*ft_sstrjoin(char const *s1, char const *s2);
 void			*ft_memdel(void *ptr);
 void			ft_putendl_fd(char *s, int fd);
 int 			print(t_env *head);
+char			*ft_strrchr(const char *str, int c);
 
 /* ----------------------- 	ft_cd	------------------------------ */
 
 static void		print_error(char **args);
-int 			ft_cd(char  **cmd, t_env *env);
 int				ft_pwd(void);
 int 			nb_args(char **argv);
 void			ft_putstr_fd(char *s, int fd);
@@ -149,8 +149,6 @@ int				ft_isdigit(int c);
 /* -------------------------- _builtin ------------------------------- */
 
 int				is_builtin(char *command);
-int 			ft_error(char *s);
-char			*ft_strrchr(const char *str, int c);
 char 			*ft_strl(char *s, size_t len);
 int     		exec_builtin(char **cmd, t_env *env);
 
@@ -177,5 +175,11 @@ void			add_declare_for_export(char **arr);
 static void		add_env_or_modify_value(char **argv, t_env **envs);
 static void		update_value(t_env *env, t_env **envs);
 void 			ft_export(char **cmd, t_env *env);
+
+/* ---------------------------- cmd_unset -------------------------- */
+
+void			cmd_unset(char **argv, t_env *envs);
+static void		delete_key(char *argv, t_env *envs);
+
 
 #endif
