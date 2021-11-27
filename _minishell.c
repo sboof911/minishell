@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   _minishell.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
+/*   Updated: 2021/11/27 17:50:59 by eelaazmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -154,16 +165,17 @@ int		main(int argc, char **argv, char **envp)
 				if (sashell)
 				{
 					//printing data
+					/*
 					printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
 					print_sashell(sashell);
 					printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
-					
+					*/
 					// main-execution-process
 					minishell(sashell, env);
 
 					free_sashell(sashell);
 				}
-				//system("leaks minishell");
+				system("leaks minishell");
 			}
 	}
 	free_env(env);
