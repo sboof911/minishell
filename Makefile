@@ -24,7 +24,7 @@ SRC =  _minishell.c _builtin.c _echo.c _pwd.c  _cd.c _tools.c\
 		sboof/outils/ft_strncmp.c  sboof/minishell.c sboof/outils/ft_charjoin.c sboof/outils/ft_itoa.c\
 		sboof/outils/ft_strrev.c\
 		
-OBJS		= $(SRCS:%.c=%.o)
+OBJS = $(SRCS:%.c=%.o)
 
 all:	$(NAME)
 

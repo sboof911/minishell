@@ -27,6 +27,8 @@
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define EMPTY 0
 # define CMD 1
@@ -81,6 +83,8 @@ typedef struct	s_sashell
 	char				**red;
 	int					error;
 	int					count;
+	int g_exit_value;
+
 	struct s_sashell	*first;
 	struct s_has		has;
 	struct s_compt		compt;
@@ -122,7 +126,7 @@ int				ft_echo(char **args, int fd);
 
 /* ----------------------- 	ft_pwd	------------------------------ */
 
-int		ft_pwd(void);
+int				ft_pwd(void);
 
 /* ----------------------- 	ft_cd	------------------------------ */
 void 			ft_cd(char  **cmd, t_env *env);
@@ -173,7 +177,7 @@ void			sort_double_arr(char **arr);
 static void		update_value(t_env *env, t_env **envs);
 void			add_declare_for_export(char **arr);
 static void		add_env_or_modify_value(char **argv, t_env **envs);
-static void		update_value(t_env *env, t_env **envs);
+char 			**convert_env_to_arr(t_env *lst) ;
 void 			ft_export(char **cmd, t_env *env);
 
 /* ---------------------------- cmd_unset -------------------------- */

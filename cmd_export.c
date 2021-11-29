@@ -87,15 +87,16 @@ static void		add_env_or_modify_value(char **argv, t_env **envs)
 	t_env	*env;
 	t_env	*curr;
 	int		pos;
+	int index = 0;
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return ;
 
 	pos = ft_strchr(*argv, '=') - *argv;
-
 	env->key = ft_ssubstr(*argv, 0, pos);
 	env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
 	curr = *envs;
+
 	while (curr)
 	{
 		if (is_exist_key(env->key, curr))

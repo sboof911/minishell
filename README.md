@@ -18,6 +18,13 @@
 ## Search and launch the right executable (based on the PATH variable or by using relative or absolute path) 
   ##### - [next_step]
 
+** ------------------------------------------------**
+
+## return each program executed
+
+  - ##### global variable g_exit_value or sashell->g_exit_value
+  
+
 ** ---------------------------------------------- ** 
 ## Redirections:
    ##### ◦ < should redirect input.
@@ -31,7 +38,6 @@
    ##### ◦ ctrl-C print a new prompt on a newline.
    ##### ◦ ctrl-D exit the shell.
    ##### ◦ ctrl-\ do nothing.
-** ** ---------------------------------------------- ** 
- ** 
+** ---------------------------------------------- **  
 
  
