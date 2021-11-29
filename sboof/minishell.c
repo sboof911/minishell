@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/11/16 21:49:46 by amaach           ###   ########.fr       */
+/*   Updated: 2021/11/29 16:11:05 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,50 @@ t_sashell	*check_file(t_sashell *sashell, char *tab, int i)
 	sashell->red[sashell->has.red]
 		= ft_strjoin(sashell->red[sashell->has.red], tab + i);
 	return (sashell);
+}
+
+int	count_quotes(char *tab)
+{
+	int		i;
+	int		compt1;
+	int		compt2;
+
+	i = 0;
+	compt1 = 0;
+	compt2 = 0;
+	while (tab[i] != '\0')
+	{
+		if (tab[i] == '"')
+			compt1++;
+		if (tab[i] == '\'')
+			compt2++;
+		i++;
+	}
+	if (compt1 % 2 == 1 || compt2 % 2 == 1)
+		ft_putstr("quotes non fermer");
+	return (compt1 + compt2);
+}
+
+char	*delete_quotes(char *tab)
+{
+	int		i;
+	int		compt;
+	int		j;
+	char	*str;
+
+	j = -1;
+	compt = 0;
+	compt = count_quotes(tab);
+	str = (char *)malloc(ft_strlen(tab) - compt + 1);
+	i = -1;
+	while (tab[++i] != '\0')
+	{
+		if (tab[i] != '"' && tab[i] != '\'')
+			str[++j] = tab[i];
+	}
+	str[++j] = '\0';
+	free(tab);
+	return (str);
 }
 
 t_sashell	*rederiction_parse(t_sashell *sashell, char *tab, char red)
@@ -141,6 +185,20 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 	return (sashell);
 }
 
+int	help_num_dollar(t_sashell *sashell, char *tab, int i)
+{
+	int	compt;
+
+	while (ft_isdigit(tab[i]))
+		i++;
+	compt = i;
+	while (tab[i] != '\0' && tab[i] != '$')
+		i++;
+	sashell->tokens[sashell->compt.tokens] = ft_substr(tab, compt, i - compt);
+	sashell->tokens[sashell->compt.tokens] = delete_quotes(sashell->tokens[sashell->compt.tokens]);
+	return (i);
+}
+
 int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 {
 	int		compt;
@@ -150,8 +208,13 @@ int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 	if (tab[i] != '\0')
 	{
 		compt = i;
-		while (ft_isalnum(tab[i]))
-			i++;
+		if (ft_isdigit(tab[i]))
+			i = help_num_dollar(sashell, tab, i);
+		else
+		{
+			while (ft_isalnum(tab[i]))
+				i++;
+		}
 		if (compt == i && tab[i] != '\'')
 			sashell->tokens[sashell->compt.tokens]
 				= ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
@@ -227,50 +290,6 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 				= ft_charjoin(sashell->tokens[sashell->compt.tokens], tab[i]);
 	}
 	return (sashell);
-}
-
-int	count_quotes(char *tab)
-{
-	int		i;
-	int		compt1;
-	int		compt2;
-
-	i = 0;
-	compt1 = 0;
-	compt2 = 0;
-	while (tab[i] != '\0')
-	{
-		if (tab[i] == '"')
-			compt1++;
-		if (tab[i] == '\'')
-			compt2++;
-		i++;
-	}
-	if (compt1 % 2 == 1 || compt2 % 2 == 1)
-		ft_putstr("quotes non fermer");
-	return (compt1 + compt2);
-}
-
-char	*delete_quotes(char *tab)
-{
-	int		i;
-	int		compt;
-	int		j;
-	char	*str;
-
-	j = -1;
-	compt = 0;
-	compt = count_quotes(tab);
-	str = (char *)malloc(ft_strlen(tab) - compt + 1);
-	i = -1;
-	while (tab[++i] != '\0')
-	{
-		if (tab[i] != '"' && tab[i] != '\'')
-			str[++j] = tab[i];
-	}
-	str[++j] = '\0';
-	free(tab);
-	return (str);
 }
 
 t_sashell	*arg_parse(t_sashell *sashell, char **tab, t_env *env)
