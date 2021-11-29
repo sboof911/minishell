@@ -19,7 +19,6 @@
   ##### - [next_step]
 
 ** ------------------------------------------------**
-
 ## return each program executed
 
   - ##### global variable g_exit_value or sashell->g_exit_value

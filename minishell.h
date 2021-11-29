@@ -53,7 +53,9 @@
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
-int g_exit_value;
+int				 g_exit_value;
+char			**g_envp;
+
 
 typedef struct	s_has
 {
@@ -83,7 +85,7 @@ typedef struct	s_sashell
 	char				**red;
 	int					error;
 	int					count;
-	int g_exit_value;
+	int 			g_exit_value;
 
 	struct s_sashell	*first;
 	struct s_has		has;
@@ -115,8 +117,14 @@ char		*ft_strrev(char *str);
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
 
 
-/*	tool execution */
-
+/* --------------------- exec_others ------------------------------*/
+void			free_double_arr(char **arr);
+void			free_env(t_env *env);
+int				ft_puterror_fd(char *s1, char *s2, int fd);
+int				is_exist_keyy(char *key, t_env *envs);
+char			*find_valuee(char *key, t_env *envs);
+char			*find_path(char *argv, t_env *envs);
+void			exec_others(char **cmd, t_env *envs, char **g_envp);
 
 /* ----------------------- 	ft_echo	------------------------------ */
 
