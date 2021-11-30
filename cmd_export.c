@@ -75,6 +75,7 @@ void			add_declare_for_export(char **arr)
 
 static void		update_value(t_env *env, t_env **envs)
 {
+	free(env->value); 
 	free((*envs)->value);
 	(*envs)->value = env->value;
 	free(env->key);

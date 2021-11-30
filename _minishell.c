@@ -96,27 +96,6 @@ void	free_sashell(t_sashell *sashell)
 }
 
 
-int		has_pipe(char *str)
-{
-	int	num;
-
-	num = 0;
-	while (*str)
-	{
-		if (*str == '|')
-			num++;
-		str++;
-	}
-	return (num);
-}
-
-void	exec_pipe(line, envs)
-{
-
-	return;
-}
-
-
 void 	exec_cmd(t_sashell *sashell, t_env *env)
 {
 	char **cmd;
@@ -125,8 +104,6 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 	cmd = sashell->tokens;
 	sashell->g_exit_value = 0;
 
-	//if (has_pipe(line))
-	//	exec_pipe(line, envs);
 	 if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
 	else if (cmd)
@@ -142,10 +119,32 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 	*/	
 }
 
-void	 minishell(t_sashell *sashell, t_env *env)
+int		has_pipe(char *str)
 {
+	int	num;
+
+	num = 0;
+	while (*str)
+	{
+		if (*str == '|')
+			num++;
+		str++;
+	}
+	return (num);
+}
+
+void	 minishell(t_sashell *sashell, t_env *env, char *str)
+{
+	int i = 0;
+
 	// fuction to handle error on the sashell structure
 	// go ahead and execute the shitty  commands
+	
+	if ((i = has_pipe(str)))
+	{
+		//printf("pipe=%d \n", i);
+		//exec_pipe(str, env, sashell);
+	}
 	exec_cmd(sashell, env);
 }
 
@@ -178,7 +177,9 @@ int		main(int argc, char **argv, char **envp)
 					printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
 					*/
 					// main-execution-process
-					minishell(sashell, env);
+
+
+					minishell(sashell, env, line);
 					free_sashell(sashell);
 				}
 				//system("leaks minishell");

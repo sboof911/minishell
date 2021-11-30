@@ -53,9 +53,32 @@
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
+# define INIT	-1
+# define INIT	-1
+# define QUOTE	39
+# define DQUOTE	34
+# define ETC	42
+# define REDIR	62
+# define DREDIR	6
+# define BREDIR	60
+
+
 int				 g_exit_value;
 char			**g_envp;
 
+typedef struct	s_quote
+{
+	int			type;
+	int			start;
+	int			end;
+}				t_quote;
+
+
+typedef struct	s_pipe
+{
+	char		*line;
+	char		**argv;
+}				t_pipe;
 
 typedef struct	s_has
 {
@@ -197,5 +220,17 @@ static void		delete_key(char *argv, t_env *envs);
 void			ft_exit(char **argv);
 static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
+
+/* ---------------------------- exec_pipe -------------------------- */
+void	exec_pipe(char *line, t_env *envs, t_sashell *sashell);
+void	exec_pipe_case_one(int child, int fd[2], t_env *envs, char *line, t_sashell *sashell);
+void	exec_pipe_case_zero(int child, int fd[2], t_env *envs, t_pipe p, char *line, t_sashell *sashell);
+void	parse_pipe(char **line, t_pipe *p, t_env *envs);
+char	**get_argv(char *line, t_env *envs);
+char	*modify_argv(char *str, t_env *envs);
+int		has_env(char *str);
+int		has_quote(char *str);
+
+
 
 #endif

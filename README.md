@@ -9,6 +9,9 @@
 
  - ##### cd            [done]
  - ##### export        [done]
+
+< case when there is an existent env key="value" when i do export m="", the value must not update  >
+
  - ##### echo + -n     [done]
  - ##### pwd           [done]
  - ##### unset         [done]
