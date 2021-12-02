@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_env	*fill_env(t_env *env, char *envp)
+t_env		*fill_env(t_env *env, char *envp)
 {
 	char	**help;
 
@@ -23,7 +23,7 @@ t_env	*fill_env(t_env *env, char *envp)
 	return (env);
 }
 
-t_env	*split_env(t_env *env, char **envp)
+t_env		*split_env(t_env *env, char **envp)
 {
 	t_env	*tmp;
 	int		i;
@@ -53,7 +53,7 @@ t_env	*split_env(t_env *env, char **envp)
 	return (env);
 }
 
-void 	print_sashell(t_sashell *sashell)
+void 		print_sashell(t_sashell *sashell)
 {
 	int i = 0;
 	t_sashell	*tmp;
@@ -78,7 +78,7 @@ void 	print_sashell(t_sashell *sashell)
 }
 
 
-void	free_sashell(t_sashell *sashell)
+void		free_sashell(t_sashell *sashell)
 {
 	t_sashell	*tmp;
 	int			i;
@@ -96,7 +96,7 @@ void	free_sashell(t_sashell *sashell)
 }
 
 
-void 	exec_cmd(t_sashell *sashell, t_env *env)
+void 		exec_cmd(t_sashell *sashell, t_env *env)
 {
 	char **cmd;
 	int ret;
@@ -109,42 +109,34 @@ void 	exec_cmd(t_sashell *sashell, t_env *env)
 	else if (cmd)
 		exec_others(cmd, env, g_envp);
 
-	/*
-	if (has_pipe(line))
-		exec_pipe(line, envs);
-	else if (has_redir(line))
-		exec_redir(line, envs);
-	else if (!exec_dollar(line) && !exec_builtin(line, envs))
-		exec_others(line, envs);	
-	*/	
 }
 
-int		has_pipe(char *str)
+int			ft_token_count(t_token *token, t_sashell *sashell)
 {
-	int	num;
-
-	num = 0;
-	while (*str)
+	while (sashell)
 	{
-		if (*str == '|')
-			num++;
-		str++;
+		token->token_count++;
+		sashell = sashell->next;
 	}
-	return (num);
+	return (token->token_count);
 }
 
-void	 minishell(t_sashell *sashell, t_env *env, char *str)
+void		minishell(t_sashell *sashell, t_env *env, char *str)
 {
-	int i = 0;
+	int 		index = 0;
+	t_token 	token;
 
 	// fuction to handle error on the sashell structure
 	// go ahead and execute the shitty  commands
 	
-	if ((i = has_pipe(str)))
+	token.token_count = 0;
+	if (ft_token_count(&token, sashell))
 	{
-		//printf("pipe=%d \n", i);
+		printf("token count = %d\n", token.token_count);
 		//exec_pipe(str, env, sashell);
 	}
+
+
 	exec_cmd(sashell, env);
 }
 
@@ -170,17 +162,15 @@ int		main(int argc, char **argv, char **envp)
 				sashell = parse_function(sashell, env, line);
 				if (sashell)
 				{
-					//printing data
-					/*
 					printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
 					print_sashell(sashell);
+					printf("%d\n", sashell->compt.tokens);
 					printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
-					*/
 					// main-execution-process
-
 
 					minishell(sashell, env, line);
 					free_sashell(sashell);
+
 				}
 				//system("leaks minishell");
 			}

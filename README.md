@@ -42,4 +42,11 @@
    ##### ◦ ctrl-\ do nothing.
 ** ---------------------------------------------- **  
 
- 
+**  Errors **
+
+bash-3.2$ 1 > 2 > 3 > 4
+bash: 1: command not found
+bash-3.2$ 
+
+
+** check

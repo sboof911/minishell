@@ -43,13 +43,13 @@
 # define STDOUT 1
 # define STDERR 2
 
-# define SKIP 1
-# define NOSKIP 0
+# define SKIP 		1
+# define NOSKIP 	0
 
-# define BUFF_SIZE 4096
+# define BUFF_SIZE 	4096
 # define EXPANSION -36
-# define ERROR 1
-# define SUCCESS 0
+# define ERROR 		1
+# define SUCCESS 	0
 # define IS_DIRECTORY 126
 # define UNKNOWN_COMMAND 127
 
@@ -65,6 +65,12 @@
 
 int				 g_exit_value;
 char			**g_envp;
+
+typedef struct	s_token
+{
+	int 	token_count;
+
+}				t_token;
 
 typedef struct	s_quote
 {
@@ -106,6 +112,7 @@ typedef struct	s_sashell
 {
 	char				**tokens;
 	char				**red;
+	
 	int					error;
 	int					count;
 	int 			g_exit_value;
@@ -114,7 +121,7 @@ typedef struct	s_sashell
 	struct s_has		has;
 	struct s_compt		compt;
 	struct s_sashell	*next;
-}				t_sashell;
+}					t_sashell;
 
 char	    **protection_malloc2(char **str, int compt);
 char	    *protection_malloc1(char *str, int compt);
@@ -223,14 +230,5 @@ int				ft_atoi(const char *str);
 
 /* ---------------------------- exec_pipe -------------------------- */
 void	exec_pipe(char *line, t_env *envs, t_sashell *sashell);
-void	exec_pipe_case_one(int child, int fd[2], t_env *envs, char *line, t_sashell *sashell);
-void	exec_pipe_case_zero(int child, int fd[2], t_env *envs, t_pipe p, char *line, t_sashell *sashell);
-void	parse_pipe(char **line, t_pipe *p, t_env *envs);
-char	**get_argv(char *line, t_env *envs);
-char	*modify_argv(char *str, t_env *envs);
-int		has_env(char *str);
-int		has_quote(char *str);
-
-
 
 #endif
