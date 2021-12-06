@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:18:55 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/06 23:19:26 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/06 23:56:40 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,6 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 	return (sashell);
 }
 
-int	help_num_dollar(t_sashell *sashell, char *tab, int i)
-{
-	int	compt;
-
-	while (ft_isdigit(tab[i]))
-		i++;
-	compt = i;
-	while (tab[i] != '\0' && tab[i] != '$')
-		i++;
-	sashell->tokens[sashell->compt.tokens] = ft_substr(tab, compt, i - compt);
-	sashell->tokens[sashell->compt.tokens]
-		= delete_quotes(sashell->tokens[sashell->compt.tokens]);
-	return (i);
-}
-
 int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 {
 	int		compt;
@@ -54,12 +39,8 @@ int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 	if (tab[i] != '\0')
 	{
 		compt = i;
-		if (ft_isdigit(tab[i]))
-			i = help_num_dollar(sashell, tab, i);
-		else if (tab[i] == '?')
-			sashell->tokens[sashell->compt.tokens] = ft_itoa(g_exit_value);
-		else
-			while (ft_isalnum(tab[i++]));
+		while (ft_isalnum(tab[i]))
+			i++;
 		if (compt == i && tab[i] != '\'')
 			sashell->tokens[sashell->compt.tokens]
 				= ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
@@ -72,25 +53,6 @@ int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 		}
 	}
 	return (i);
-}
-
-int	help_dollar_quotes(int d_q)
-{
-	if (d_q == 0)
-		d_q = 1;
-	else
-		d_q = 0;
-	return (d_q);
-}
-
-t_sashell	*help_norm_dollar(t_sashell *sashell, char *tab, int i)
-{
-	if (tab[i] == '\0')
-	{
-		sashell->tokens[sashell->compt.tokens]
-			= ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
-	}
-	return (sashell);
 }
 
 int	some_shit(int *d_quotes, int *s_quotes, char *tab, int i)

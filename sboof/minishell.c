@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/06 23:22:16 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/06 23:41:15 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,21 +185,6 @@
 // 	return (sashell);
 // }
 
-// int	help_num_dollar(t_sashell *sashell, char *tab, int i)
-// {
-// 	int	compt;
-
-// 	while (ft_isdigit(tab[i]))
-// 		i++;
-// 	compt = i;
-// 	while (tab[i] != '\0' && tab[i] != '$')
-// 		i++;
-// 	sashell->tokens[sashell->compt.tokens] = ft_substr(tab, compt, i - compt);
-// 	sashell->tokens[sashell->compt.tokens]
-// 		= delete_quotes(sashell->tokens[sashell->compt.tokens]);
-// 	return (i);
-// }
-
 // int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 // {
 // 	int		compt;
@@ -209,12 +194,8 @@
 // 	if (tab[i] != '\0')
 // 	{
 // 		compt = i;
-// 		if (ft_isdigit(tab[i]))
-// 			i = help_num_dollar(sashell, tab, i);
-// 		else if (tab[i] == '?')
-// 			sashell->tokens[sashell->compt.tokens] = ft_itoa(g_exit_value);
-// 		else
-// 			while (ft_isalnum(tab[i++]));
+// 		while (ft_isalnum(tab[i]))
+// 			i++;
 // 		if (compt == i && tab[i] != '\'')
 // 			sashell->tokens[sashell->compt.tokens]
 // 				= ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
@@ -315,411 +296,406 @@
 // 	return (sashell);
 // }
 
-t_sashell	*command_parse(t_sashell *sashell, char **tab, t_env *env)
-{
-	sashell->tokens[sashell->compt.tokens++]
-		= ft_strdup(tab[sashell->compt.position++]);
-	if (tab[sashell->compt.position])
-	{
-		if (tab[sashell->compt.position][0] == '-')
-		{
-			while (tab[sashell->compt.position]
-				&& tab[sashell->compt.position][0] == '-')
-			{
-				sashell->tokens[sashell->compt.tokens]
-					= ft_strdup(tab[sashell->compt.position]);
-				sashell->compt.tokens++;
-				sashell->compt.position++;
-			}
-			sashell = arg_parse(sashell, tab, env);
-		}
-		else
-			sashell = arg_parse(sashell, tab, env);
-	}
-	return (sashell);
-}
+// t_sashell	*command_parse(t_sashell *sashell, char **tab, t_env *env)
+// {
+// 	sashell->tokens[sashell->compt.tokens++]
+// 		= ft_strdup(tab[sashell->compt.position++]);
+// 	if (tab[sashell->compt.position])
+// 	{
+// 		if (tab[sashell->compt.position][0] == '-')
+// 		{
+// 			while (tab[sashell->compt.position]
+// 				&& tab[sashell->compt.position][0] == '-')
+// 			{
+// 				sashell->tokens[sashell->compt.tokens]
+// 					= ft_strdup(tab[sashell->compt.position]);
+// 				sashell->compt.tokens++;
+// 				sashell->compt.position++;
+// 			}
+// 			sashell = arg_parse(sashell, tab, env);
+// 		}
+// 		else
+// 			sashell = arg_parse(sashell, tab, env);
+// 	}
+// 	return (sashell);
+// }
 
-t_sashell	*count_every(t_sashell *sashell, char *tab)
-{
-	sashell->red = (char **)malloc((sizeof(char *)) * (1024));
-	sashell->tokens = (char **)malloc((sizeof(char *)) * (1024));
-	return (sashell);
-}
+// t_sashell	*count_every(t_sashell *sashell, char *tab)
+// {
+// 	sashell->red = (char **)malloc((sizeof(char *)) * (1024));
+// 	sashell->tokens = (char **)malloc((sizeof(char *)) * (1024));
+// 	return (sashell);
+// }
 
-t_sashell	*initialize(t_sashell *sashell)
-{
-	sashell->compt.red = 0;
-	sashell->has.red = 0;
-	sashell->has.option = 0;
-	sashell->has.arg = 0;
-	sashell->compt.tokens = 0;
-	sashell->compt.position = 0;
-	sashell->compt.dollar = 0;
-	sashell->red = NULL;
-	sashell->tokens = NULL;
-	return (sashell);
-}
+// t_sashell	*initialize(t_sashell *sashell)
+// {
+// 	sashell->compt.red = 0;
+// 	sashell->has.red = 0;
+// 	sashell->has.option = 0;
+// 	sashell->has.arg = 0;
+// 	sashell->compt.tokens = 0;
+// 	sashell->compt.position = 0;
+// 	sashell->compt.dollar = 0;
+// 	sashell->red = NULL;
+// 	sashell->tokens = NULL;
+// 	return (sashell);
+// }
 
-t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
-{
-	char	**help;
+// t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
+// {
+// 	char	**help;
 
-	sashell = initialize(sashell);
-	help = split_pipe(tab, ' ');
-	sashell = count_every(sashell, tab);
-	while (help[sashell->compt.position])
-	{
-		if (help[sashell->compt.position][0] == '<'
-			|| help[sashell->compt.position][0] == '>')
-		{
-			sashell = parse_red(sashell, help, 0, 0);
-			sashell->compt.position++;
-		}
-		else if (ft_isalpha(help[sashell->compt.position][0])
-			|| sashell->compt.tokens > 0)
-			sashell = command_parse(sashell, help, env);
-	}
-	sashell->tokens[sashell->compt.tokens] = 0;
-	sashell->red[sashell->has.red] = 0;
-	ft_free(help, sashell->compt.position);
-	return (sashell);
-}
+// 	sashell = initialize(sashell);
+// 	help = split_pipe(tab, ' ');
+// 	sashell = count_every(sashell, tab);
+// 	while (help[sashell->compt.position])
+// 	{
+// 		if (help[sashell->compt.position][0] == '<'
+// 			|| help[sashell->compt.position][0] == '>')
+// 		{
+// 			sashell = parse_red(sashell, help, 0, 0);
+// 			sashell->compt.position++;
+// 		}
+// 		else if (ft_isalpha(help[sashell->compt.position][0])
+// 			|| sashell->compt.tokens > 0)
+// 			sashell = command_parse(sashell, help, env);
+// 	}
+// 	sashell->tokens[sashell->compt.tokens] = 0;
+// 	sashell->red[sashell->has.red] = 0;
+// 	ft_free(help, sashell->compt.position);
+// 	return (sashell);
+// }
 
-t_sashell	*next_sashell(t_sashell *sashell, t_env *env, char **tab)
-{
-	int		i;
+// t_sashell	*next_sashell(t_sashell *sashell, t_env *env, char **tab)
+// {
+// 	int		i;
 
-	i = 1;
-	sashell = sashell->next;
-	while (tab[i])
-	{
-		sashell = fill_in_the_blank(sashell, tab[i], env);
-		if (tab[i + 1])
-		{
-			sashell->next = (t_sashell *)malloc(sizeof(t_sashell));
-			if (!sashell->next)
-				return (NULL);
-			sashell = sashell->next;
-		}
-		i++;
-	}
-	return (sashell);
-}
+// 	i = 1;
+// 	sashell = sashell->next;
+// 	while (tab[i])
+// 	{
+// 		sashell = fill_in_the_blank(sashell, tab[i], env);
+// 		if (tab[i + 1])
+// 		{
+// 			sashell->next = (t_sashell *)malloc(sizeof(t_sashell));
+// 			if (!sashell->next)
+// 				return (NULL);
+// 			sashell = sashell->next;
+// 		}
+// 		i++;
+// 	}
+// 	return (sashell);
+// }
 
-t_sashell	*parse_time(char **tab, t_env *env)
-{
-	t_sashell	*sashell;
-	t_sashell	*tmp;
+// t_sashell	*parse_time(char **tab, t_env *env)
+// {
+// 	t_sashell	*sashell;
+// 	t_sashell	*tmp;
 
-	if (!tab[0])
-		return (NULL);
-	sashell = (t_sashell *)malloc(sizeof(t_sashell));
-	if (!sashell)
-		return (NULL);
-	sashell = fill_in_the_blank(sashell, tab[0], env);
-	tmp = sashell;
-	sashell->next = (t_sashell *)malloc(sizeof(t_sashell));
-	if (!sashell->next)
-		return (NULL);
-	if (!tab[1])
-	{
-		free(sashell->next);
-		sashell->next = NULL;
-		return (sashell);
-	}
-	sashell = next_sashell(sashell, env, tab);
-	sashell->next = NULL;
-	sashell = tmp;
-	return (sashell);
-}
+// 	if (!tab[0])
+// 		return (NULL);
+// 	sashell = (t_sashell *)malloc(sizeof(t_sashell));
+// 	if (!sashell)
+// 		return (NULL);
+// 	sashell = fill_in_the_blank(sashell, tab[0], env);
+// 	tmp = sashell;
+// 	sashell->next = (t_sashell *)malloc(sizeof(t_sashell));
+// 	if (!sashell->next)
+// 		return (NULL);
+// 	if (!tab[1])
+// 	{
+// 		free(sashell->next);
+// 		sashell->next = NULL;
+// 		return (sashell);
+// 	}
+// 	sashell = next_sashell(sashell, env, tab);
+// 	sashell->next = NULL;
+// 	sashell = tmp;
+// 	return (sashell);
+// }
 
-char	**delete_spaces(char **tab)
-{
-	int		i;
-	int		j;
-	char	**tmp;
+// char	**delete_spaces(char **tab)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	**tmp;
 
-	i = 0;
-	tmp = (char **)malloc(sizeof(char *) * (ft_count_tab(tab) + 1));
-	while (tab[i])
-	{
-		j = 0;
-		while (tab[i][j] == ' ')
-			j++;
-		tmp[i] = ft_strdup(tab[i] + j);
-		i++;
-	}
-	tmp[i] = 0;
-	ft_free(tab, i);
-	return (tmp);
-}
+// 	i = 0;
+// 	tmp = (char **)malloc(sizeof(char *) * (ft_count_tab(tab) + 1));
+// 	while (tab[i])
+// 	{
+// 		j = 0;
+// 		while (tab[i][j] == ' ')
+// 			j++;
+// 		tmp[i] = ft_strdup(tab[i] + j);
+// 		i++;
+// 	}
+// 	tmp[i] = 0;
+// 	ft_free(tab, i);
+// 	return (tmp);
+// }
 
-int	ft_count_tab(char **tab)
-{
-	int		i;
+// int	ft_count_tab(char **tab)
+// {
+// 	int		i;
 
-	i = 0;
-	if (tab)
-	{
-		while (tab[i] != NULL)
-			i++;
-	}
-	return (i);
-}
+// 	i = 0;
+// 	if (tab)
+// 	{
+// 		while (tab[i] != NULL)
+// 			i++;
+// 	}
+// 	return (i);
+// }
 
-int	check_red(char *line, int i)
-{
-	int	compt1;
-	int	compt2;
-	int	red1;
-	int	red2;
+// int	check_red(char *line, int i)
+// {
+// 	int	compt1;
+// 	int	compt2;
+// 	int	red1;
+// 	int	red2;
 
-	red1 = 0;
-	red2 = 0;
-	compt1 = 0;
-	compt2 = 0;
-	while (line[++i] != '\0')
-	{
-		compt1 += (line[i] == '"');
-		compt2 += (line[i] == '\'');
-		red1 += (line[i] == '<' && compt1 % 2 == 0 && compt2 % 2 == 0);
-		red2 += (line[i] == '>' && compt1 % 2 == 0 && compt2 % 2 == 0);
-		if (red1 > 0 && red2 > 0)
-			return (0);
-		if (ft_isalnum(line[i]) && red1 < 3)
-			red1 = 0;
-		if (ft_isalnum(line[i]) && red2 < 3)
-			red2 = 0;
-	}
-	if (red1 > 0 || red2 > 0)
-		return (0);
-	return (1);
-}
+// 	red1 = 0;
+// 	red2 = 0;
+// 	compt1 = 0;
+// 	compt2 = 0;
+// 	while (line[++i] != '\0')
+// 	{
+// 		compt1 += (line[i] == '"');
+// 		compt2 += (line[i] == '\'');
+// 		red1 += (line[i] == '<' && compt1 % 2 == 0 && compt2 % 2 == 0);
+// 		red2 += (line[i] == '>' && compt1 % 2 == 0 && compt2 % 2 == 0);
+// 		if (red1 > 0 && red2 > 0)
+// 			return (0);
+// 		if (ft_isalnum(line[i]) && red1 < 3)
+// 			red1 = 0;
+// 		if (ft_isalnum(line[i]) && red2 < 3)
+// 			red2 = 0;
+// 	}
+// 	if (red1 > 0 || red2 > 0)
+// 		return (0);
+// 	return (1);
+// }
 
-int	check_quotes(char *line)
-{
-	int	i;
-	int	compt1;
-	int	compt2;
+// int	check_quotes(char *line)
+// {
+// 	int	i;
+// 	int	compt1;
+// 	int	compt2;
 
-	i = 0;
-	compt1 = 0;
-	compt2 = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == '"' && compt2 % 2 != 1)
-			compt1++;
-		if (line[i] == '\'' && compt1 % 2 != 1)
-			compt2++;
-		i++;
-	}
-	if ((compt1 % 2 == 1) || (compt2 % 2 == 1))
-		return (0);
-	return (1);
-}
+// 	i = 0;
+// 	compt1 = 0;
+// 	compt2 = 0;
+// 	while (line[i] != '\0')
+// 	{
+// 		if (line[i] == '"' && compt2 % 2 != 1)
+// 			compt1++;
+// 		if (line[i] == '\'' && compt1 % 2 != 1)
+// 			compt2++;
+// 		i++;
+// 	}
+// 	if ((compt1 % 2 == 1) || (compt2 % 2 == 1))
+// 		return (0);
+// 	return (1);
+// }
 
-int	help_check_pipe(char *line, int i, int compt1, int compt2)
-{
-	if (line[i - 1] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0)
-	{
-		while (line[i] != '\0' && line[i] == ' ')
-			i++;
-		if (line[i] != '>' && line[i] != '<')
-		{
-			if (!ft_isalnum(line[i]))
-				return (-1);
-		}
-	}
-	return (i);
-}
+// int	help_check_pipe(char *line, int i, int compt1, int compt2)
+// {
+// 	if (line[i - 1] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0)
+// 	{
+// 		while (line[i] != '\0' && line[i] == ' ')
+// 			i++;
+// 		if (line[i] != '>' && line[i] != '<')
+// 		{
+// 			if (!ft_isalnum(line[i]))
+// 				return (-1);
+// 		}
+// 	}
+// 	return (i);
+// }
 
-int	check_pipe(char *line, int i, int pipe, int compt1)
-{
-	int		compt2;
+// int	check_pipe(char *line, int i, int pipe, int compt1)
+// {
+// 	int		compt2;
 
-	compt2 = 0;
-	while (line[i] != '\0')
-	{
-		if (i > 0)
-		{
-			i = help_check_pipe(line, i, compt1, compt2);
-			if (i == -1)
-				return (0);
-		}
-		compt1 += (line[i] == '"');
-		compt2 += (line[i] == '\'');
-		pipe += (line[i] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0);
-		if (ft_isalnum(line[i]) && pipe < 2)
-			pipe = 0;
-		i++;
-	}
-	if (pipe > 0)
-		return (0);
-	return (1);
-}
+// 	compt2 = 0;
+// 	while (line[i] != '\0')
+// 	{
+// 		if (i > 0)
+// 		{
+// 			i = help_check_pipe(line, i, compt1, compt2);
+// 			if (i == -1)
+// 				return (0);
+// 		}
+// 		compt1 += (line[i] == '"');
+// 		compt2 += (line[i] == '\'');
+// 		pipe += (line[i] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0);
+// 		if (ft_isalnum(line[i]) && pipe < 2)
+// 			pipe = 0;
+// 		i++;
+// 	}
+// 	if (pipe > 0)
+// 		return (0);
+// 	return (1);
+// }
 
-int	help_check_sytax(char *line, int i)
-{
-	if (check_quotes(line) != 1)
-	{
-		ft_putstr("SASHELL : Syntax Error // quotes not closed\n");
-		return (0);
-	}
-	if (check_red(line, i - 1) != 1)
-	{
-		ft_putstr("SASHELL : Syntax Error // redirections\n");
-		return (0);
-	}
-	return (1);
-}
+// int	help_check_sytax(char *line, int i)
+// {
+// 	if (check_quotes(line) != 1)
+// 	{
+// 		ft_putstr("SASHELL : Syntax Error // quotes not closed\n");
+// 		return (0);
+// 	}
+// 	if (check_red(line, i - 1) != 1)
+// 	{
+// 		ft_putstr("SASHELL : Syntax Error // redirections\n");
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
-int	check_sytaxerr(char *line)
-{
-	int		i;
-	int		pipe;
-	int		compt1;
-	int		compt2;
+// int	check_sytaxerr(char *line)
+// {
+// 	int		i;
+// 	int		pipe;
+// 	int		compt1;
+// 	int		compt2;
 
-	compt1 = 0;
-	compt2 = 0;
-	pipe = 0;
-	i = 0;
-	if (!help_check_sytax(line, 0))
-		return (0);
-	while (line[i] != '\0' && line[i] == ' ')
-		i++;
-	if ((line[i] != '>' && line[i] != '<') && (!ft_isalnum(line[i])))
-	{
-		ft_putstr("SASHELL : Syntax Error\n");
-		return (0);
-	}
-	if (check_pipe(line, i, 0, 0) != 1)
-	{
-		ft_putstr("SASHELL : Syntax Error // pipe\n");
-		return (0);
-	}
-	return (1);
-}
+// 	compt1 = 0;
+// 	compt2 = 0;
+// 	pipe = 0;
+// 	i = 0;
+// 	if (!help_check_sytax(line, 0))
+// 		return (0);
+// 	while (line[i] != '\0' && line[i] == ' ')
+// 		i++;
+// 	if ((line[i] != '>' && line[i] != '<') && (!ft_isalnum(line[i])))
+// 	{
+// 		ft_putstr("SASHELL : Syntax Error\n");
+// 		return (0);
+// 	}
+// 	if (check_pipe(line, i, 0, 0) != 1)
+// 	{
+// 		ft_putstr("SASHELL : Syntax Error // pipe\n");
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
-char	*generate_random_value(void)
-{
-	int				fd;
-	unsigned int	randval;
-	char			*rand_string;
-	char			*r_string;
-	char			*tmp;
+// char	*generate_random_value(void)
+// {
+// 	int				fd;
+// 	unsigned int	randval;
+// 	char			*rand_string;
+// 	char			*r_string;
+// 	char			*tmp;
 
-	fd = open("/dev/random", O_RDONLY);
-	read(fd, &randval, sizeof(randval));
-	close(fd);
-	rand_string = ft_itoa(randval);
-	tmp = ft_strdup("/tmp/heredoc-");
-	r_string = ft_strjoin(tmp, rand_string);
-	free (rand_string);
-	return (r_string);
-}
+// 	fd = open("/dev/random", O_RDONLY);
+// 	read(fd, &randval, sizeof(randval));
+// 	close(fd);
+// 	rand_string = ft_itoa(randval);
+// 	tmp = ft_strdup("/tmp/heredoc-");
+// 	r_string = ft_strjoin(tmp, rand_string);
+// 	free (rand_string);
+// 	return (r_string);
+// }
 
-void	ctrl_handler(int sig)
-{
-	exit(sig);
-}
+// void	quit_handler(int num)
+// {
+// 	char	cwd[PATH_MAX];
 
-void	quit_handler(int num)
-{
-	char	cwd[PATH_MAX];
+// 	if (num == SIGQUIT)
+// 		return ;
+// 	ft_putchar('\n');
+// 	rl_on_new_line();
+// 	getcwd(cwd, PATH_MAX);
+// 	printf("\e[48;5;098m~%s", cwd);
+//     rl_replace_line("", 0);
+//     rl_redisplay();
+// }
 
-	if (num == SIGQUIT)
-		return ;
-	ft_putchar('\n');
-	rl_on_new_line();
-	getcwd(cwd, PATH_MAX);
-	printf("\e[48;5;098m~%s", cwd);
-    rl_replace_line("", 0);
-    rl_redisplay();
-}
+// void	quit_handlerherdoc(int num)
+// {
+// 	if (num == SIGQUIT)
+// 		return ;
+// 	ft_putchar('\n');
+// 	rl_on_new_line();
+//     rl_replace_line("", 0);
+//     rl_redisplay();
+// }
 
-void	quit_handlerherdoc(int num)
-{
-	if (num == SIGQUIT)
-		return ;
-	ft_putchar('\n');
-	rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-}
+// char	*heredoc(t_sashell *sashell, int i)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	char	*random_string;
+// 	pid_t	pid;
 
-char	*heredoc(t_sashell *sashell, int i)
-{
-	int		fd;
-	char	*line;
-	char	*random_string;
-	pid_t	pid;
+// 	random_string = generate_random_value();
+// 	fd = open(random_string, O_CREAT | O_RDWR, S_IRWXU);
+// 	signal(SIGQUIT, &quit_handlerherdoc);
+// 	signal(SIGINT, &quit_handlerherdoc);
+// 	// pid = fork();
+// 	while (420)
+// 	{
+// 		line = readline("> ");
+// 		if (!line || !ft_strncmp(line, sashell->red[i] + 3,
+// 				ft_strlen(sashell->red[i] + 3)))
+// 		{
+// 			if (line)
+// 				free(line);
+// 			close(fd);
+// 			return (random_string);
+// 		}
+// 		ft_putendl_fd(line, fd);
+// 		free(line);
+// 	}
+// 	free(line);
+// 	close(fd);
+// 	return (NULL);
+// }
 
-	random_string = generate_random_value();
-	fd = open(random_string, O_CREAT | O_RDWR, S_IRWXU);
-	signal(SIGQUIT, &quit_handlerherdoc);
-	signal(SIGINT, &quit_handlerherdoc);
-	// pid = fork();
-	while (420)
-	{
-		line = readline("> ");
-		if (!line || !ft_strncmp(line, sashell->red[i] + 3,
-				ft_strlen(sashell->red[i] + 3)))
-		{
-			if (line)
-				free(line);
-			close(fd);
-			return (random_string);
-		}
-		ft_putendl_fd(line, fd);
-		free(line);
-	}
-	free(line);
-	close(fd);
-	return (NULL);
-}
+// t_sashell	*red_open(t_sashell *sashell)
+// {
+// 	int			i;
+// 	char		*tmp;
+// 	t_sashell	*help;
 
-t_sashell	*red_open(t_sashell *sashell)
-{
-	int			i;
-	char		*tmp;
-	t_sashell	*help;
+// 	help = sashell;
+// 	while (sashell)
+// 	{
+// 		i = 0;
+// 		while (sashell->red[i] != '\0')
+// 		{
+// 			if (sashell->red[i][0] == '2' && sashell->red[i][1] == '<')
+// 			{
+// 				tmp = heredoc(sashell, i);
+// 				free(sashell->red[i]);
+// 				sashell->red[i] = ft_strdup("1< ");
+// 				sashell->red[i] = ft_strjoin(sashell->red[i], tmp);
+// 				free(tmp);
+// 			}
+// 			i++;
+// 		}
+// 		sashell = sashell->next;
+// 	}
+// 	sashell = help;
+// 	return (sashell);
+// }
 
-	help = sashell;
-	while (sashell)
-	{
-		i = 0;
-		while (sashell->red[i] != '\0')
-		{
-			if (sashell->red[i][0] == '2' && sashell->red[i][1] == '<')
-			{
-				tmp = heredoc(sashell, i);
-				free(sashell->red[i]);
-				sashell->red[i] = ft_strdup("1< ");
-				sashell->red[i] = ft_strjoin(sashell->red[i], tmp);
-				free(tmp);
-			}
-			i++;
-		}
-		sashell = sashell->next;
-	}
-	sashell = help;
-	return (sashell);
-}
+// t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
+// {
+// 	char	**tab;
 
-t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
-{
-	char	**tab;
-
-	if (check_sytaxerr(line) == 1)
-	{
-		tab = split_pipe(line, '|');
-		tab = delete_spaces(tab);
-		sashell = parse_time(tab, env);
-		ft_free(tab, ft_count_tab(tab));
-		red_open(sashell);
-		free(line);
-		return (sashell);
-	}
-	return (NULL);
-}
+// 	if (check_sytaxerr(line) == 1)
+// 	{
+// 		tab = split_pipe(line, '|');
+// 		tab = delete_spaces(tab);
+// 		sashell = parse_time(tab, env);
+// 		ft_free(tab, ft_count_tab(tab));
+// 		red_open(sashell);
+// 		free(line);
+// 		return (sashell);
+// 	}
+// 	return (NULL);
+// }
