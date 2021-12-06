@@ -6,7 +6,7 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/06 21:09:59 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/06 23:22:43 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC =  _minishell.c _builtin.c _echo.c _pwd.c  _cd.c _tools.c\
 		sboof/outils/ft_isalpha.c  sboof/outils/ft_putchar.c  sboof/outils/ft_putstr.c  sboof/outils/ft_strjoin.c \
 		sboof/outils/ft_putnbr.c  sboof/outils/split_pipe.c  sboof/outils/ft_strchr.c  sboof/outils/ft_substr.c \
 		sboof/outils/ft_strncmp.c  sboof/minishell.c sboof/outils/ft_charjoin.c sboof/outils/ft_itoa.c\
-		sboof/outils/ft_strrev.c\
+		sboof/outils/ft_strrev.c sboof/rederiction/rederiction.c sboof/dollar/dollar.c sboof/args/args.c\
 		
 OBJS = $(SRCS:%.c=%.o)
 
