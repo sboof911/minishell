@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/11/27 17:50:47 by eelaazmi         ###   ########.fr        #
+#    Updated: 2021/12/06 21:09:59 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LEAKS = -g3 -fsanitize=address
 
-FLAGS =  -lreadline -ledit  #/*-Wall -Wextra -Werror*/
+FLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include \
+		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
 
 NAME = minishell
 

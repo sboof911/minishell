@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/11/27 17:54:29 by eelaazmi         ###   ########.fr       */
+/*   Updated: 2021/12/06 14:33:59 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ char		*ft_itoa(int n);
 char		*ft_strrev(char *str);
 t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
 
+/* --------------------- signals ------------------------------*/
+void		quit_handler(int num);
 
 /* --------------------- exec_others ------------------------------*/
 void			free_double_arr(char **arr);

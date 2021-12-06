@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:10:34 by amaach            #+#    #+#             */
-/*   Updated: 2021/11/29 16:11:05 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/06 21:23:57 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ int	help_num_dollar(t_sashell *sashell, char *tab, int i)
 	while (tab[i] != '\0' && tab[i] != '$')
 		i++;
 	sashell->tokens[sashell->compt.tokens] = ft_substr(tab, compt, i - compt);
-	sashell->tokens[sashell->compt.tokens] = delete_quotes(sashell->tokens[sashell->compt.tokens]);
+	sashell->tokens[sashell->compt.tokens]
+		= delete_quotes(sashell->tokens[sashell->compt.tokens]);
 	return (i);
 }
 
@@ -210,11 +211,10 @@ int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 		compt = i;
 		if (ft_isdigit(tab[i]))
 			i = help_num_dollar(sashell, tab, i);
+		else if (tab[i] == '?')
+			sashell->tokens[sashell->compt.tokens] = ft_itoa(g_exit_value);
 		else
-		{
-			while (ft_isalnum(tab[i]))
-				i++;
-		}
+			while (ft_isalnum(tab[i++]));
 		if (compt == i && tab[i] != '\'')
 			sashell->tokens[sashell->compt.tokens]
 				= ft_charjoin(sashell->tokens[sashell->compt.tokens], '$');
@@ -619,16 +619,49 @@ char	*generate_random_value(void)
 	return (r_string);
 }
 
+void	ctrl_handler(int sig)
+{
+	exit(sig);
+}
+
+void	quit_handler(int num)
+{
+	char	cwd[PATH_MAX];
+
+	if (num == SIGQUIT)
+		return ;
+	ft_putchar('\n');
+	rl_on_new_line();
+	getcwd(cwd, PATH_MAX);
+	printf("\e[48;5;098m~%s", cwd);
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
+
+void	quit_handlerherdoc(int num)
+{
+	if (num == SIGQUIT)
+		return ;
+	ft_putchar('\n');
+	rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
+
 char	*heredoc(t_sashell *sashell, int i)
 {
 	int		fd;
 	char	*line;
 	char	*random_string;
+	pid_t	pid;
 
 	random_string = generate_random_value();
 	fd = open(random_string, O_CREAT | O_RDWR, S_IRWXU);
+	signal(SIGQUIT,&quit_handlerherdoc);
+	signal(SIGINT,&quit_handlerherdoc);
+	// pid = fork();
 	while (420)
-	{	
+	{
 		line = readline("> ");
 		if (!line || !ft_strncmp(line, sashell->red[i] + 3,
 				ft_strlen(sashell->red[i] + 3)))
@@ -648,8 +681,8 @@ char	*heredoc(t_sashell *sashell, int i)
 
 t_sashell	*red_open(t_sashell *sashell)
 {
-	int		i;
-	char	*tmp;
+	int			i;
+	char		*tmp;
 	t_sashell	*help;
 
 	help = sashell;
