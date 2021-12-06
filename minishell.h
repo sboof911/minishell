@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/06 14:33:59 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/06 23:46:26 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,31 +123,81 @@ typedef struct	s_sashell
 	struct s_sashell	*next;
 }					t_sashell;
 
-char	    **protection_malloc2(char **str, int compt);
-char	    *protection_malloc1(char *str, int compt);
-void	    *ft_free(char **s, int i);
-char	    **ft_split(char const *s, char c);
-char	    **split_pipe(char const *s, char c);
-char	    *ft_strdup(const char *s);
-int		    ft_strlen(char *str);
-int		    ft_isalpha(int c);
-int			ft_isalnum(int c);
-void	    ft_putstr(char *s);
-void	    ft_putchar(char c);
-char		*ft_charjoin(char *str, char c);
-char	    *ft_strjoin(char *s1, char *s2);
-void	    ft_putnbr(int n);
-char	    *ft_strchr(const char *s, int c);
-char	    *ft_substr(char const *s, unsigned int start, size_t len);
-int		    ft_strncmp(const char *s1, const char *s2, size_t n);
-int			ft_count_tab(char **tab);
-void		free_sashell(t_sashell *sashell);
-char		*ft_itoa(int n);
-char		*ft_strrev(char *str);
-t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line);
+/* --------------------- libft outils ------------------------------*/
+char	    	**protection_malloc2(char **str, int compt);
+char	    	*protection_malloc1(char *str, int compt);
+void	    	*ft_free(char **s, int i);
+char	    	**ft_split(char const *s, char c);
+char	    	*ft_strdup(const char *s);
+int		    	ft_strlen(char *str);
+int		    	ft_isalpha(int c);
+int				ft_isalnum(int c);
+void	    	ft_putchar(char c);
+void	    	ft_putstr(char *s);
+char			*ft_charjoin(char *str, char c);
+char	    	*ft_strjoin(char *s1, char *s2);
+void	    	ft_putnbr(int n);
+char	    	*ft_strchr(const char *s, int c);
+char	    	*ft_substr(char const *s, unsigned int start, size_t len);
+int		    	ft_strncmp(const char *s1, const char *s2, size_t n);
+char			*ft_itoa(int n);
+char			*ft_strrev(char *str);
+
+/* --------------------- parsing outils ------------------------------*/
+char	    	**split_pipe(char const *s, char c);
+int				ft_count_tab(char **tab);
+void			free_sashell(t_sashell *sashell);
+
+/* --------------------- parsing ------------------------------*/
+t_sashell		*command_parse(t_sashell *sashell, char **tab, t_env *env);
+t_sashell		*count_every(t_sashell *sashell, char *tab);
+t_sashell		*initialize(t_sashell *sashell);
+t_sashell		*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env);
+t_sashell		*next_sashell(t_sashell *sashell, t_env *env, char **tab);
+t_sashell		*parse_time(char **tab, t_env *env);
+char			**delete_spaces(char **tab);
+t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line);
+
+
+/* --------------------- rederiction ------------------------------*/
+t_sashell		*check_file(t_sashell *sashell, char *tab, int i);
+int				count_quotes(char *tab);
+char			*delete_quotes(char *tab);
+t_sashell		*rederiction_parse(t_sashell *sashell, char *tab, char red);
+char			rederiction_sign(char *tab);
+int				help_rederiction(t_sashell *sashell, char **tab, int i);
+int				help_red(char **tab, int i, t_sashell *sashell, int remember);
+t_sashell		*parse_red(t_sashell *sashell, char **tab, int i, int remember);
+
+/* --------------------- dollar ------------------------------*/
+t_sashell		*dollar_parse(t_sashell *sashell, char *tab, t_env *env);
+int				help_num_dollar(t_sashell *sashell, char *tab, int i);
+int				help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i);
+int				help_dollar_quotes(int d_q);
+t_sashell		*help_norm_dollar(t_sashell *sashell, char *tab, int i);
+int				some_shit(int *d_quotes, int *s_quotes, char *tab, int i);
+t_sashell		*check_dollar(t_sashell *sashell, char *tab, t_env *env, int i);
+
+/* --------------------- args ------------------------------*/
+t_sashell		*arg_parse(t_sashell *sashell, char **tab, t_env *env);
+
+/* --------------------- Errors parsing ------------------------------*/
+int				check_red(char *line, int i);
+int				check_quotes(char *line);
+int				help_check_pipe(char *line, int i, int compt1, int compt2);
+int				check_pipe(char *line, int i, int pipe, int compt1);
+int				help_check_sytax(char *line, int i);
+int				check_sytaxerr(char *line);
+
+/* --------------------- Herdoc ------------------------------*/
+char			*generate_random_value(void);
+void			quit_handler(int num);
+void			quit_handlerherdoc(int num);
+char			*heredoc(t_sashell *sashell, int i);
+t_sashell		*red_open(t_sashell *sashell);
 
 /* --------------------- signals ------------------------------*/
-void		quit_handler(int num);
+void			quit_handler(int num);
 
 /* --------------------- exec_others ------------------------------*/
 void			free_double_arr(char **arr);
@@ -231,6 +281,6 @@ static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
 
 /* ---------------------------- exec_pipe -------------------------- */
-void	exec_pipe(char *line, t_env *envs, t_sashell *sashell);
+void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
 
 #endif
