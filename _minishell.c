@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/06 14:55:31 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/06 21:46:25 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ int		main(int argc, char **argv, char **envp)
 		getcwd(cwd, PATH_MAX);
 		printf("\e[48;5;098m~%s", cwd);
 		line = readline("\e[48;5;098m $> \033[0m");
-		if (strcmp(line ,"") == 0 || !line)
+		if (strcmp(line , "") == 0 || !line)
 			continue;
-		else 
+		else
 			{
 				add_history(line);
 				sashell = parse_function(sashell, env, line);
