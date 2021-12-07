@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:40:17 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/06 23:53:26 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/07 15:59:45 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 t_sashell	*command_parse(t_sashell *sashell, char **tab, t_env *env)
 {
-	sashell->tokens[sashell->compt.tokens++]
-		= ft_strdup(tab[sashell->compt.position++]);
 	if (tab[sashell->compt.position])
 	{
 		if (tab[sashell->compt.position][0] == '-')

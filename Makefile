@@ -6,11 +6,11 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/06 23:57:03 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/07 15:31:59 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LEAKS = -g3 -fsanitize=address
+LEAKS = -g #-fsanitize=address
 
 FLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include \
 		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
