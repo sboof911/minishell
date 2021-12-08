@@ -12,13 +12,15 @@
 
 LEAKS = -g #-fsanitize=address
 
-FLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include \
-		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
+FLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
+		-L/goinfre/eelaazmi/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
 
 NAME = minishell
 
-SRC =  _minishell.c _builtin.c _echo.c _pwd.c  _cd.c _tools.c\
-		cmd_export.c cmd_export_outil.c cmd_unset.c cmd_exit.c exec_others.c exec_pipe.c\
+SRC =  	_minishell.c\
+		alchemist/_builtin.c alchemist/_echo.c alchemist/_pwd.c  alchemist/_cd.c alchemist/_tools.c\
+		alchemist/cmd_export.c alchemist/cmd_export_outil.c alchemist/cmd_unset.c alchemist/cmd_exit.c\
+		alchemist/exec_others.c alchemist/exec_pipe.c\
 		sboof/outils/ft_split.c sboof/outils/outils_help.c sboof/outils/ft_strdup.c sboof/outils/ft_strlen.c \
 		sboof/outils/ft_isalpha.c sboof/outils/ft_putchar.c sboof/outils/ft_putstr.c sboof/outils/ft_strjoin.c \
 		sboof/outils/ft_putnbr.c sboof/outils/split_pipe.c sboof/outils/ft_strchr.c sboof/outils/ft_substr.c \

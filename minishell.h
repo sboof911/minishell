@@ -108,6 +108,14 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct	s_redir
+{
+	int			argc;
+	char		**argv;
+	char		**cmds;
+	char		*types;
+}				t_redir;
+
 typedef struct	s_sashell 
 {
 	char				**tokens;
@@ -281,6 +289,17 @@ static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
 
 /* ---------------------------- exec_pipe -------------------------- */
-void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
+// void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
+void		exec_pipe(char *line, t_env *envs, t_sashell *sashell);
+ int		has_redir(char *str);
+
+/* ---------------------------- exec_redir -------------------------- */
+void			exec_redir(char *line, t_env *envs);
+
+void			exec_cmds(char *line,t_sashell *sashell, t_env *envs);
+
+
+void 			exec_cmd(t_sashell *sashell, t_env *env);
+
 
 #endif

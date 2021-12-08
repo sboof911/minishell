@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_env		*fill_env(t_env *env, char *envp)
+t_env			*fill_env(t_env *env, char *envp)
 {
 	char	**help;
 
@@ -23,7 +23,7 @@ t_env		*fill_env(t_env *env, char *envp)
 	return (env);
 }
 
-t_env		*split_env(t_env *env, char **envp)
+t_env			*split_env(t_env *env, char **envp)
 {
 	t_env	*tmp;
 	int		i;
@@ -53,7 +53,7 @@ t_env		*split_env(t_env *env, char **envp)
 	return (env);
 }
 
-void 		print_sashell(t_sashell *sashell)
+void 			print_sashell(t_sashell *sashell)
 {
 	int i = 0;
 	t_sashell	*tmp;
@@ -77,8 +77,7 @@ void 		print_sashell(t_sashell *sashell)
 	sashell = tmp;
 }
 
-
-void		free_sashell(t_sashell *sashell)
+void			free_sashell(t_sashell *sashell)
 {
 	t_sashell	*tmp;
 	int			i;
@@ -95,8 +94,7 @@ void		free_sashell(t_sashell *sashell)
 	// free(sashell);
 }
 
-
-void 		exec_cmd(t_sashell *sashell, t_env *env)
+void 			exec_cmd(t_sashell *sashell, t_env *env)
 {
 	char **cmd;
 	int ret;
@@ -111,7 +109,7 @@ void 		exec_cmd(t_sashell *sashell, t_env *env)
 
 }
 
-int			ft_token_count(t_token *token, t_sashell *sashell)
+int				ft_token_count(t_token *token, t_sashell *sashell)
 {
 	while (sashell)
 	{
@@ -121,23 +119,53 @@ int			ft_token_count(t_token *token, t_sashell *sashell)
 	return (token->token_count);
 }
 
-void		minishell(t_sashell *sashell, t_env *env, char *str)
+void			exec_cmds(char *line,t_sashell *sashell, t_env *envs)
 {
+	char **cmd;
+	int ret;
 	int 		index = 0;
 	t_token 	token;
+
+	token.token_count = 0;
+	cmd = sashell->tokens;
+	sashell->g_exit_value = 0;
+
+	if (ft_token_count(&token, sashell))
+	{
+		printf("token count = %d\n", token.token_count);
+		exec_pipe(line, envs, sashell);
+	}
+	//else if (has_redir(line))
+		//exec_redir(line, envs);
+	exec_cmd(sashell, envs);
+}
+
+void		minishell(t_sashell *sashell, t_env *env, char *str)
+{
+	/*	// int 		index = 0;
+	// t_token 	token;
 
 	// fuction to handle error on the sashell structure
 	// go ahead and execute the shitty  commands
 	
-	token.token_count = 0;
-	if (ft_token_count(&token, sashell))
-	{
-		printf("token count = %d\n", token.token_count);
-		//exec_pipe(str, env, sashell);
-	}
+	// if (has_pipe(line))
+	// 	exec_pipe(line, envs);
 
+	// else if (has_redir(line))
+	// 	exec_redir(line, envs);
+		
 
-	exec_cmd(sashell, env);
+	// //if (ft_token_count(&token, sashell))
+	// {
+	// 	//printf("token count = %d\n", token.token_count);
+	// 	//exec_pipe(str, env, sashell);
+	// 	// exec_pipe(str, env);
+
+	// }
+	// else if (has_redir(line))
+	// 	exec_redir(line, envs);*/
+
+	exec_cmds(str, sashell, env);
 }
 
 int		main(int argc, char **argv, char **envp)
@@ -166,10 +194,10 @@ int		main(int argc, char **argv, char **envp)
 				sashell = parse_function(sashell, env, line);
 				if (sashell)
 				{
-					printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
-					print_sashell(sashell);
-					printf("%d\n", sashell->compt.tokens);
-					printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
+					// printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
+					// print_sashell(sashell);
+					// printf("%d\n", sashell->compt.tokens);
+					// printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
 					// main-execution-process
 
 					minishell(sashell, env, line);
