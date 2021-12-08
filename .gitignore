@@ -4,3 +4,11 @@
 *.swp
 *.swo
 .vscode
+minishell
+.git
+.gitignore
+.gitattributes
+.gitmodules
+.gitconfig
+.gitignore
+.*
