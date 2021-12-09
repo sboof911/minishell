@@ -94,21 +94,6 @@ void			free_sashell(t_sashell *sashell)
 	// free(sashell);
 }
 
-void 			exec_cmd(t_sashell *sashell, t_env *env)
-{
-	char **cmd;
-	int ret;
-
-	cmd = sashell->tokens;
-	sashell->g_exit_value = 0;
-
-	 if (cmd && is_builtin(cmd[0]))
-		ret = exec_builtin(cmd, env);
-	else if (cmd)
-		exec_others(cmd, env, g_envp);
-
-}
-
 int				ft_token_count(t_token *token, t_sashell *sashell)
 {
 	while (sashell)
@@ -119,7 +104,21 @@ int				ft_token_count(t_token *token, t_sashell *sashell)
 	return (token->token_count);
 }
 
-void			exec_cmds(char *line,t_sashell *sashell, t_env *envs)
+void 			exec_c(t_sashell *sashell, t_env *env)
+{
+	int ret;
+	char **cmd;
+
+	cmd = sashell->tokens;
+
+	if (cmd && is_builtin(cmd[0]))
+		ret = exec_builtin(cmd, env);
+	else if (cmd)
+		exec_others(cmd, env, g_envp);
+
+}
+
+void			minishell(t_sashell *sashell, t_env *env, char *str)
 {
 	char **cmd;
 	int ret;
@@ -133,39 +132,13 @@ void			exec_cmds(char *line,t_sashell *sashell, t_env *envs)
 	if (ft_token_count(&token, sashell))
 	{
 		printf("token count = %d\n", token.token_count);
-		exec_pipe(line, envs, sashell);
+		exec_pipe(str, env, sashell);
 	}
+
 	//else if (has_redir(line))
 		//exec_redir(line, envs);
-	exec_cmd(sashell, envs);
-}
 
-void		minishell(t_sashell *sashell, t_env *env, char *str)
-{
-	/*	// int 		index = 0;
-	// t_token 	token;
 
-	// fuction to handle error on the sashell structure
-	// go ahead and execute the shitty  commands
-	
-	// if (has_pipe(line))
-	// 	exec_pipe(line, envs);
-
-	// else if (has_redir(line))
-	// 	exec_redir(line, envs);
-		
-
-	// //if (ft_token_count(&token, sashell))
-	// {
-	// 	//printf("token count = %d\n", token.token_count);
-	// 	//exec_pipe(str, env, sashell);
-	// 	// exec_pipe(str, env);
-
-	// }
-	// else if (has_redir(line))
-	// 	exec_redir(line, envs);*/
-
-	exec_cmds(str, sashell, env);
 }
 
 int		main(int argc, char **argv, char **envp)
