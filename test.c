@@ -140,10 +140,13 @@ int main(void)
         char input[MAX_LINE];
         fgets(input, MAX_LINE, stdin);
 
+
         char *tokens;
         tokens = tokenize(input);
 
-        printf("ww-----------------{%s}\n", tokens);
+
+
+        //printf("ww-----------------{%s}\n", tokens);
 
         if (tokens[strlen(tokens) - 1] == '&') {
             should_wait = 0;
@@ -152,7 +155,11 @@ int main(void)
 
         char *arg = strtok(tokens, " ");
         int i = 0;
-        while (arg) {
+
+        printf("arg = %s\n", arg);
+
+        while (arg)
+        {
             if (*arg == '<') {
                 redirectIn(strtok(NULL, " "));
             } else if (*arg == '>') {
@@ -168,7 +175,6 @@ int main(void)
             arg = strtok(NULL, " ");
         }
         args[i] = NULL;
-  
         run(args);
     }
     return 0;

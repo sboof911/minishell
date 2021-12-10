@@ -96,6 +96,7 @@ void			free_sashell(t_sashell *sashell)
 
 int				ft_token_count(t_token *token, t_sashell *sashell)
 {
+
 	while (sashell)
 	{
 		token->token_count++;
@@ -104,12 +105,11 @@ int				ft_token_count(t_token *token, t_sashell *sashell)
 	return (token->token_count);
 }
 
-void 			exec_c(t_sashell *sashell, t_env *env)
+void 			exec_cmd(char **cmd, t_env *env)
 {
 	int ret;
-	char **cmd;
+	//char **cmd;
 
-	cmd = sashell->tokens;
 
 	if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
@@ -129,16 +129,15 @@ void			minishell(t_sashell *sashell, t_env *env, char *str)
 	cmd = sashell->tokens;
 	sashell->g_exit_value = 0;
 
-	if (ft_token_count(&token, sashell))
+	ft_token_count(&token, sashell);
+	if (token.token_count > 1)
 	{
 		printf("token count = %d\n", token.token_count);
-		exec_pipe(str, env, sashell);
-	}
-
-	//else if (has_redir(line))
-		//exec_redir(line, envs);
-
-
+		exec_pipe(str, env, sashell, token.token_count);
+	} 
+	//else if (has_redir(line)) //exec_redir(line, envs);
+	else if (cmd)       					
+		exec_cmd(cmd, env);
 }
 
 int		main(int argc, char **argv, char **envp)
