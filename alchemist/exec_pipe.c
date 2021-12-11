@@ -64,16 +64,50 @@ void	exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
 	int		fd[2];
 	int		child[2];
 	int		status[2];
-
+    pid_t   pid, pid2;
 	int 	index = 0;
-
 	int i =0;
-	while (sashell)
-	{
-		createPipe(sashell->tokens);
-		sashell = sashell->next;
-	}
-	//exit(0);
 
+	// while (sashell)
+	// {
+		//createPipe(sashell->tokens);
+
+        if (pipe(fd) == -1)
+        {
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+
+        if ((pid = fork()) < 0)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+        if (pid == 0)
+        {
+            dup2(fd[1], 1);
+            close(fd[1]);
+            close(fd[0]);
+            exec_cmd(sashell->tokens, envs);
+            return ;
+
+        }
+
+        else if ((pid = fork()) < 0)
+        {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+        else 
+        {
+            printf("%d\n", pid);
+        }
+        // }
+
+        close(fd[1]);
+        close(fd[0]);
+        waitpid(pid, NULL, 0);
+    //    waitpid(pid2, NULL, 0);
+        exit(0);
 }
  
