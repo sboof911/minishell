@@ -59,55 +59,50 @@ void createPipe(char *args[])
 }
 
 
-void	exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
+static int    spwan_process(int in, int out, t_sashell *sashell, t_env *envs) {
+
+  pid_t pid;
+
+  if ((pid = fork ()) == 0)
+    {
+      if (in != 0)
+        {
+          dup2 (in, 0);
+          close (in);
+        }
+
+      if (out != 1)
+        {
+          dup2 (out, 1);
+          close (out);
+        }
+
+       exec_cmd(sashell->tokens, envs);
+    }
+
+  return pid;
+}
+
+int	exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
 {
-	int		fd[2];
-	int		child[2];
-	int		status[2];
-    pid_t   pid, pid2;
-	int 	index = 0;
-	int i =0;
-
-	// while (sashell)
-	// {
-		//createPipe(sashell->tokens);
-
-        if (pipe(fd) == -1)
-        {
-            perror("pipe");
-            exit(EXIT_FAILURE);
-        }
-
-        if ((pid = fork()) < 0)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-        if (pid == 0)
-        {
-            dup2(fd[1], 1);
-            close(fd[1]);
-            close(fd[0]);
-            exec_cmd(sashell->tokens, envs);
-            return ;
-
-        }
-
-        else if ((pid = fork()) < 0)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-        else 
-        {
-            printf("%d\n", pid);
-        }
-        // }
-
+    int i = 0;
+    int in = 0;
+    int fd[2];
+    printf("%d\n", count);
+    while (i++ < count - 1)
+    {
+        pipe(fd);
+        spwan_process(in, fd[1], sashell, envs);
         close(fd[1]);
-        close(fd[0]);
-        waitpid(pid, NULL, 0);
-    //    waitpid(pid2, NULL, 0);
-        exit(0);
+        in = fd[0];
+        sashell = sashell->next;
+    }
+
+    if (in != 0) {
+        dup2(in, 0);
+        
+    }
+    exec_cmd(sashell->tokens, envs);
+
 }
  
