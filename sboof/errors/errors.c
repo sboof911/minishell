@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:35:20 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/06 23:54:52 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/11 03:09:42 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	check_sytaxerr(char *line)
 		return (0);
 	while (line[i] != '\0' && line[i] == ' ')
 		i++;
-	if ((line[i] != '>' && line[i] != '<') && (!ft_isalnum(line[i])))
+	if ((line[i] != '>' && line[i] != '<') && (!ft_isalpha(line[i])))
 	{
 		ft_putstr("SASHELL : Syntax Error\n");
 		return (0);
