@@ -96,12 +96,29 @@ void			exec_others(char **cmd, t_env *envs, char **g_envp)
 
 	argv = cmd;
 
+	path = find_path(argv[0], envs);
+	if (!path)
+	{
+		ft_puterror_fd(argv[0], ": command not found", 2);
+		return ;
+	}
+	if (execve(path, argv, g_envp) == -1)
+		exit(ft_puterror_fd(argv[0], ": command not found", 2));
+	free(path);
+	// free_double_arr(argv);
+	g_exit_value = status % 256;
 
-	//if (!strcmp(cmd[0], "clear"))
-	//{
-		//printf("\033c");
-	//	return ;
-	//}
+}
+
+void			execo_others(char **cmd, t_env *envs, char **g_envp)
+{
+	int		status;
+	char	*path;
+	char	**argv;
+	pid_t	child;
+
+	argv = cmd;
+
 	path = find_path(argv[0], envs);
 	if (!path)
 	{
@@ -115,7 +132,7 @@ void			exec_others(char **cmd, t_env *envs, char **g_envp)
 			exit(ft_puterror_fd(argv[0], ": command not found", 2));
 		exit(EXIT_SUCCESS);
 	}
-	// wait(&status);
+	wait(&status);
 	free(path);
 	// free_double_arr(argv);
 	g_exit_value = status % 256;

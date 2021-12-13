@@ -19,7 +19,7 @@ SRC =  minishell.c ft_split.c outils_help.c ft_strdup.c ft_strlen.c \
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc $(FLAGS) $(SRC) -o $(NAME)
+	gcc -g  $(FLAGS) $(SRC) -o $(NAME)
 
 clean:
 	

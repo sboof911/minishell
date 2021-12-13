@@ -296,8 +296,9 @@ int			exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
 /* ---------------------------- exec_redir -------------------------- */
 void			exec_redir(char *line, t_env *envs);
 
-void 			exec_cmd(char **cmd, t_env *env);
+void 			exec_cmd(char **cmd, t_env *env, int i);
 void 			print_sashell(t_sashell *sashell);
+void			execo_others(char **cmd, t_env *envs, char **g_envp);
 
 
 #endif

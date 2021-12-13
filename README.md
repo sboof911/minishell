@@ -42,11 +42,6 @@
    ##### ◦ ctrl-\ do nothing.
 ** ---------------------------------------------- **  
 
-**  Errors **
+**  Cmds **
 
-bash-3.2$ 1 > 2 > 3 > 4
-bash: 1: command not found
-bash-3.2$ 
-
-
-** check
+> curl -fsSL https://raw.githubusercontent.com/hakamdev/42homebrew/master/install.sh | zsh

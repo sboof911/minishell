@@ -1,5 +1,88 @@
 #include <unistd.h>
 
+
+static int    spawn_proc(int in, int out, t_sashell *sashell, t_env *envs) {
+
+  pid_t pid;
+
+  if ((pid = fork ()) == 0)
+    {
+        if (in != 0)
+        {
+          dup2 (in, 0);
+          close (in);
+        }
+
+        if (out != 1)
+        {
+          dup2 (out, 1);
+          close (out);
+        }
+        printf("exec pid=%d cmd\n", getpid());
+        exec_cmd(sashell->tokens, envs);
+        printf("excec cmd? done\n");
+
+      return pid;
+    }
+
+  return pid;
+}
+
+void redirectIn(char *fileName)
+{
+    int in = open(fileName, O_RDONLY);
+    dup2(in, 0);
+    close(in);
+}
+
+void redirectOut(char *fileName)
+{
+    int out = open(fileName, O_WRONLY | O_TRUNC | O_CREAT, 0600);
+    dup2(out, 1);
+    close(out);
+}
+
+void run(char *args[])
+{ 
+    pid_t pid;
+	int should_wait;
+	int should_run;
+
+
+    if (strcmp(args[0], "exit") != 0)
+        {
+            pid = fork();
+            if (pid < 0) { 
+                fprintf(stderr, "Fork Failed");
+            }
+            else if ( pid == 0) { /* child process */
+                execvp(args[0], args);
+            }
+            else { /* parent process */
+                if (should_wait) {
+                    waitpid(pid, NULL, 0);
+                } else {
+                    should_wait = 0;
+                }
+            }
+            redirectIn("/dev/tty");
+            redirectOut("/dev/tty");
+        }
+    else {
+        exit(0);
+    }
+}
+
+void createPipe(char *args[])
+{
+    int fd[2];
+    pipe(fd);
+    dup2(fd[1], 1);
+    close(fd[1]);
+    //run(args);
+    dup2(fd[0], 0);
+    close(fd[0]);
+}
 struct command
 {
   const char **argv;

@@ -2,107 +2,67 @@
 
 #define MAX_LINE 1024
 
-void redirectIn(char *fileName)
+int	    exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
 {
-    int in = open(fileName, O_RDONLY);
-    dup2(in, 0);
-    close(in);
-}
+   int  pfd[2];
+   int  status;
+   int  pid2;
+   int  pid;
 
-void redirectOut(char *fileName)
-{
-    int out = open(fileName, O_WRONLY | O_TRUNC | O_CREAT, 0600);
-    dup2(out, 1);
-    close(out);
-}
-
-void run(char *args[])
-{
-    pid_t pid;
-	int should_wait;
-	int should_run;
-
-
-    if (strcmp(args[0], "exit") != 0)
-        {
-            pid = fork();
-            if (pid < 0) { 
-                fprintf(stderr, "Fork Failed");
-            }
-            else if ( pid == 0) { /* child process */
-                execvp(args[0], args);
-            }
-            else { /* parent process */
-                if (should_wait) {
-                    waitpid(pid, NULL, 0);
-                } else {
-                    should_wait = 0;
-                }
-            }
-            redirectIn("/dev/tty");
-            redirectOut("/dev/tty");
-        }
-    else {
-        exit(0);
-    }
-}
-
-void createPipe(char *args[])
-{
-    int fd[2];
-    pipe(fd);
-    dup2(fd[1], 1);
-    close(fd[1]);
-    //run(args);
-    dup2(fd[0], 0);
-    close(fd[0]);
-}
-
-
-static int    spwan_process(int in, int out, t_sashell *sashell, t_env *envs) {
-
-  pid_t pid;
-
-  if ((pid = fork ()) == 0)
+    /* parent process */
+    /* create  pipe */
+   if (pipe(pfd) == -1)
     {
-      if (in != 0)
-        {
-          dup2 (in, 0);
-          close (in);
-        }
-
-      if (out != 1)
-        {
-          dup2 (out, 1);
-          close (out);
-        }
-
-       exec_cmd(sashell->tokens, envs);
+        printf("pipe failed\n");
+        return 1;
     }
+ 
+   /* create the child 1 */
+   if ((pid = fork()) < 0)
+     {
+       printf("fork failed\n");
+       return 2;
+     }
 
-  return pid;
-}
+   /* child process1 */
+   if (pid == 0)
+     {
+        close(pfd[0]); /* close read side */
+        dup2(pfd[1], 1); /* redirect stdout to the write end of the pipe */
+        close(pfd[1]);
+        exec_cmd(sashell->tokens, envs, 2);
+        exit(EXIT_SUCCESS);
+     }
 
-int	exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
-{
-    int i = 0;
-    int in = 0;
-    int fd[2];
-    printf("%d\n", count);
-    while (i++ < count - 1)
+    /* parent process */
+    sashell = sashell->next;
+    
+
+
+    
+    /* create the child 2 */
+    if ((pid2 = fork()) < 0)
     {
-        pipe(fd);
-        spwan_process(in, fd[1], sashell, envs);
-        close(fd[1]);
-        in = fd[0];
-        sashell = sashell->next;
+        printf("fork failed\n");
+        return 2;
     }
-
-    if (in != 0) {
-        dup2(in, 0);
-        
+    /* child process2 */
+    if (pid2 == 0)
+    {
+        close(pfd[1]); /* close write side */
+        dup2(pfd[0], 0);
+        close(pfd[0]);
+        exec_cmd(sashell->tokens, envs, 2);
+        exit(EXIT_SUCCESS);
     }
-    exec_cmd(sashell->tokens, envs);
+    /* parent process */
+    close(pfd[0]);
+    close(pfd[1]);
+    waitpid(pid, &status, 0);
+    waitpid(pid2, &status, 0);
 
+    //printf("\nEnd Procees Pipe\n");
+    return 0;
 }
+
  
