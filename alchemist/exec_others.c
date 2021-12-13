@@ -107,7 +107,8 @@ void			exec_others(char **cmd, t_env *envs, char **g_envp)
 	free(path);
 	// free_double_arr(argv);
 	g_exit_value = status % 256;
-
+	printf("cmd executed\n");
+	exit(EXIT_SUCCESS);
 }
 
 void			execo_others(char **cmd, t_env *envs, char **g_envp)
