@@ -10,33 +10,35 @@ int	    exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
    int  pid;
 
     /* parent process */
+
+
     /* create  pipe */
    if (pipe(pfd) == -1)
     {
         printf("pipe failed\n");
         return 1;
     }
- 
-   /* create the child 1 */
-   if ((pid = fork()) < 0)
-     {
-       printf("fork failed\n");
-       return 2;
-     }
-
-   /* child process1 */
-   if (pid == 0)
-     {
+     
+    /* child process1 */
+    if (((pid = fork()) == 0))
+    {
         close(pfd[0]); /* close read side */
         dup2(pfd[1], 1); /* redirect stdout to the write end of the pipe */
         close(pfd[1]);
         exec_cmd(sashell->tokens, envs, 2);
         exit(EXIT_SUCCESS);
-     }
+    }
+    else if (pid < 0)
+    {
+        printf("fork failed\n");
+        return 2;
+    }
 
     /* parent process */
     sashell = sashell->next;
     
+
+
 
 
     
