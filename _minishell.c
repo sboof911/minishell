@@ -133,14 +133,12 @@ void			minishell(t_sashell *sashell, t_env *env, char *str)
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
 	{
-		printf("token count = %d\n", token.token_count);
+		//printf("token count = %d\n", token.token_count);
 		exec_pipe(str, env, sashell, token.token_count);
 	} 
 	else if (cmd)       	//else if (has_redir(line)) //exec_redir(line, envs);
 	 	exec_cmd(cmd, env, 1);
 
-
-	printf("Minishell End\n");
 	// while (token.token_count-- > 0){
 	// 	wait(NULL);
 	// }

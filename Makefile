@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-LEAKS = -g #-fsanitize=address
+LEAKS = -g --std=c99 #-fsanitize=address
 
 FLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
 		-L/goinfre/eelaazmi/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
