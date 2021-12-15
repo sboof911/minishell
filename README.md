@@ -10,17 +10,17 @@
 
 ### ERRORS EXEC :
 
-> export env1=""
-> export env1="exemple"
+- export env1=""
+- export env1="exemple"
 minishell(82240,0x1150815c0) malloc: *** error for object 0x7fa8ad500180: pointer being freed was not allocated
 minishell(82240,0x1150815c0) malloc: *** set a breakpoint in malloc_error_break to debug
-> -- ABSOLUTE COMMANDE LIKE /bin/ls
+- -- ABSOLUTE COMMANDE LIKE /bin/ls
 
 ### ERRORS PARS:
 
-> echo -nnn mm
-> echo '0' 'a' | cat -e
-> 'e'"c"h"o" hi | cat -e
-> echo '"   " adsjhfgjadhsf ha '
+- echo -nnn mm
+- echo '0' 'a' | cat -e
+- 'e'"c"h"o" hi | cat -e
+- echo '"   " adsjhfgjadhsf ha '
 
 
