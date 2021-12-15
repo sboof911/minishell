@@ -290,7 +290,7 @@ int				ft_atoi(const char *str);
 
 /* ---------------------------- exec_pipe -------------------------- */
 // void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
-int			exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
+int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
  int			has_redir(char *str);
 
 /* ---------------------------- exec_redir -------------------------- */
