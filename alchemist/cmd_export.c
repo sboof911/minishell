@@ -58,6 +58,7 @@ void			sort_double_arr(char **arr)
 		i++;
 	}
 }
+
 void			add_declare_for_export(char **arr)
 {
 	int		index;
@@ -81,7 +82,6 @@ static void		update_value(t_env *env, t_env **envs)
 	free(env->key);
 	free(env);
 }
-
 
 static void		add_env_or_modify_value(char **argv, t_env **envs)
 {

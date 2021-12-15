@@ -251,7 +251,6 @@ int				ft_isdigit(int c);
 /* -------------------------- _builtin ------------------------------- */
 
 int				is_builtin(char *command);
-char 			*ft_strl(char *s, size_t len);
 int     		exec_builtin(char **cmd, t_env *env);
 
 

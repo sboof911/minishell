@@ -96,7 +96,6 @@ void			free_sashell(t_sashell *sashell)
 
 int				ft_token_count(t_token *token, t_sashell *sashell)
 {
-
 	while (sashell)
 	{
 		token->token_count++;
@@ -121,28 +120,21 @@ void 			exec_cmd(char **cmd, t_env *env, int i)
 
 void			minishell(t_sashell *sashell, t_env *env, char *str)
 {
-	char **cmd;
-	int ret;
-	int 		index = 0;
+	char 		**cmd;
+	int 		ret;
+	int 		index;
 	t_token 	token;
 
+	index = 0;
 	token.token_count = 0;
 	cmd = sashell->tokens;
 	sashell->g_exit_value = 0;
-
+	
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
-	{
-		//printf("token count = %d\n", token.token_count);
 		exec_pipe(str, env, sashell, token.token_count);
-	} 
-	else if (cmd)       	//else if (has_redir(line)) //exec_redir(line, envs);
+	else if (cmd)
 	 	exec_cmd(cmd, env, 1);
-
-	// while (token.token_count-- > 0){
-	// 	wait(NULL);
-	// }
-
 }
 
 int		main(int argc, char **argv, char **envp)

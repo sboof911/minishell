@@ -31,24 +31,6 @@ int		is_builtin(char *command)
 	return (0);
 }
 
-char 	*ft_strl(char *s, size_t len)
-{
-	char *str;
-	size_t i;
-
-	i = 0;
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return (NULL);
-	while (i < len)
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
 int	 	exec_builtin(char **cmd, t_env *env)
 {
 	if (!env || !cmd)

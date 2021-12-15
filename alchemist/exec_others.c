@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	free_double_arr(char **arr)
+void			free_double_arr(char **arr)
 {
 	int		idx;
 
@@ -12,7 +12,7 @@ void	free_double_arr(char **arr)
 	free(arr);
 }
 
-void	free_env(t_env *env)
+void			free_env(t_env *env)
 {
 	t_env	*tmp;
 
@@ -27,14 +27,14 @@ void	free_env(t_env *env)
 	// free(env);
 }
 
-int		ft_puterror_fd(char *s1, char *s2, int fd)
+int				ft_puterror_fd(char *s1, char *s2, int fd)
 {
 	ft_putstr_fd(s1, fd);
 	ft_putendl_fd(s2, fd);
 	return (127);
 }
 
-int			is_exist_keyy(char *key, t_env *envs)
+int				is_exist_keyy(char *key, t_env *envs)
 {
 	int		len;
 	int		len_find;
@@ -48,7 +48,7 @@ int			is_exist_keyy(char *key, t_env *envs)
 	return (0);
 }
 
-char		*find_valuee(char *key, t_env *envs)
+char			*find_valuee(char *key, t_env *envs)
 {
 	while (envs)
 	{
@@ -59,7 +59,7 @@ char		*find_valuee(char *key, t_env *envs)
 	return ("");
 }
 
-char		*find_path(char *argv, t_env *envs)
+char			*find_path(char *argv, t_env *envs)
 {
 	int			idx;
 	char		*temp;
@@ -87,14 +87,11 @@ char		*find_path(char *argv, t_env *envs)
 	return (ft_strdup(argv));
 }
 
-void			exec_others(char **cmd, t_env *envs, char **g_envp)
+void			exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	int		status;
 	char	*path;
-	char	**argv;
 	pid_t	child;
-
-	argv = cmd;
 
 	path = find_path(argv[0], envs);
 	if (!path)
@@ -111,14 +108,11 @@ void			exec_others(char **cmd, t_env *envs, char **g_envp)
 	exit(EXIT_SUCCESS);
 }
 
-void			execo_others(char **cmd, t_env *envs, char **g_envp)
+void			execo_others(char **argv, t_env *envs, char **g_envp)
 {
 	int		status;
 	char	*path;
-	char	**argv;
 	pid_t	child;
-
-	argv = cmd;
 
 	path = find_path(argv[0], envs);
 	if (!path)

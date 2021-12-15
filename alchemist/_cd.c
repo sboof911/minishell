@@ -149,7 +149,7 @@ static int		go_to_path(int option, t_env *env)
 	return (ret);
 }
 
-char		*find_value(char *key, t_env *envs)
+char			*find_value(char *key, t_env *envs)
 {
 	while (envs)
 	{
@@ -160,7 +160,7 @@ char		*find_value(char *key, t_env *envs)
 	return ("");
 }
 
-void				ft_cd(char **argv, t_env *envs) 
+void			ft_cd(char **argv, t_env *envs) 
 {
 	char	*path;
 
