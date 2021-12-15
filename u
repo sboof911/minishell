@@ -1,9 +1,0 @@
-Makefile
-README.md
-_minishell.c
-alchemist
-f
-minishell
-minishell.h
-sboof
-u
