@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-LEAKS = -g --std=c99 #-fsanitize=address
+LEAKS = -g3 --std=c99 -fsanitize=address
 
 FLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
 		-L/goinfre/eelaazmi/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
@@ -34,7 +34,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc  $(FLAGS) $(SRC) -o $(NAME)
+	gcc  $(FLAGS) -g3 -fsanitize=address $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

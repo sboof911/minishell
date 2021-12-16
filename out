@@ -1,0 +1,6 @@
+Makefile
+_minishell.c
+alchemist
+minishell
+minishell.dSYM
+minishell.h
