@@ -108,19 +108,11 @@ typedef struct	s_env
 	struct s_env	*next;
 }				t_env;
 
-typedef struct	s_redir
-{
-	int			argc;
-	char		**argv;
-	char		**cmds;
-	char		*types;
-}				t_redir;
-
 typedef struct	s_sashell 
 {
 	char				**tokens;
 	char				**red;
-	
+//	int  				***fd; /* fd[count][1 || 0][fd]*/
 	int					error;
 	int					count;
 	int 			g_exit_value;
@@ -295,7 +287,7 @@ int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
 /* ---------------------------- exec_redir -------------------------- */
 void			exec_redir(char *line, t_env *envs);
 
-void 			exec_cmd(char **cmd, t_env *env, int i);
+void 			exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
 void 			print_sashell(t_sashell *sashell);
 void			execo_others(char **cmd, t_env *envs, char **g_envp);
 

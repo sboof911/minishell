@@ -104,9 +104,64 @@ int				ft_token_count(t_token *token, t_sashell *sashell)
 	return (token->token_count);
 }
 
-void 			exec_cmd(char **cmd, t_env *env, int i)
+void redirectIn(char *fileName)
+{
+    int in = open(fileName, O_RDONLY);
+    dup2(in, 0);
+    close(in);
+}
+
+void redirectOut(char *fileName)
+{
+    int out = open(fileName, O_WRONLY | O_TRUNC | O_CREAT, 0600);
+    dup2(out, 1);
+    close(out);
+}
+
+void 			exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 {
 	int ret;
+	int index_in = 0, index_out = 0;
+	int p = 0;
+	char *file_name;
+	int fd = 0;
+
+	if (sashell->red)
+    {
+        p = index_out = index_in = 0;
+        while (sashell->red[p])
+        {
+           // printf("redir%d |{%c}| %s\n",i, sashell->red[p][1],sashell->red[p]);
+			if (sashell->red[p][1] == '<')
+            {
+				index_in++;			  
+				file_name = ft_strdup(sashell->red[p] + 3);
+				//printf("read from {%s}\n",file_name);
+				// if ((fd = open(file_name, O_RDONLY)) < 0)
+				// {
+				// 	printf("no such file or directory: %s\n", file_name);
+				// 	g_exit_value = 1;
+				// 	close(fd);
+				// 	free(file_name);
+				// 	return;
+				// }
+				
+				redirectIn("/dev/tty");
+
+				free(file_name);
+			}
+            else if (sashell->red[p][1] == '>')
+            { 
+				index_out++;
+				//printf("write to {%s}\n", sashell->red[p] + 3);
+			}
+
+            p++;
+			// printf("End process redir\n");
+        }
+
+        //printf("in={%d} out={%d}\n\n", index_in, index_out);
+    }
 
 	if (cmd && is_builtin(cmd[0]))
 		ret = exec_builtin(cmd, env);
@@ -129,12 +184,14 @@ void			minishell(t_sashell *sashell, t_env *env, char *str)
 	token.token_count = 0;
 	cmd = sashell->tokens;
 	sashell->g_exit_value = 0;
-	
+
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
 		exec_pipe(str, env, sashell, token.token_count);
 	else if (cmd)
-	 	exec_cmd(cmd, env, 1);
+	 	exec_cmd(sashell, cmd, env, 1);
+	
+	printf("end minishell\n");
 }
 
 int		main(int argc, char **argv, char **envp)
@@ -153,14 +210,24 @@ int		main(int argc, char **argv, char **envp)
 		getcwd(cwd, PATH_MAX);
 		printf("\e[48;5;098m~%s", cwd);
 		line = readline("\e[48;5;098m $> \033[0m");
+		// if (line == NULL)
+		// 	fgets(line, 1024, stdin);
+		
+		printf("\ntaking line={%s}\n", line);
+
 		if (line == NULL)
-			break;
+		{
+			printf("\nbreak;\n");
+			break ;
+		}
 		if (strcmp(line , "") == 0)
 			continue;
 		else
 			{
 				add_history(line);
+				printf("add history\n");
 				sashell = parse_function(sashell, env, line);
+				printf("parse function\n");
 				if (sashell)
 				{
 					// printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
@@ -169,9 +236,10 @@ int		main(int argc, char **argv, char **envp)
 					// printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
 					// main-execution-process
 
+					printf("start minishell\n");
 					minishell(sashell, env, line);
 					free_sashell(sashell);
-
+					printf("end free and minishell\n");
 				}
 				// system("leaks minishell");
 			}
