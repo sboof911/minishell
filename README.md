@@ -1,30 +1,61 @@
-#  NOTES PART : EXECUTION  : 
+## NOTES PART : EXECUTION  : 
  
  --segfault when change the path with cd and use env or export--  [solved]
  - g_exit_status [not-yet]
 
-# Cmds :
+## Cmds :
 
 > curl -fsSL https://raw.githubusercontent.com/hakamdev/42homebrew/master/install.sh | zsh
 
 
-### ERRORS EXEC :
+## to do liste  : 
 
-- export env1=""
-- export env1="exemple"
-minishell(82240,0x1150815c0) malloc: *** error for object 0x7fa8ad500180: pointer being freed was not allocated
-minishell(82240,0x1150815c0) malloc: *** set a breakpoint in malloc_error_break to debug
++ handle absolute path case 1 [WORKING_ON_IT]
++ review export case  case 2 []
++ handle the exit status g_exit_value []
++ handle filename with spaces like case 4 []
++ handle echo -nnnn case 3 []
++ review quote and double quotes on cases 3 []
++ handle parsing when cmd< input || cmd> output  
++ 
+
+## ERRORS:
+
+### case 1 []
+
 - -- ABSOLUTE COMMANDE LIKE /bin/ls
 
-### ERRORS PARS:
+### case 2 []
+
+- export env1="".  
+- export env1="exemple"
+
+
+minishell(82240,0x1150815c0) malloc: *** error for object 0x7fa8ad500180: pointer being freed was not allocated
+minishell(82240,0x1150815c0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+- case export [] 
+export mehdi
+export mehdi=p
+~/Users/eelaazmi/Desktop/minishell $> env 
+
+### case 3 []
 
 - echo -nnn mm
+
 - echo '0' 'a' | cat -e
+
 - 'e'"c"h"o" hi | cat -e
+
 - echo '"   " adsjhfgjadhsf ha '
 
+### case 4 []
+
 - ls < input > output | ls < iSn DFSDF > o [DO NOT HANDLE THIS PSYCHOPATE CASE]
-*case start*
+<br>
+
+#### sashel STDOUT
+<br>
 =============================|     Tokens    |========================================
 *********************************
 pipe[1]...tokens[0] = ls
@@ -47,5 +78,10 @@ redir1 |{<}| 1< iSn
 redir1 |{>}| 1> o
 
 *case end*
+<br>
+
+### case 5 []
 
 - ls< README.md 
+
+

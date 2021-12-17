@@ -17,7 +17,7 @@ FLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
 
 NAME = minishell
 
-SRC =  	_minishell.c\
+SRC =  	minishell.c\
 		alchemist/_builtin.c alchemist/_echo.c alchemist/_pwd.c  alchemist/_cd.c alchemist/_tools.c\
 		alchemist/cmd_export.c alchemist/cmd_export_outil.c alchemist/cmd_unset.c alchemist/cmd_exit.c\
 		alchemist/exec_others.c alchemist/exec_pipe.c\

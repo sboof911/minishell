@@ -70,8 +70,15 @@ void	ft_putendl_fd(char *s, int fd)
 int		print(t_env *head) {
     t_env *current_node = head;
 
-   	while ( current_node != NULL)
+   	while (current_node != NULL)
 	{
+		/* code */
+		if (current_node->key == NULL || !current_node)
+			return 0;
+		if (current_node->value == NULL)
+			current_node->value = "";
+		/**/
+		
         printf("%s=%s\n", current_node->key, current_node->value);
         current_node = current_node->next;
     }
