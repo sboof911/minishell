@@ -83,39 +83,56 @@ static void		update_value(t_env *env, t_env **envs)
 	free(env);
 }
 
-static void		add_env_or_modify_value(char **argv, t_env **envs)
+static int		add_env_or_modify_value( int i ,char **argv, t_env **envs)
 {
 	t_env	*env;
 	t_env	*curr;
 	int		pos;
 	int index = 0;
 
-	if (!(env = (t_env *)malloc(sizeof(t_env))))
-		return ;
+	if (i)
+		{
+			if (!ft_isalpha(*argv[0]))
+				{
+					ft_putstr_fd("export: `", 1);
+					ft_putstr_fd(*argv, 1);
+					ft_putendl_fd("': not a valid identifier", 1);
+					return 1;
+				}
+			env->key 	= ft_strdup(*argv);
+			env->value  = ft_strdup("");
+		}
 
-	pos = ft_strchr(*argv, '=') - *argv;
-	env->key = ft_ssubstr(*argv, 0, pos);
-	env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
-	curr = *envs;
+	if (!(env = (t_env *)malloc(sizeof(t_env))))
+		return 0;
+
+	if (!i)
+	{
+		pos = ft_strchr(*argv, '=') - *argv;
+		env->key = ft_ssubstr(*argv, 0, pos);
+		env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
+		curr = *envs;
+	}
 
 	while (curr)
 	{
 		if (is_exist_key(env->key, curr))
 		{
 			update_value(env, &curr);
-			return ;
+			return 0;
 		}
 		curr = curr->next;
 	}
 	if (curr == NULL)
 		ft_lstadd_back(envs, ft_lstnew(env));
+	return 0;
 }
 
 void 			ft_export(char **cmd, t_env *env)
 {
 
     char **tmp;
-
+	int index = 0;
 
     if (cmd[1] == NULL)
     {
@@ -124,19 +141,18 @@ void 			ft_export(char **cmd, t_env *env)
         add_declare_for_export(tmp);
 		print_arr(tmp);
 		free_arr(tmp);
-        return ;
+        return;
     }
     cmd++;
 	while (*cmd)
-	{
+	{	index = 0;
 		if (!is_valid_env(*cmd))
 		{
-			ft_putstr_fd("export: `", 1);
-			ft_putstr_fd(*cmd, 1);
-			ft_putendl_fd("': not a valid identifier", 1);
-			return;
+			if (add_env_or_modify_value(++index,cmd, &env))
+				return;
 		}
-		add_env_or_modify_value(cmd, &env);
+		
+		add_env_or_modify_value(index,cmd, &env);
 		cmd++;
 	}
 }

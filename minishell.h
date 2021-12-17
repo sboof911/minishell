@@ -261,11 +261,10 @@ char			*ft_ssubstr(char const *s, unsigned int start, size_t len);
 
 /* ---------------------------- cmd_export -------------------------- */
 
-static void		add_env_or_modify_value(char **argv, t_env **envs);
+static int		add_env_or_modify_value(int index, char **argv, t_env **envs);
 void			sort_double_arr(char **arr);
 static void		update_value(t_env *env, t_env **envs);
 void			add_declare_for_export(char **arr);
-static void		add_env_or_modify_value(char **argv, t_env **envs);
 char 			**convert_env_to_arr(t_env *lst) ;
 void 			ft_export(char **cmd, t_env *env);
 

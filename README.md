@@ -10,17 +10,20 @@ taking bash as a reference to made a little nasty one that include :
 
 > curl -fsSL https://raw.githubusercontent.com/hakamdev/42homebrew/master/install.sh | zsh
 
-
 ## to do liste  : 
 
 + [_] handle absolute path case 1 
+    - [_] handle the token {/path/bin/exemple} -> parsing
+    - [_] executed the absolute and relatibve path tokens -> execution 
+
 + [_] review export  case 2 
+
+
 + [_] handle the exit status  g_exit_status 
 + [_] handle filename with spaces like case 4 
 + [_] handle echo -nnnn case 3 
 + [_] review quote and double quotes on cases 3 
 + [_] handle parsing when cmd< input || cmd> output   
-
 ## ERRORS:
 
 ### case 1 :

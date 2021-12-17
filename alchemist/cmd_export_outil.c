@@ -70,10 +70,17 @@ void		free_arr(char **arr)
 
 int			is_valid_env(char *arg)
 {
+	int i = -1;
+ 
 	if (ft_isdigit(arg[0]) || arg[0] == '=')
 		return (0);
 	if (ft_strchr(arg, '='))
+	{
+		while (arg[++i])
+			if (ft_isdigit(arg[i]))
+				return (0);
 		return (1);
+	}
 	return (0);
 }
 
