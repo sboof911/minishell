@@ -1,8 +1,11 @@
-## NOTES PART : EXECUTION  : 
+# 1337 cursus Project : minishell 
+taking bash as a reference to made a little nasty one that include : 
+- 1 
+- 2
+- 3
+- 4
+- 5 
  
- --segfault when change the path with cd and use env or export--  [solved]
- - g_exit_status [not-yet]
-
 ## Cmds :
 
 > curl -fsSL https://raw.githubusercontent.com/hakamdev/42homebrew/master/install.sh | zsh
@@ -10,36 +13,35 @@
 
 ## to do liste  : 
 
-+ handle absolute path case 1 [WORKING_ON_IT]
-+ review export case  case 2 []
-+ handle the exit status g_exit_value []
-+ handle filename with spaces like case 4 []
-+ handle echo -nnnn case 3 []
-+ review quote and double quotes on cases 3 []
-+ handle parsing when cmd< input || cmd> output  
-+ 
++ [_] handle absolute path case 1 
++ [_] review export  case 2 
++ [_] handle the exit status  g_exit_status 
++ [_] handle filename with spaces like case 4 
++ [_] handle echo -nnnn case 3 
++ [_] review quote and double quotes on cases 3 
++ [_] handle parsing when cmd< input || cmd> output   
 
 ## ERRORS:
 
-### case 1 []
+### case 1 :
 
 - -- ABSOLUTE COMMANDE LIKE /bin/ls
 
-### case 2 []
+### case 2 :
 
 - export env1="".  
 - export env1="exemple"
-
 
 minishell(82240,0x1150815c0) malloc: *** error for object 0x7fa8ad500180: pointer being freed was not allocated
 minishell(82240,0x1150815c0) malloc: *** set a breakpoint in malloc_error_break to debug
 
 - case export [] 
+
 export mehdi
 export mehdi=p
 ~/Users/eelaazmi/Desktop/minishell $> env 
 
-### case 3 []
+### case 3 :
 
 - echo -nnn mm
 
@@ -49,7 +51,7 @@ export mehdi=p
 
 - echo '"   " adsjhfgjadhsf ha '
 
-### case 4 []
+### case 4 :
 
 - ls < input > output | ls < iSn DFSDF > o [DO NOT HANDLE THIS PSYCHOPATE CASE]
 <br>
@@ -80,7 +82,7 @@ redir1 |{>}| 1> o
 *case end*
 <br>
 
-### case 5 []
+### case 5 :
 
 - ls< README.md 
 
