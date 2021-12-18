@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:40:17 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/07 15:59:45 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/18 04:16:42 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_sashell	*command_parse(t_sashell *sashell, char **tab, t_env *env)
 t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 {
 	char	**help;
+	int		i = 0;
 
 	sashell = initialize(sashell);
 	help = split_pipe(tab, ' ');
@@ -49,8 +50,7 @@ t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 			sashell = parse_red(sashell, help, 0, 0);
 			sashell->compt.position++;
 		}
-		else if (ft_isalpha(help[sashell->compt.position][0])
-			|| sashell->compt.tokens > 0)
+		else
 			sashell = command_parse(sashell, help, env);
 	}
 	sashell->tokens[sashell->compt.tokens] = 0;
@@ -107,7 +107,7 @@ t_sashell	*parse_time(char **tab, t_env *env)
 	return (sashell);
 }
 
-t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
+t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line, int shlvl)
 {
 	char	**tab;
 
@@ -117,6 +117,7 @@ t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 		tab = delete_spaces(tab);
 		sashell = parse_time(tab, env);
 		ft_free(tab, ft_count_tab(tab));
+		sashell = final_check(sashell);
 		red_open(sashell);
 		free(line);
 		return (sashell);

@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/06 23:46:26 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/18 23:39:20 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ t_sashell		*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env);
 t_sashell		*next_sashell(t_sashell *sashell, t_env *env, char **tab);
 t_sashell		*parse_time(char **tab, t_env *env);
 char			**delete_spaces(char **tab);
-t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line);
+t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line, int shlvl); // check this
+t_sashell		*final_check(t_sashell *sashell);
 
 
 /* --------------------- rederiction ------------------------------*/
@@ -182,7 +183,7 @@ t_sashell		*arg_parse(t_sashell *sashell, char **tab, t_env *env);
 
 /* --------------------- Errors parsing ------------------------------*/
 int				check_red(char *line, int i);
-int				check_quotes(char *line);
+int				check_quotes(char *line, int i);
 int				help_check_pipe(char *line, int i, int compt1, int compt2);
 int				check_pipe(char *line, int i, int pipe, int compt1);
 int				help_check_sytax(char *line, int i);

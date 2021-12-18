@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:37:32 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/07 00:01:41 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/18 04:17:05 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ char	*heredoc(t_sashell *sashell, int i)
 
 	random_string = generate_random_value();
 	fd = open(random_string, O_CREAT | O_RDWR, S_IRWXU);
-	signal(SIGQUIT, &quit_handlerherdoc);
-	signal(SIGINT, &quit_handlerherdoc);
+	// signal(SIGQUIT, &quit_handlerherdoc);
+	// signal(SIGINT, &quit_handlerherdoc);
 	while (420)
 	{
 		line = readline("> ");
@@ -93,7 +93,7 @@ t_sashell	*red_open(t_sashell *sashell)
 	while (sashell)
 	{
 		i = 0;
-		while (sashell->red[i] != '\0')
+		while (sashell->red[i] != 0)
 		{
 			if (sashell->red[i][0] == '2' && sashell->red[i][1] == '<')
 			{

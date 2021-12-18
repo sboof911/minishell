@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _minishell.c                                       :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/07 15:39:05 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/18 23:38:12 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,36 +70,61 @@ void	minishell(t_sashell *sashell, t_env *env, char *str)
 		g_exit_value = exec_cmd(sashell, cmd, env, 1);
 }
 
+int		find_shlvl(t_env *env)
+{
+	t_env	*tmp;
+	int		i;
+
+	tmp = env;
+	while (env)
+	{
+		if (ft_strncmp(env->key, "SHLVL", 5) == 0)
+		{
+			i = ft_atoi(env->value);
+			env = tmp;
+			return (i);
+		}
+		env = env->next;
+	}
+	return (-1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
 	t_sashell	*sashell;
 	t_env		*env;
 	char		cwd[PATH_MAX];
+	int			shlvl;
 
 	g_envp = envp;
 	signal(SIGQUIT, &quit_handler);
 	signal(SIGINT, &quit_handler);
 	env = split_env(env, envp);
+	// shlvl = find_shlvl(env);
+	// printf("THIS IS SHLVL = %d\n", shlvl);
 	while (1)
 	{
 		getcwd(cwd, PATH_MAX);
 		printf("\e[48;5;098m~%s", cwd);
+
 		line = readline("\e[48;5;098m $> \033[0m");
 		if (line == NULL)
 			break ;
-		if (strcmp(line, "") == 0)
-			continue ;
+		if (strcmp(line , "") == 0)
+			continue;
 		else
 		{
 			add_history(line);
-			sashell = parse_function(sashell, env, line);
+			sashell = parse_function(sashell, env, line, shlvl);
 			if (sashell)
 			{
 				// printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
 				// print_sashell(sashell);
 				// printf("%d\n", sashell->compt.tokens);
 				// printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
+				// main-execution-process
+
 				minishell(sashell, env, line);
 				free_sashell(sashell);
 			}

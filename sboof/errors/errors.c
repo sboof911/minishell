@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:35:20 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/11 03:11:36 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/18 03:33:19 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ int	check_red(char *line, int i)
 	return (1);
 }
 
-int	check_quotes(char *line)
+int	check_quotes(char *line, int i)
 {
-	int	i;
 	int	compt1;
 	int	compt2;
 
-	i = 0;
 	compt1 = 0;
 	compt2 = 0;
 	while (line[i] != '\0')
@@ -114,18 +112,24 @@ int	check_sytaxerr(char *line)
 	compt2 = 0;
 	pipe = 0;
 	i = 0;
-	if (!help_check_sytax(line, 0))
-		return (0);
 	while (line[i] != '\0' && line[i] == ' ')
 		i++;
-	if ((line[i] != '>' && line[i] != '<') && (!ft_isalpha(line[i])))
-	{
-		ft_putstr("SASHELL : Syntax Error\n");
+	if (!help_check_sytax(line, i))
 		return (0);
-	}
+	// if ((line[i] != '>' && line[i] != '<') && ((!ft_isalpha(line[i])) && line[i] != '.' && line[i] != '/'))
+	// {
+	// 	ft_putstr("SASHELL : Syntax Error\n");
+	// 	return (0);
+	// }
+	// if (line[i] == '/' && line[i + 1] == '/')
+	// {
+	// 	ft_putstr("SASHELL : Syntax Error\n");
+	// 	return (0);
+	// }
 	if (check_pipe(line, i, 0, 0) != 1)
 	{
-		ft_putstr("SASHELL : Syntax Error // pipe\n");
+		g_exit_value = 127;
+		ft_putstr("SASHELL : Syntax Error\n");
 		return (0);
 	}
 	return (1);

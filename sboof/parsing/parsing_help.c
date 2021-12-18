@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:50:30 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/06 23:51:21 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/18 04:00:04 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,42 @@ int	ft_count_tab(char **tab)
 			i++;
 	}
 	return (i);
+}
+
+t_sashell	*final_check(t_sashell *sashell)
+{
+	t_sashell	*tmp;
+	int			i;
+	int			j;
+
+	tmp = sashell;
+	while (sashell)
+	{
+		i = 0;
+		while (sashell->tokens[i])
+		{
+			if (!ft_strncmp(sashell->tokens[i], "echo", 4))
+			{
+				i++;
+				while (sashell->tokens[i][0] == '-')
+				{
+					j = 1;
+					while (sashell->tokens[i][j] == 'n')
+						j++;
+					if (sashell->tokens[i][j])
+						break;
+					else
+					{
+						free(sashell->tokens[i]);
+						sashell->tokens[i] = ft_strdup("-n");
+					}
+					i++;
+				}
+			}
+			i++;
+		}
+		sashell = sashell->next;
+	}
+	sashell = tmp;
+	return (sashell);
 }
