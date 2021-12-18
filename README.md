@@ -50,6 +50,7 @@ taking bash as a reference to made a little nasty one that include :
 ### case 4 :
 
 - ls < input > output | ls < iSn DFSDF > o [DO NOT HANDLE THIS PSYCHOPATE CASE]
+- ls < input > output | ls < "iSn DFSDF" > o                                [CHECK]
 <br>
 
 #### sashel STDOUT
