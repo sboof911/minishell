@@ -20,7 +20,7 @@ NAME = minishell
 SRC =  	minishell.c\
 		alchemist/_builtin.c alchemist/_echo.c alchemist/_pwd.c  alchemist/_cd.c alchemist/_tools.c\
 		alchemist/cmd_export.c alchemist/cmd_export_outil.c alchemist/cmd_unset.c alchemist/cmd_exit.c\
-		alchemist/exec_others.c alchemist/exec_pipe.c\
+		alchemist/exec_others.c alchemist/exec_pipe.c alchemist/exec_redire.c minishell_outils.c\
 		sboof/outils/ft_split.c sboof/outils/outils_help.c sboof/outils/ft_strdup.c sboof/outils/ft_strlen.c \
 		sboof/outils/ft_isalpha.c sboof/outils/ft_putchar.c sboof/outils/ft_putstr.c sboof/outils/ft_strjoin.c \
 		sboof/outils/ft_putnbr.c sboof/outils/split_pipe.c sboof/outils/ft_strchr.c sboof/outils/ft_substr.c \

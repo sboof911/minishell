@@ -59,7 +59,6 @@ int		ft_echo(char **args, int fd)
 			i++;
 		}
 	}
-
 	if (n_option == 0)
 		write(fd, "\n", 1);
 	return (SUCCESS);

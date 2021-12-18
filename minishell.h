@@ -112,7 +112,6 @@ typedef struct	s_sashell
 {
 	char				**tokens;
 	char				**red;
-//	int  				***fd; /* fd[count][1 || 0][fd]*/
 	int					error;
 	int					count;
 	int 			g_exit_value;
@@ -199,6 +198,26 @@ t_sashell		*red_open(t_sashell *sashell);
 /* --------------------- signals ------------------------------*/
 void			quit_handler(int num);
 
+
+
+
+/* --------------------- minishell ------------------------------*/
+int	ft_token_count(t_token *token, t_sashell *sashell);
+int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
+void	minishell(t_sashell *sashell, t_env *env, char *str);
+
+
+/* --------------------- minishell_outis ------------------------------*/
+t_env			*fill_env(t_env *env, char *envp);
+t_env			*split_env(t_env *env, char **envp);
+void 			print_sashell(t_sashell *sashell);
+void			free_sashell(t_sashell *sashell);
+
+
+
+
+
+
 /* --------------------- exec_others ------------------------------*/
 void			free_double_arr(char **arr);
 void			free_env(t_env *env);
@@ -206,7 +225,7 @@ int				ft_puterror_fd(char *s1, char *s2, int fd);
 int				is_exist_keyy(char *key, t_env *envs);
 char			*find_valuee(char *key, t_env *envs);
 char			*find_path(char *argv, t_env *envs);
-void			exec_others(char **cmd, t_env *envs, char **g_envp);
+int			exec_others(char **cmd, t_env *envs, char **g_envp);
 
 /* ----------------------- 	ft_echo	------------------------------ */
 
@@ -286,9 +305,11 @@ int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
 /* ---------------------------- exec_redir -------------------------- */
 void			exec_redir(char *line, t_env *envs);
 
-void 			exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
+int 			exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
 void 			print_sashell(t_sashell *sashell);
-void			execo_others(char **cmd, t_env *envs, char **g_envp);
+int				execo_others(char **cmd, t_env *envs, char **g_envp);
+int 			exec_redirection(t_sashell *sashell, int *in, int *out, int *fd, int *index_in, int *index_out);
+void 			reset_redirection(int *in, int *out, int *fd);
 
 
 #endif

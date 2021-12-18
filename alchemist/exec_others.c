@@ -87,7 +87,7 @@ char			*find_path(char *argv, t_env *envs)
 	return (ft_strdup(argv));
 }
 
-void			exec_others(char **argv, t_env *envs, char **g_envp)
+int			exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	int		status;
 	char	*path;
@@ -97,7 +97,7 @@ void			exec_others(char **argv, t_env *envs, char **g_envp)
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
-		return ;
+		return EXIT_FAILURE;
 	}
 	if (execve(path, argv, g_envp) == -1)
 		exit(ft_puterror_fd(argv[0], ": command not found", 2));
@@ -108,7 +108,7 @@ void			exec_others(char **argv, t_env *envs, char **g_envp)
 	exit(EXIT_SUCCESS);
 }
 
-void			execo_others(char **argv, t_env *envs, char **g_envp)
+int			execo_others(char **argv, t_env *envs, char **g_envp)
 {
 	int		status;
 	char	*path;
@@ -118,7 +118,7 @@ void			execo_others(char **argv, t_env *envs, char **g_envp)
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
-		return ;
+		return (g_exit_value = EXIT_FAILURE);
 	}
 	child = fork();
 	if (child == 0)
@@ -130,5 +130,5 @@ void			execo_others(char **argv, t_env *envs, char **g_envp)
 	wait(&status);
 	free(path);
 	// free_double_arr(argv);
-	g_exit_value = status % 256;
+	return (g_exit_value = status % 256);
 }

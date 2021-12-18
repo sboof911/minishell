@@ -131,6 +131,7 @@ void 			ft_export(char **cmd, t_env *env)
         add_declare_for_export(tmp);
 		print_arr(tmp);
 		free_arr(tmp);
+		g_exit_value = 0;
         return;
     }
     cmd++;
@@ -144,6 +145,7 @@ void 			ft_export(char **cmd, t_env *env)
 					ft_putstr_fd("export: `", 1);
 					ft_putstr_fd(*cmd, 1);
 					ft_putendl_fd("': not a valid identifier", 1);
+					g_exit_value = 127;
 					return;
 				}
 			else 

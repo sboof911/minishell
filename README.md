@@ -16,19 +16,20 @@ taking bash as a reference to made a little nasty one that include :
 
 + [_] handle the exit status  g_exit_status 
 
-+ [-] append in 
++ echo $?
+
 
 + [_] handle absolute path case 1 
     - [_] handle the token {/path/bin/exemple} -> parsing
     - [_] executed the absolute and relatibve path tokens -> execution 
-    
-+ [_] handle echo -nnnn case 3 
 
+
+
+------------------------------------------------
 
 + [_] handle filename with spaces like case 4 
 + [_] review quote and double quotes on cases 3 
 + [_] handle parsing when cmd< input || cmd> output
-
 
 ## ERRORS:
 

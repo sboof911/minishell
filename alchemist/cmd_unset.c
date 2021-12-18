@@ -41,4 +41,5 @@ void			ft_unset(char **argv, t_env *envs)
 		delete_key(*argv, envs);
 		argv++;
 	}
+	g_exit_value = 0;
 }
