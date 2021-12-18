@@ -16,11 +16,11 @@ taking bash as a reference to made a little nasty one that include :
 
 + [_] handle the exit status  g_exit_status 
 
-+ echo $?
++ echo $?                                                                   [CHECK]
 
 
 + [_] handle absolute path case 1 
-    - [_] handle the token {/path/bin/exemple} -> parsing
+    - [_] handle the token {/path/bin/exemple} -> parsing                   [CHECK]
     - [_] executed the absolute and relatibve path tokens -> execution 
 
 
@@ -35,17 +35,17 @@ taking bash as a reference to made a little nasty one that include :
 
 ### case 1 :
 
-- -- ABSOLUTE COMMANDE LIKE /bin/ls
+- -- ABSOLUTE COMMANDE LIKE /bin/ls                                         [CHECK]
 
 ### case 3 :
 
-- echo -nnn mm
+- echo -nnn mm                                                              [CHECK]
 
-- echo '0' 'a' | cat -e
+- echo '0' 'a' | cat -e                                                     [CHECK]
 
-- 'e'"c"h"o" hi | cat -e
+- 'e'"c"h"o" hi | cat -e                                                    [CHECK]
 
-- echo '"   " adsjhfgjadhsf ha '
+- echo '"   " adsjhfgjadhsf ha '                                            [BONUS]
 
 ### case 4 :
 
