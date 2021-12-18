@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:50:30 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/19 00:16:17 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 00:22:54 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,53 +65,4 @@ int	ft_count_tab(char **tab)
 			i++;
 	}
 	return (i);
-}
-
-t_sashell	*help_final(t_sashell *sashell, int i, int j)
-{
-	while (sashell->tokens[i])
-	{
-		if (!ft_strncmp(sashell->tokens[i], "echo", 4))
-		{
-			i++;
-			if (!sashell->tokens[i])
-				break ;
-			while (sashell->tokens[i][0] == '-')
-			{
-				j = 1;
-				while (sashell->tokens[i][j] == 'n')
-					j++;
-				if (sashell->tokens[i][j])
-					break ;
-				else
-				{
-					free(sashell->tokens[i]);
-					sashell->tokens[i] = ft_strdup("-n");
-				}
-				i++;
-			}
-		}
-		i++;
-	}
-	return (sashell);
-}
-
-t_sashell	*final_check(t_sashell *sashell)
-{
-	t_sashell	*tmp;
-	int			i;
-	int			j;
-
-	tmp = sashell;
-	while (sashell)
-	{
-		i = 0;
-		sashell = help_final(sashell, i, j);
-		i = -1;
-		while (sashell->red[++i])
-			sashell->red[i] = delete_quotes(sashell->red[i]);
-		sashell = sashell->next;
-	}
-	sashell = tmp;
-	return (sashell);
 }
