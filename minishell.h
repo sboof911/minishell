@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/18 23:39:20 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 00:15:46 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ t_sashell		*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env);
 t_sashell		*next_sashell(t_sashell *sashell, t_env *env, char **tab);
 t_sashell		*parse_time(char **tab, t_env *env);
 char			**delete_spaces(char **tab);
-t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line, int shlvl); // check this
+t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line); // check this
 t_sashell		*final_check(t_sashell *sashell);
 
 

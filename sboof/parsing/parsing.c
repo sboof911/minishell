@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:40:17 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/18 04:16:42 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 00:15:37 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_sashell	*command_parse(t_sashell *sashell, char **tab, t_env *env)
 t_sashell	*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env)
 {
 	char	**help;
-	int		i = 0;
 
 	sashell = initialize(sashell);
 	help = split_pipe(tab, ' ');
@@ -107,7 +106,7 @@ t_sashell	*parse_time(char **tab, t_env *env)
 	return (sashell);
 }
 
-t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line, int shlvl)
+t_sashell	*parse_function(t_sashell *sashell, t_env *env, char *line)
 {
 	char	**tab;
 

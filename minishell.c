@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/18 23:47:55 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 00:15:50 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(line);
-			sashell = parse_function(sashell, env, line, shlvl);
+			sashell = parse_function(sashell, env, line);
 			if (sashell)
 			{
-				printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
-				print_sashell(sashell);
-				printf("%d\n", sashell->compt.tokens);
-				printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
+				// printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
+				// print_sashell(sashell);
+				// printf("%d\n", sashell->compt.tokens);
+				// printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
 				// main-execution-process
 
 				minishell(sashell, env, line);

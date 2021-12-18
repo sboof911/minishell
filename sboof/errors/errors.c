@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:35:20 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/18 03:33:19 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 00:19:00 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,20 +116,10 @@ int	check_sytaxerr(char *line)
 		i++;
 	if (!help_check_sytax(line, i))
 		return (0);
-	// if ((line[i] != '>' && line[i] != '<') && ((!ft_isalpha(line[i])) && line[i] != '.' && line[i] != '/'))
-	// {
-	// 	ft_putstr("SASHELL : Syntax Error\n");
-	// 	return (0);
-	// }
-	// if (line[i] == '/' && line[i + 1] == '/')
-	// {
-	// 	ft_putstr("SASHELL : Syntax Error\n");
-	// 	return (0);
-	// }
 	if (check_pipe(line, i, 0, 0) != 1)
 	{
 		g_exit_value = 127;
-		ft_putstr("SASHELL : Syntax Error\n");
+		ft_putstr("SASHELL : Syntax error\n");
 		return (0);
 	}
 	return (1);
