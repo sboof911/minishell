@@ -90,11 +90,11 @@ int			is_exist_key(char *key, t_env *envs)
 	int		len_find = 0;
 	int		len_exist = 0;
 
-	printf("key: %s\n", key);
-	printf("envs->key: %s\n", envs->key);
+	// printf("key: %s\n", key);
+	// printf("envs->key: %s\n", envs->key);
 	len_find = ft_strlen(key);
 	len_exist = ft_strlen((envs->key));
-		printf("key: %s\n", key);
+		// printf("key: %s\n", key);
 
 	len = (len_find > len_exist) ? len_find : len_exist;
 	if (ft_strncmp(key, envs->key, len) == 0)

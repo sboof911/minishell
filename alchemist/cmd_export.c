@@ -76,7 +76,7 @@ void			add_declare_for_export(char **arr)
 
 static void		update_value(t_env *env, t_env **envs)
 {
-	free(env->value); 
+	//free(env->value); 
 	free((*envs)->value);
 	(*envs)->value = env->value;
 	free(env->key);
@@ -93,19 +93,18 @@ static int		add_env_or_modify_value(int i ,char **argv, t_env **envs)
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return 0;
 
-		pos = ft_strchr(*argv, '=') - *argv;
-		if (pos < 1)
-			{
-				env->key = ft_strdup(*argv);
-				env->value = ft_strdup("");	
-			}
-		else 
-		{
-			env->key = ft_ssubstr(*argv, 0, pos);
-			env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
-			curr = *envs;
-		}
-		
+	pos = ft_strchr(*argv, '=') - *argv;
+	if (pos < 1)
+	{
+		env->key = ft_ssubstr(*argv, 0, ft_strlen(*argv));
+		env->value = ft_ssubstr("", 0, 1);
+	}
+	else 
+	{
+		env->key = ft_ssubstr(*argv, 0, pos);
+		env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
+	}
+	curr = *envs;
 	while (curr)
 	{
 		if (is_exist_key(env->key, curr))
@@ -122,7 +121,6 @@ static int		add_env_or_modify_value(int i ,char **argv, t_env **envs)
 
 void 			ft_export(char **cmd, t_env *env)
 {
-
     char **tmp;
 	int index = 0;
 
@@ -151,10 +149,12 @@ void 			ft_export(char **cmd, t_env *env)
 			else 
 				{
 					add_env_or_modify_value(index, cmd, &env);
+					cmd++;
 					continue;
 				}
 		}
-		add_env_or_modify_value(index,cmd, &env);
+		else 
+			add_env_or_modify_value(index,cmd, &env);
 		cmd++;
 	}
 }

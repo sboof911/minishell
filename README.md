@@ -14,37 +14,27 @@ taking bash as a reference to made a little nasty one that include :
 
 ## to do liste  : 
 
++ [_] handle the exit status  g_exit_status 
+
++ [-] append in 
+
 + [_] handle absolute path case 1 
     - [_] handle the token {/path/bin/exemple} -> parsing
     - [_] executed the absolute and relatibve path tokens -> execution 
-
-+ [_] review export  case 2 
-+ [-] append in 
-
-+ [_] handle the exit status  g_exit_status 
-+ [_] handle filename with spaces like case 4 
+    
 + [_] handle echo -nnnn case 3 
+
+
++ [_] handle filename with spaces like case 4 
 + [_] review quote and double quotes on cases 3 
-+ [_] handle parsing when cmd< input || cmd> output   
++ [_] handle parsing when cmd< input || cmd> output
+
+
 ## ERRORS:
 
 ### case 1 :
 
 - -- ABSOLUTE COMMANDE LIKE /bin/ls
-
-### case 2 :
-
-- export env1="".  
-- export env1="exemple"
-
-minishell(82240,0x1150815c0) malloc: *** error for object 0x7fa8ad500180: pointer being freed was not allocated
-minishell(82240,0x1150815c0) malloc: *** set a breakpoint in malloc_error_break to debug
-
-- case export [] 
-
-export mehdi
-export mehdi=p
-~/Users/eelaazmi/Desktop/minishell $> env 
 
 ### case 3 :
 
