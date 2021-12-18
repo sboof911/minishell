@@ -83,37 +83,29 @@ static void		update_value(t_env *env, t_env **envs)
 	free(env);
 }
 
-static int		add_env_or_modify_value( int i ,char **argv, t_env **envs)
+static int		add_env_or_modify_value(int i ,char **argv, t_env **envs)
 {
 	t_env	*env;
 	t_env	*curr;
 	int		pos;
 	int index = 0;
 
-	if (i)
-		{
-			if (!ft_isalpha(*argv[0]))
-				{
-					ft_putstr_fd("export: `", 1);
-					ft_putstr_fd(*argv, 1);
-					ft_putendl_fd("': not a valid identifier", 1);
-					return 1;
-				}
-			env->key 	= ft_strdup(*argv);
-			env->value  = ft_strdup("");
-		}
-
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return 0;
 
-	if (!i)
-	{
 		pos = ft_strchr(*argv, '=') - *argv;
-		env->key = ft_ssubstr(*argv, 0, pos);
-		env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
-		curr = *envs;
-	}
-
+		if (pos < 1)
+			{
+				env->key = ft_strdup(*argv);
+				env->value = ft_strdup("");	
+			}
+		else 
+		{
+			env->key = ft_ssubstr(*argv, 0, pos);
+			env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
+			curr = *envs;
+		}
+		
 	while (curr)
 	{
 		if (is_exist_key(env->key, curr))
@@ -145,13 +137,23 @@ void 			ft_export(char **cmd, t_env *env)
     }
     cmd++;
 	while (*cmd)
-	{	index = 0;
+	{	
+		index = 0;
 		if (!is_valid_env(*cmd))
 		{
-			if (add_env_or_modify_value(++index,cmd, &env))
-				return;
+			if (!ft_isalpha(*cmd[0]))
+				{
+					ft_putstr_fd("export: `", 1);
+					ft_putstr_fd(*cmd, 1);
+					ft_putendl_fd("': not a valid identifier", 1);
+					return;
+				}
+			else 
+				{
+					add_env_or_modify_value(index, cmd, &env);
+					continue;
+				}
 		}
-		
 		add_env_or_modify_value(index,cmd, &env);
 		cmd++;
 	}

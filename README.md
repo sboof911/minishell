@@ -10,6 +10,8 @@ taking bash as a reference to made a little nasty one that include :
 
 > curl -fsSL https://raw.githubusercontent.com/hakamdev/42homebrew/master/install.sh | zsh
 
+> sudo apt-get install lib32readline8 lib32readline-dev libreadline-dev ; gcc $(SRCS) -L/usr/local/lib -I/usr/local/include -lreadline -o $(NAME) 
+
 ## to do liste  : 
 
 + [_] handle absolute path case 1 
@@ -17,7 +19,7 @@ taking bash as a reference to made a little nasty one that include :
     - [_] executed the absolute and relatibve path tokens -> execution 
 
 + [_] review export  case 2 
-
++ [-] append in 
 
 + [_] handle the exit status  g_exit_status 
 + [_] handle filename with spaces like case 4 
