@@ -12,46 +12,29 @@
 
 #include "../minishell.h"
 
-void	sort_double_arr(char **arr)
-{
-	int		i;
-	char	*temp;
-
-	i = 0;
-	while (arr[i + 1])
-	{
-		if (ft_strncmp(arr[i], arr[i + 1], 100) > 0)
-		{
-			temp = arr[i];
-			arr[i] = arr[i + 1];
-			arr[i + 1] = temp;
-			i = -1;
-		}
-		i++;
-	}
-}
-
-void	add_declare_for_export(char **arr)
-{
-	int		index;
-	char	*tmp;
-
-	index = 0;
-	while (arr[index])
-	{
-		tmp = ft_sdtrjoin("declare -x ", arr[index]);
-		free(arr[index]);
-		arr[index] = tmp;
-		index++;
-	}
-}
-
 static void	update_value(t_env *env, t_env **envs)
 {
 	free((*envs)->value);
 	(*envs)->value = env->value;
 	free(env->key);
 	free(env);
+}
+
+static void	assigne_value(char **argv, t_env *env)
+{
+	int	pos;
+
+	pos = ft_strchr(*argv, '=') - *argv;
+	if (pos < 1 || pos > (ft_strlen(*argv)))
+	{
+		env->key = ft_ssubstr(*argv, 0, ft_strlen(*argv));
+		env->value = ft_strdup("");
+	}
+	else
+	{
+		env->key = ft_ssubstr(*argv, 0, pos);
+		env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
+	}
 }
 
 static int	add_env_or_modify_value(char **argv, t_env **envs)
@@ -64,17 +47,7 @@ static int	add_env_or_modify_value(char **argv, t_env **envs)
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!(env))
 		return (0);
-	pos = ft_strchr(*argv, '=') - *argv;
-	if (pos < 1 || pos > (ft_strlen(*argv)))
-	{
-		env->key = ft_ssubstr(*argv, 0, ft_strlen(*argv));
-		env->value = ft_strdup("");
-	}
-	else
-	{
-		env->key = ft_ssubstr(*argv, 0, pos);
-		env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
-	}
+	assigne_value(argv, env);
 	curr = *envs;
 	while (curr)
 	{
@@ -90,21 +63,27 @@ static int	add_env_or_modify_value(char **argv, t_env **envs)
 	return (0);
 }
 
+int	export_process(t_env *env)
+{
+	char	**tmp;
+
+	tmp = convert_env_to_arr(env);
+	sort_double_arr(tmp);
+	add_declare_for_export(tmp);
+	print_arr(tmp);
+	free_arr(tmp);
+	g_exit_value = 0;
+	return (1);
+}
+
 void	ft_export(char **cmd, t_env *env)
 {
 	char	**tmp;
 	int		index;
 
 	if (cmd[1] == NULL)
-	{
-		tmp = convert_env_to_arr(env);
-		sort_double_arr(tmp);
-		add_declare_for_export(tmp);
-		print_arr(tmp);
-		free_arr(tmp);
-		g_exit_value = 0;
-		return ;
-	}
+		if (export_process(env))
+			return ;
 	cmd++;
 	while (*cmd)
 	{
@@ -113,11 +92,8 @@ void	ft_export(char **cmd, t_env *env)
 		{
 			if (!ft_isalpha(*cmd[0]))
 			{
-				ft_putstr_fd("export: `", 1);
-				ft_putstr_fd(*cmd, 1);
-				ft_putendl_fd("': not a valid identifier", 1);
-				g_exit_value = 127;
-				return ;
+				if (error_display(cmd))
+					return ;
 			}
 			else
 				add_env_or_modify_value(cmd, &env);

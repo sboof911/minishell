@@ -32,3 +32,12 @@ char	*ft_strcpy(char *dst, const char *src)
 	*(dst + i) = '\0';
 	return (dst);
 }
+
+void	reset_redirection(int *in, int *out, int *fd)
+{
+	dup2(*in, 0);
+	dup2(*out, 1);
+	close(*fd);
+	close(*out);
+	close(*in);
+}

@@ -112,7 +112,7 @@ int	    exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
       tmp_fd = pfd[0];
       close(pfd[1]);
   }
-
+  
   close(pfd[0]);
   i = 0;
   while (i < count)

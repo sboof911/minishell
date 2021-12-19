@@ -122,6 +122,15 @@ typedef struct	s_sashell
 	struct s_sashell	*next;
 }					t_sashell;
 
+typedef struct  s_redir
+{
+	int					fd;
+	int					in;
+	int					out;
+	int					index_in;
+	int					index_out;
+}					t_redir;
+
 /* --------------------- libft outils ------------------------------*/
 char	    	**protection_malloc2(char **str, int compt);
 char	    	*protection_malloc1(char *str, int compt);
@@ -200,9 +209,9 @@ t_sashell		*red_open(t_sashell *sashell);
 void			quit_handler(int num);
 
 /* --------------------- minishell ------------------------------*/
-int	ft_token_count(t_token *token, t_sashell *sashell);
-int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
-void	minishell(t_sashell *sashell, t_env *env, char *str);
+int				ft_token_count(t_token *token, t_sashell *sashell);
+int				exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
+void			minishell(t_sashell *sashell, t_env *env, char *str);
 
 /* --------------------- minishell_outis ------------------------------*/
 t_env			*fill_env(t_env *env, char *envp);
@@ -238,10 +247,6 @@ void			ft_exit(char **argv);
 static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
 
-
-
-
-
 /* ---------------------cmd_export_outil --------------------- */
 int				is_valid_env(char *arg);
 int				is_exist_key(char *key, t_env *envs);
@@ -254,21 +259,20 @@ char			*ft_sdtrjoin(const char *s1, const char *s2);
 int				ft_lstsize(t_env *lst);
 void			print_arr(char **arr);
 void			free_arr(char **arr);
-void			sort_double_arr(char **arr);
 
 /* ---------------------cmd_export_outil3 --------------------- */
 char			**convert_env_to_arr(t_env *lst);
-
+void			sort_double_arr(char **arr);
+void			add_declare_for_export(char **arr);
+int				error_display(char **cmd);
+void	assign_key_value(t_env *lst, char **keytmp, char **valuetmp);
 
 /* --------------------- cmd_export --------------------- */
-void				export_error(char **cmd);
-void			export_list_process(t_env *env);
+int				export_process(t_env *env);
 void			ft_export(char **cmd, t_env *env);
-
-
-
-
-
+static void		update_value(t_env *env, t_env **envs);
+static void		assigne_value(char **argv, t_env *env);
+static int		add_env_or_modify_value(char **argv, t_env **envs);
 
 /* ---------------------------- cmd_unset -------------------------- */
 
@@ -298,13 +302,14 @@ char			*ft_strrchr(const char *str, int c);
 /* --------------------- _tools2.c ------------------------------*/
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dst, const char *src);
+void	reset_redirection(int *in, int *out, int *fd);
 
-
-
-
-
-
-
+/* ---------------------------- exec_redir -------------------------- */
+int				exec_redirection(t_sashell *sashell, t_redir *redir);
+int				open_file(char *file_name, t_sashell *sashell, int p);
+int				redir_ou(t_redir *redir, char *file_name, t_sashell *sashell, int p);
+int				redirection(t_sashell *sashell, t_redir *redir, char *file_name, int p);
+int				exec_redirection(t_sashell *sashell, t_redir *redir);
 
 
 
@@ -317,12 +322,6 @@ char			*ft_substr(const char *str, unsigned int start, size_t len);
 char			*ft_strchr(const char *str, int c);
 int				ft_isdigit(int c);
 
-
-
-
-
-
-
 /* ---------------------------- cmd_export -------------------------- */
 
 static int		add_env_or_modify_value(char **argv, t_env **envs);
@@ -331,22 +330,12 @@ static void		update_value(t_env *env, t_env **envs);
 void			add_declare_for_export(char **arr);
 void 			ft_export(char **cmd, t_env *env);
 
-
-
-
 /* ---------------------------- exec_pipe -------------------------- */
 // void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
 int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
  int			has_redir(char *str);
 
-/* ---------------------------- exec_redir -------------------------- */
-void			exec_redir(char *line, t_env *envs);
 
-int 			exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
-void 			print_sashell(t_sashell *sashell);
-int				execo_others(char **cmd, t_env *envs, char **g_envp);
-int 			exec_redirection(t_sashell *sashell, int *in, int *out, int *fd, int *index_in, int *index_out);
-void 			reset_redirection(int *in, int *out, int *fd);
 
 
 #endif

@@ -25,17 +25,20 @@ int	ft_token_count(t_token *token, t_sashell *sashell)
 int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 {
 	int	ret;
+	t_redir redir;
+
 	int	in;
 	int	out;
 	int	index_in;
 	int	index_out;
 	int	fd;
 
-	index_in = 0;
-	index_out = 0;
+	redir.index_in = 0;
+	redir.index_out = 0;
 	if (sashell->red)
-		if (exec_redirection(sashell, &in, &out, &fd, &index_in, &index_out))
+		if (exec_redirection(sashell, &redir))
 			return (1);
+
 	if (cmd && is_builtin(cmd[0]))
 		exec_builtin(cmd, env);
 	else if (cmd && i > 1)
@@ -47,8 +50,8 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 		ft_putstr("minishell: command not found: ");
 		ret = 127;
 	}
-	if (index_in || index_out)
-		reset_redirection(&in, &out, &fd);
+	if (redir.index_in || redir.index_out)
+		reset_redirection(&redir.in, &redir.out, &redir.fd);
 	return (ret);
 }
 
