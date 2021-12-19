@@ -54,11 +54,12 @@ char	*find_path(char *argv, t_env *envs)
 
 int	exec_others(char **argv, t_env *envs, char **g_envp)
 {
-	int		status;
 	char	*path;
-	pid_t	child;
 
 	path = find_path(argv[0], envs);
+	if (*argv[0] == '.' || *argv[0] == '/')
+		if (check_path(path, argv[0]))
+			return (EXIT_FAILURE);
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
@@ -88,7 +89,6 @@ int	execo_others(char **argv, t_env *envs, char **g_envp)
 	int		status;
 	char	*path;
 	pid_t	child;
-	int		count;
 
 	path = find_path(argv[0], envs);
 	if (*argv[0] == '.' || *argv[0] == '/')

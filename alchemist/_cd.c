@@ -12,64 +12,6 @@
 
 #include "../minishell.h"
 
-static void	print_error(char **args)
-{
-	ft_putstr_fd("cd: ", 2);
-	if (args[2])
-		ft_putstr_fd("string not in pwd: ", 2);
-	else
-	{
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd(": ", 2);
-	}
-	ft_putendl_fd(args[1], 2);
-}
-
-static int	update_oldpwd(t_env *env)
-{
-	char	cwd[PATH_MAX];
-	char	*oldpwd;
-
-	if (getcwd(cwd, PATH_MAX) == NULL)
-		return (ERROR);
-	oldpwd = ft_sstrjoin("OLDPWD=", cwd);
-	if (!oldpwd)
-		return (ERROR);
-	if (is_in_env(env, oldpwd) == 0)
-		env_add(oldpwd, env);
-	ft_memdel(oldpwd);
-	return (SUCCESS);
-}
-
-static int	go_to_path(int option, t_env *env)
-{
-	int		ret;
-	char	*env_path;
-
-	env_path = NULL;
-	if (option == 0)
-	{
-		update_oldpwd(env);
-		env_path = get_env_path(env, "HOME", 4);
-		if (!env_path)
-			ft_putendl_fd("minishell : cd: HOME not set", STDERR);
-		if (!env_path)
-			return (ERROR);
-	}
-	else if (option == 1)
-	{
-		env_path = get_env_path(env, "OLDPWD", 6);
-		if (!env_path)
-			ft_putendl_fd("minishell : cd: OLDPWD not set", STDERR);
-		if (!env_path)
-			return (ERROR);
-		update_oldpwd(env);
-	}
-	ret = chdir(env_path);
-	ft_memdel(env_path);
-	return (ret);
-}
-
 char	*find_value(char *key, t_env *envs)
 {
 	while (envs)

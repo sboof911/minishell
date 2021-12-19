@@ -246,7 +246,7 @@ int				ft_pwd(void);
 
 /* ---------------------------- cmd_exit -------------------------- */
 void			ft_exit(char **argv);
-static int		ft_isdigit_str(char *str);
+// static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
 
 /* ---------------------cmd_export_outil --------------------- */
@@ -267,19 +267,19 @@ char			**convert_env_to_arr(t_env *lst);
 void			sort_double_arr(char **arr);
 void			add_declare_for_export(char **arr);
 int				error_display(char **cmd);
-void	assign_key_value(t_env *lst, char **keytmp, char **valuetmp);
+void			assign_key_value(t_env *lst, char **keytmp, char **valuetmp);
 
 /* --------------------- cmd_export --------------------- */
 int				export_process(t_env *env);
 void			ft_export(char **cmd, t_env *env);
-static void		update_value(t_env *env, t_env **envs);
-static void		assigne_value(char **argv, t_env *env);
-static int		add_env_or_modify_value(char **argv, t_env **envs);
+// static void		update_value(t_env *env, t_env **envs);
+// static void		assigne_value(char **argv, t_env *env);
+// static int		add_env_or_modify_value(char **argv, t_env **envs);
 
 /* ---------------------------- cmd_unset -------------------------- */
 
 void			ft_unset(char **argv, t_env *envs);
-static void		delete_key(char *argv, t_env *envs);
+// static void		delete_key(char *argv, t_env *envs);
 
 /* --------------------- exec_others ------------------------------*/
 char		*find_valuee(char *key, t_env *envs);
@@ -314,7 +314,7 @@ int				redirection(t_sashell *sashell, t_redir *redir, char *file_name, int p);
 int				exec_redirection(t_sashell *sashell, t_redir *redir);
 
 /* ---------------------------- exec_pipe -------------------------- */
-int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
+int				exec_pipe(t_env *envs, t_sashell *sashell, int count);
 void			init_redir(t_redir *redir);
 int				pipe_process(t_redir *redir, t_env *envs, t_sashell *sashell, pid_t *pid);
 int				process(t_redir *redir, t_sashell *sashell, int *pfd, int i);
@@ -325,33 +325,6 @@ int				pipe_child(t_sashell *sashell, t_redir *redir, int i);;
 int				pipe_redirection(t_sashell *sashell, t_redir *redir);
 int				pipe_redire_out(t_redir *redir, char *file_name);
 int				pipe_redire_in(t_redir *redir, char *file_name);
-
-
-
-
-
-
-
-/* ----------------------- 	ft_cd	------------------------------ */
-
-int				ft_pwd(void);
-int 			nb_args(char **argv);
-void			ft_putstr_fd(char *s, int fd);
-char			*ft_substr(const char *str, unsigned int start, size_t len);
-char			*ft_strchr(const char *str, int c);
 int				ft_isdigit(int c);
-
-/* ---------------------------- cmd_export -------------------------- */
-
-static int		add_env_or_modify_value(char **argv, t_env **envs);
-void			sort_double_arr(char **arr);
-static void		update_value(t_env *env, t_env **envs);
-void			add_declare_for_export(char **arr);
-void 			ft_export(char **cmd, t_env *env);
-
-/* ---------------------------- exec_pipe -------------------------- */
-// void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
-int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
-int			has_redir(char *str);
 
 #endif

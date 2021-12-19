@@ -75,7 +75,7 @@ void	init_redir(t_redir *redir)
 	redir->tmp_fd = 0;
 }
 
-int	exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
+int	exec_pipe(t_env *envs, t_sashell *sashell, int count)
 {
 	int			status;
 	pid_t		*pid;
@@ -91,5 +91,6 @@ int	exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count)
 	i = 0;
 	while (i < count)
 		waitpid(pid[i++], &status, 0);
+	free(pid);
 	return (g_exit_value = status);
 }

@@ -78,7 +78,6 @@ int	export_process(t_env *env)
 
 void	ft_export(char **cmd, t_env *env)
 {
-	char	**tmp;
 	int		index;
 
 	if (cmd[1] == NULL)

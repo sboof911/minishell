@@ -27,18 +27,12 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 	int	ret;
 	t_redir redir;
 
-	int	in;
-	int	out;
-	int	index_in;
-	int	index_out;
-	int	fd;
-
 	redir.index_in = 0;
 	redir.index_out = 0;
+	ret = 0;
 	if (sashell->red)
 		if (exec_redirection(sashell, &redir))
 			return (1);
-
 	if (cmd && is_builtin(cmd[0]))
 		exec_builtin(cmd, env);
 	else if (cmd && i > 1)
@@ -58,7 +52,6 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 void	minishell(t_sashell *sashell, t_env *env, char *str)
 {
 	char	**cmd;
-	int		ret;
 	int		index;
 	t_token	token;
 
@@ -68,7 +61,7 @@ void	minishell(t_sashell *sashell, t_env *env, char *str)
 	sashell->g_exit_value = 0;
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
-		g_exit_value = exec_pipe(str, env, sashell, token.token_count);
+		g_exit_value = exec_pipe(env, sashell, token.token_count);
 	else if (cmd)
 		g_exit_value = exec_cmd(sashell, cmd, env, 1);
 	//free_arr(cmd);
@@ -99,14 +92,16 @@ int	main(int argc, char **argv, char **envp)
 	t_sashell	*sashell;
 	t_env		*env;
 	char		cwd[PATH_MAX];
-	int			shlvl;
 
+	if (argc > 1)
+	{
+		printf("usage: ./minishell\n");
+		return (1);
+	}
 	g_envp = envp;
 	signal(SIGQUIT, &quit_handler);
 	signal(SIGINT, &quit_handler);
 	env = split_env(env, envp);
-	// shlvl = find_shlvl(env);
-	// printf("THIS IS SHLVL = %d\n", shlvl);
 	while (1)
 	{
 		getcwd(cwd, PATH_MAX);
@@ -123,12 +118,6 @@ int	main(int argc, char **argv, char **envp)
 			sashell = parse_function(sashell, env, line);
 			if (sashell)
 			{
-				// printf("\n\033[1;33m=============================|     Tokens    |========================================\033[0m\n");
-				// print_sashell(sashell);
-				// printf("%d\n", sashell->compt.tokens);
-				// printf("\n\033[1;33m=============================| End of Tokens |========================================\033[0m\n\n");
-				// main-execution-process
-
 				minishell(sashell, env, line);
 				free_sashell(sashell);
 			}

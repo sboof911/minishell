@@ -10,13 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-LEAKS = #-g3 --std=c99 -fsanitize=address
-
 AFLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include\
 		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror 
 
 MFLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
-		-L/goinfre/eelaazmi/.brew/opt/readline/lib #-Wall -Wextra -Werror
+		-L/goinfre/eelaazmi/.brew/opt/readline/lib -Wall -Wextra -Werror
 
 NAME = minishell
 

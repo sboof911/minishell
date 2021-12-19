@@ -3,9 +3,7 @@ taking bash as a reference to made a little nasty one that include :
 - 1 
 - 2
 - 3
-- 4
-- 5 
- 
+
 ## Cmds :
 
 > curl -fsSL https://raw.githubusercontent.com/hakamdev/42homebrew/master/install.sh | zsh
@@ -19,7 +17,8 @@ taking bash as a reference to made a little nasty one that include :
 - ls -l | cat '"Makefile"'                                                    [CHECK]
 - ls< README.md 
 
--------
+- /bin/cat | /bin/ls
+SASHELL : Syntax error-------
 
 #### execution
 
