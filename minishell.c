@@ -68,6 +68,7 @@ void	minishell(t_sashell *sashell, t_env *env, char *str)
 		g_exit_value = exec_pipe(str, env, sashell, token.token_count);
 	else if (cmd)
 		g_exit_value = exec_cmd(sashell, cmd, env, 1);
+	//free_arr(cmd);
 }
 
 int		find_shlvl(t_env *env)
@@ -128,7 +129,7 @@ int	main(int argc, char **argv, char **envp)
 				minishell(sashell, env, line);
 				free_sashell(sashell);
 			}
-			// system("leaks minishell");
+			system("leaks minishell");
 		}
 	}
 	free_env(env);

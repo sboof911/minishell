@@ -162,7 +162,6 @@ void 			ft_export(char **cmd, t_env *env)
 		}
 		else 
 			add_env_or_modify_value(cmd, &env);
-
 		cmd++;
 	}
 }
