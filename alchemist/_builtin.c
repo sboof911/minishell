@@ -12,42 +12,42 @@
 
 #include "../minishell.h"
 
-int		is_builtin(char *command)
+int	is_builtin(char *command)
 {
-	if (strcmp(command, "echo") == 0)
+	if (ft_strncmp(command, "echo", ft_strlen(command)) == 0)
 		return (1);
-	if (strcmp(command, "cd") == 0)
+	if (ft_strncmp(command, "cd", ft_strlen(command)) == 0)
 		return (1);
-	if (strcmp(command, "pwd") == 0)
+	if (ft_strncmp(command, "pwd", ft_strlen(command)) == 0)
 		return (1);
-	if (strcmp(command, "env") == 0)
+	if (ft_strncmp(command, "env", ft_strlen(command)) == 0)
 		return (1);
-	if (strcmp(command, "export") == 0)
+	if (ft_strncmp(command, "export", ft_strlen(command)) == 0)
 		return (1);
-	if (strcmp(command, "unset") == 0)
+	if (ft_strncmp(command, "unset", ft_strlen(command)) == 0)
 		return (1);
-	if (strcmp(command, "exit") == 0)
+	if (ft_strncmp(command, "exit", ft_strlen(command)) == 0)
 		return (1);
 	return (0);
 }
 
-int	 	exec_builtin(char **cmd, t_env *env)
+int	exec_builtin(char **cmd, t_env *env)
 {
 	if (!env || !cmd)
-		return -1;
-	if (!strcmp(cmd[0], "pwd"))
+		return (-1);
+	if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
 		g_exit_value = ft_pwd();
-	else if (!strcmp(cmd[0], "echo"))
+	else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
 		g_exit_value = ft_echo(cmd, 1);
-	else if (!strcmp(cmd[0], "cd"))
+	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
 		ft_cd(cmd, env);
-	else if (!strcmp(cmd[0], "env"))
+	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
 		g_exit_value = print(env);
-	else if (!strcmp(cmd[0], "export"))
+	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
 		ft_export(cmd, env);
-	else if (!strcmp(cmd[0], "unset"))
+	else if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
 		ft_unset(cmd, env);
-	else if (!strcmp(cmd[0], "exit"))
+	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
 		ft_exit(cmd);
-	return 1;
+	return (1);
 }

@@ -157,7 +157,6 @@ t_sashell		*parse_time(char **tab, t_env *env);
 char			**delete_spaces(char **tab);
 t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line);
 
-
 /* --------------------- rederiction ------------------------------*/
 t_sashell		*check_file(t_sashell *sashell, char *tab, int i);
 int				count_quotes(char *tab);
@@ -200,12 +199,10 @@ t_sashell		*red_open(t_sashell *sashell);
 /* --------------------- signals ------------------------------*/
 void			quit_handler(int num);
 
-
 /* --------------------- minishell ------------------------------*/
 int	ft_token_count(t_token *token, t_sashell *sashell);
 int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
 void	minishell(t_sashell *sashell, t_env *env, char *str);
-
 
 /* --------------------- minishell_outis ------------------------------*/
 t_env			*fill_env(t_env *env, char *envp);
@@ -213,6 +210,55 @@ t_env			*split_env(t_env *env, char **envp);
 void 			print_sashell(t_sashell *sashell);
 void			free_sashell(t_sashell *sashell);
 
+/* -------------------------- _builtin ------------------------------- */
+
+int				is_builtin(char *command);
+int     		exec_builtin(char **cmd, t_env *env);
+
+/* ----------------------- 	_cd	------------------------------ */
+void 			ft_cd(char  **cmd, t_env *env);
+char			*find_value(char *key, t_env *envs);
+
+/* ----------------------- 	_cd_outils ------------------------------ */
+char			*get_env_path(t_env *env, const char *var, size_t len);
+int				is_in_env(t_env *env, char *args);
+char			*get_env_name(char *dest, const char *src);
+int				env_add(const char *value, t_env *env);
+
+/* ----------------------- 	ft_echo	------------------------------ */
+void			ft_putstr_fd(char *s, int fd);
+int 			nb_args(char **argv);
+int				ft_echo(char **args, int fd);
+
+/* ----------------------- 	ft_pwd	------------------------------ */
+int				ft_pwd(void);
+
+/* ---------------------------- cmd_exit -------------------------- */
+void			ft_exit(char **argv);
+static int		ft_isdigit_str(char *str);
+int				ft_atoi(const char *str);
+
+/* ---------------------cmd_export_outil --------------------- */
+int				is_valid_env(char *arg);
+int				is_exist_key(char *key, t_env *envs);
+void	    	ft_lstadd_back(t_env **lst, t_env *new);
+t_env	    	*ft_lstnew(t_env *content);
+char			*ft_ssubstr(char const *s, unsigned int start, size_t len);
+
+/* ---------------------cmd_export_outil2 --------------------- */
+char			*ft_sdtrjoin(const char *s1, const char *s2);
+int				ft_lstsize(t_env *lst);
+void			print_arr(char **arr);
+void			free_arr(char **arr);
+void			sort_double_arr(char **arr);
+
+/* ---------------------cmd_export_outil3 --------------------- */
+
+
+/* --------------------- cmd_export --------------------- */
+void				export_error(char **cmd);
+void			export_list_process(t_env *env);
+void			ft_export(char **cmd, t_env *env);
 
 
 
@@ -227,18 +273,11 @@ char			*find_valuee(char *key, t_env *envs);
 char			*find_path(char *argv, t_env *envs);
 int			exec_others(char **cmd, t_env *envs, char **g_envp);
 
-/* ----------------------- 	ft_echo	------------------------------ */
 
-void			ft_putstr_fd(char *s, int fd);
-int 			nb_args(char **argv);
-int				ft_echo(char **args, int fd);
 
-/* ----------------------- 	ft_pwd	------------------------------ */
 
-int				ft_pwd(void);
 
-/* ----------------------- 	ft_cd	------------------------------ */
-void 			ft_cd(char  **cmd, t_env *env);
+
 
 
 /* ----------------------- 	tools	------------------------------ */
@@ -248,10 +287,13 @@ void			*ft_memdel(void *ptr);
 void			ft_putendl_fd(char *s, int fd);
 int 			print(t_env *head);
 char			*ft_strrchr(const char *str, int c);
+int				ft_strcmp(const char *s1, const char *s2);
+
+char	*ft_strcpy(char *dst, const char *src);
+
 
 /* ----------------------- 	ft_cd	------------------------------ */
 
-static void		print_error(char **args);
 int				ft_pwd(void);
 int 			nb_args(char **argv);
 void			ft_putstr_fd(char *s, int fd);
@@ -259,23 +301,10 @@ char			*ft_substr(const char *str, unsigned int start, size_t len);
 char			*ft_strchr(const char *str, int c);
 int				ft_isdigit(int c);
 
-/* -------------------------- _builtin ------------------------------- */
-
-int				is_builtin(char *command);
-int     		exec_builtin(char **cmd, t_env *env);
 
 
-/* ---------------------cmd_export_outils export --------------------- */
 
-char			*ft_sdtrjoin(const char *s1, const char *s2);
-int				ft_lstsize(t_env *lst);
-void			print_arr(char **arr);
-void			free_arr(char **arr);
-int				is_valid_env(char *arg);
-int				is_exist_key(char *key, t_env *envs);
-void	    	ft_lstadd_back(t_env **lst, t_env *new);
-t_env	    	*ft_lstnew(t_env *content);
-char			*ft_ssubstr(char const *s, unsigned int start, size_t len);
+
 
 
 /* ---------------------------- cmd_export -------------------------- */
@@ -292,10 +321,7 @@ void 			ft_export(char **cmd, t_env *env);
 void			ft_unset(char **argv, t_env *envs);
 static void		delete_key(char *argv, t_env *envs);
 
-/* ---------------------------- cmd_exit -------------------------- */
-void			ft_exit(char **argv);
-static int		ft_isdigit_str(char *str);
-int				ft_atoi(const char *str);
+
 
 /* ---------------------------- exec_pipe -------------------------- */
 // void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);

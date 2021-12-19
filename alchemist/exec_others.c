@@ -113,6 +113,12 @@ int			execo_others(char **argv, t_env *envs, char **g_envp)
 	pid_t	child;
 
 	path = find_path(argv[0], envs);
+	if (*argv[0] == '.' || *argv[0] == '/')
+		if (ft_strncmp(path, *argv, ft_strlen(path)))
+		{
+			ft_puterror_fd(argv[0], ": no such file or directory", 2);
+			return EXIT_FAILURE;
+		}
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);

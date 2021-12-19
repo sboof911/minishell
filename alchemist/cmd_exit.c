@@ -12,14 +12,14 @@
 
 #include "../minishell.h"
 
-int			    ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int				sign;
 	long long		value;
 
 	sign = 1;
 	value = 0;
-	while (*str == ' ' || *str == '\f' || *str == '\n' ||
+	while (*str == ' ' || *str == '\f' || *str == '\n' || \
 			*str == '\r' || *str == '\t' || *str == '\v')
 		str++;
 	if (*str == '-')
@@ -31,11 +31,13 @@ int			    ft_atoi(const char *str)
 		value = value * 10 + (*str - '0');
 		str++;
 	}
-	value = sign == 1 ? value : -value;
-	return (value);
+	if (sign == 1)
+		return (value);
+	else
+		return (-value);
 }
 
-static int		ft_isdigit_str(char *str)
+static int	ft_isdigit_str(char *str)
 {
 	int	idx;
 
@@ -49,7 +51,7 @@ static int		ft_isdigit_str(char *str)
 	return (1);
 }
 
-void			ft_exit(char **argv)
+void	ft_exit(char **argv)
 {
 	int	argc;
 
@@ -59,24 +61,15 @@ void			ft_exit(char **argv)
 	if (argc == 1)
 	{
 		ft_putendl_fd("exit", 1);
-		g_exit_value = 0;
 		exit(EXIT_SUCCESS);
 	}
 	else if (argc == 2 && ft_isdigit_str(argv[1]))
-	{
-		g_exit_value = 0;
 		exit(ft_atoi(argv[1]));
-	}
 	else if (argc > 2 && ft_isdigit_str(argv[1]))
-	{
 		ft_putendl_fd("bash: exit: too many arguments", 1);
-		g_exit_value = 127;
-	
-	}
 	else
 	{
 		ft_putstr_fd("bash: exit: numeric argument required", 1);
-		g_exit_value = 0;
 		exit(2);
 	}
 }

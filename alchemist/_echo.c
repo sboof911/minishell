@@ -26,9 +26,9 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-int 	nb_args(char **argv)
+int	nb_args(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (argv[i])
@@ -36,7 +36,7 @@ int 	nb_args(char **argv)
 	return (i);
 }
 
-int		ft_echo(char **args, int fd)
+int	ft_echo(char **args, int fd)
 {
 	int		i;
 	int		n_option;
@@ -50,7 +50,6 @@ int		ft_echo(char **args, int fd)
 			n_option = 1;
 			i++;
 		}
-
 		while (args[i])
 		{
 			ft_putstr_fd(args[i], 1);
