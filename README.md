@@ -83,4 +83,9 @@ redir1 |{>}| 1> o
 
 - ls< README.md 
 
-
+### case 6 :
+#### parsing
+echo -   "asdasdasdas "dasas "dsadas "
+ls -l | cat '"Makefile"'
+#### execution
+export po | env 

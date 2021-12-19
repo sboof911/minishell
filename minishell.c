@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/19 00:15:50 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 01:18:10 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	main(int argc, char **argv, char **envp)
 				minishell(sashell, env, line);
 				free_sashell(sashell);
 			}
-			// system("leaks minishell");
+			system("leaks minishell");
 		}
 	}
 	free_env(env);
