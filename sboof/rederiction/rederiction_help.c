@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:47:19 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/06 23:48:14 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 02:51:58 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	count_quotes(char *tab)
 	compt2 = 0;
 	while (tab[i] != '\0')
 	{
-		if (tab[i] == '"')
+		if (tab[i] == '"' && compt2 % 2 == 0)
 			compt1++;
-		if (tab[i] == '\'')
+		if (tab[i] == '\'' && compt1 % 2 == 0)
 			compt2++;
 		i++;
 	}

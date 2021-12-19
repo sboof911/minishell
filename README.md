@@ -85,7 +85,7 @@ redir1 |{>}| 1> o
 
 ### case 6 :
 #### parsing
-echo -   "asdasdasdas "dasas "dsadas "
-ls -l | cat '"Makefile"'
+echo -   "asdasdasdas "dasas "dsadas "                                      [CHECK]
+ls -l | cat '"Makefile"'                                                    [CHECK]
 #### execution
 export po | env 

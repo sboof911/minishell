@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:16:36 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/19 00:30:56 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 02:50:58 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,27 @@ t_sashell	*check_file(t_sashell *sashell, char *tab, int i)
 char	*delete_quotes(char *tab)
 {
 	int		i;
-	int		compt;
+	int		compt1;
+	int		compt2;
 	int		j;
 	char	*str;
 
 	j = -1;
-	compt = 0;
-	compt = count_quotes(tab);
-	str = (char *)malloc(ft_strlen(tab) - compt + 1);
+	compt1 = 0;
+	compt2 = 0;
+	str = (char *)malloc(ft_strlen(tab) - count_quotes(tab) + 1);
 	i = -1;
 	while (tab[++i] != '\0')
 	{
+		if (tab[i] == '"')
+			compt1++;
+		else if (tab[i] == '\'')
+			compt2++;
 		if (tab[i] != '"' && tab[i] != '\'')
+			str[++j] = tab[i];
+		else if (tab[i] == '"' && compt2 % 2 == 1)
+			str[++j] = tab[i];
+		else if (tab[i] == '\'' && compt1 % 2 == 1)
 			str[++j] = tab[i];
 	}
 	str[++j] = '\0';

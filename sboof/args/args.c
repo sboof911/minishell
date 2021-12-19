@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:22:17 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/19 00:22:10 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/19 02:42:15 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_sashell	*help_final(t_sashell *sashell, int i, int j)
 					j++;
 				if (sashell->tokens[i][j])
 					break ;
-				else
+				else if (j > 1)
 				{
 					free(sashell->tokens[i]);
 					sashell->tokens[i] = ft_strdup("-n");
