@@ -12,10 +12,10 @@
 
 #include "../minishell.h"
 
-static void		delete_key(char *argv, t_env *envs)
+static void	delete_key(char *argv, t_env *envs)
 {
-	t_env *curr;
-	t_env *next;
+	t_env	*curr;
+	t_env	*next;
 
 	curr = envs;
 	while (curr->next)
@@ -33,7 +33,7 @@ static void		delete_key(char *argv, t_env *envs)
 	}
 }
 
-void			ft_unset(char **argv, t_env *envs)
+void	ft_unset(char **argv, t_env *envs)
 {
 	argv++;
 	while (*argv)

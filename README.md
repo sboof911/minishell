@@ -89,3 +89,5 @@ echo -   "asdasdasdas "dasas "dsadas "                                      [CHE
 ls -l | cat '"Makefile"'                                                    [CHECK]
 #### execution
 export po | env 
+
+echo -n | /bin/ls | grep l

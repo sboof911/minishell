@@ -238,6 +238,10 @@ void			ft_exit(char **argv);
 static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
 
+
+
+
+
 /* ---------------------cmd_export_outil --------------------- */
 int				is_valid_env(char *arg);
 int				is_exist_key(char *key, t_env *envs);
@@ -253,6 +257,7 @@ void			free_arr(char **arr);
 void			sort_double_arr(char **arr);
 
 /* ---------------------cmd_export_outil3 --------------------- */
+char			**convert_env_to_arr(t_env *lst);
 
 
 /* --------------------- cmd_export --------------------- */
@@ -264,32 +269,43 @@ void			ft_export(char **cmd, t_env *env);
 
 
 
+
+/* ---------------------------- cmd_unset -------------------------- */
+
+void			ft_unset(char **argv, t_env *envs);
+static void		delete_key(char *argv, t_env *envs);
+
 /* --------------------- exec_others ------------------------------*/
+char		*find_valuee(char *key, t_env *envs);
+char		*find_path(char *argv, t_env *envs);
+int			exec_others(char **argv, t_env *envs, char **g_envp);
+int			check_path(char *path, char *argv);
+int			execo_others(char **argv, t_env *envs, char **g_envp);
+
+/* --------------------- exec_others_outils ------------------------------*/
 void			free_double_arr(char **arr);
 void			free_env(t_env *env);
 int				ft_puterror_fd(char *s1, char *s2, int fd);
 int				is_exist_keyy(char *key, t_env *envs);
-char			*find_valuee(char *key, t_env *envs);
-char			*find_path(char *argv, t_env *envs);
-int			exec_others(char **cmd, t_env *envs, char **g_envp);
 
-
-
-
-
-
-
-
-/* ----------------------- 	tools	------------------------------ */
-
+/* --------------------- _tools.c ------------------------------*/
 char			*ft_sstrjoin(char const *s1, char const *s2);
 void			*ft_memdel(void *ptr);
 void			ft_putendl_fd(char *s, int fd);
 int 			print(t_env *head);
 char			*ft_strrchr(const char *str, int c);
-int				ft_strcmp(const char *s1, const char *s2);
 
-char	*ft_strcpy(char *dst, const char *src);
+/* --------------------- _tools2.c ------------------------------*/
+int				ft_strcmp(const char *s1, const char *s2);
+char			*ft_strcpy(char *dst, const char *src);
+
+
+
+
+
+
+
+
 
 
 /* ----------------------- 	ft_cd	------------------------------ */
@@ -313,13 +329,8 @@ static int		add_env_or_modify_value(char **argv, t_env **envs);
 void			sort_double_arr(char **arr);
 static void		update_value(t_env *env, t_env **envs);
 void			add_declare_for_export(char **arr);
-char 			**convert_env_to_arr(t_env *lst) ;
 void 			ft_export(char **cmd, t_env *env);
 
-/* ---------------------------- cmd_unset -------------------------- */
-
-void			ft_unset(char **argv, t_env *envs);
-static void		delete_key(char *argv, t_env *envs);
 
 
 

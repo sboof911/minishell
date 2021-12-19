@@ -1,54 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_others.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/19 16:51:08 by eelaazmi          #+#    #+#             */
+/*   Updated: 2021/12/19 16:51:10 by eelaazmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-void			free_double_arr(char **arr)
-{
-	int		idx;
-
-	if (!arr)
-		return ;
-	idx = -1;
-	while (arr[++idx])
-		free(arr[idx]);
-	free(arr);
-}
-
-void			free_env(t_env *env)
-{
-	t_env	*tmp;
-
-	while (env)
-	{
-		tmp = env->next;
-		free(env->key);
-		free(env->value);
-		free(env);
-		env = tmp;
-	}
-	// free(env);
-}
-
-int				ft_puterror_fd(char *s1, char *s2, int fd)
-{
-	ft_putstr_fd(s1, fd);
-	ft_putendl_fd(s2, fd);
-	return (127);
-}
-
-int				is_exist_keyy(char *key, t_env *envs)
-{
-	int		len;
-	int		len_find;
-	int		len_exist;
-
-	len_find = ft_strlen(key);
-	len_exist = ft_strlen((char *)(envs->key));
-	len = (len_find > len_exist) ? len_find : len_exist;
-	if (ft_strncmp(key, envs->key, len) == 0) 
-		return (1);
-	return (0);
-}
-
-char			*find_valuee(char *key, t_env *envs)
+char	*find_valuee(char *key, t_env *envs)
 {
 	while (envs)
 	{
@@ -59,7 +23,7 @@ char			*find_valuee(char *key, t_env *envs)
 	return ("");
 }
 
-char			*find_path(char *argv, t_env *envs)
+char	*find_path(char *argv, t_env *envs)
 {
 	int			idx;
 	char		*temp;
@@ -67,7 +31,8 @@ char			*find_path(char *argv, t_env *envs)
 	char		**paths;
 	struct stat	s;
 
-	if (!(temp = find_valuee("PATH", envs)))
+	temp = find_valuee("PATH", envs);
+	if (!(temp))
 		return (NULL);
 	paths = ft_split(temp, ':');
 	idx = -1;
@@ -87,7 +52,7 @@ char			*find_path(char *argv, t_env *envs)
 	return (ft_strdup(argv));
 }
 
-int			exec_others(char **argv, t_env *envs, char **g_envp)
+int	exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	int		status;
 	char	*path;
@@ -97,28 +62,38 @@ int			exec_others(char **argv, t_env *envs, char **g_envp)
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
-		return EXIT_FAILURE;
+		return (EXIT_FAILURE);
 	}
 	if (execve(path, argv, g_envp) == -1)
 		exit(ft_puterror_fd(argv[0], ": command not found", 2));
 	free(path);
-	// free_double_arr(argv);
 	exit(EXIT_SUCCESS);
 }
 
-int			execo_others(char **argv, t_env *envs, char **g_envp)
+int	check_path(char *path, char *argv)
+{
+	int	count;
+
+	count = ft_strlen(path);
+	if (ft_strncmp(path, argv, count))
+	{
+		ft_puterror_fd(argv, ": no such file or directory", 2);
+		return (1);
+	}
+	return (0);
+}
+
+int	execo_others(char **argv, t_env *envs, char **g_envp)
 {
 	int		status;
 	char	*path;
 	pid_t	child;
+	int		count;
 
 	path = find_path(argv[0], envs);
 	if (*argv[0] == '.' || *argv[0] == '/')
-		if (ft_strncmp(path, *argv, ft_strlen(path)))
-		{
-			ft_puterror_fd(argv[0], ": no such file or directory", 2);
-			return EXIT_FAILURE;
-		}
+		if (check_path(path, argv[0]))
+			return (EXIT_FAILURE);
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
@@ -133,6 +108,5 @@ int			execo_others(char **argv, t_env *envs, char **g_envp)
 	}
 	wait(&status);
 	free(path);
-	// free_double_arr(argv);
 	return (g_exit_value = status % 256);
 }

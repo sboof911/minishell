@@ -20,13 +20,10 @@ char	*ft_sstrjoin(char const *s1, char const *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
-		j++;
-	if (!(new = malloc(sizeof(char) * (i + j + 1))))
+	i = ft_strlen((char *)s1);
+	j = ft_strlen((char *)s2);
+	new = malloc(sizeof(char) * (i + j + 1));
+	if (!(new))
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -41,7 +38,6 @@ char	*ft_sstrjoin(char const *s1, char const *s2)
 	return (new);
 }
 
-
 void	*ft_memdel(void *ptr)
 {
 	if (ptr)
@@ -50,7 +46,6 @@ void	*ft_memdel(void *ptr)
 	}
 	return (NULL);
 }
-
 
 void	ft_putendl_fd(char *s, int fd)
 {
@@ -67,17 +62,19 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-int		print(t_env *head) {
-    t_env *current_node = head;
+int	print(t_env *head)
+{
+	t_env	*current_node;
 
-   	while (current_node != NULL)
+	current_node = head;
+	while (current_node != NULL)
 	{
 		if (current_node->key == NULL || !current_node)
-			return 0;
+			return (g_exit_value = 0);
 		if (ft_strlen(current_node->value) > 0)
-        	printf("%s=%s\n", current_node->key, current_node->value);
-        current_node = current_node->next;
-    }
+			printf("%s=%s\n", current_node->key, current_node->value);
+		current_node = current_node->next;
+	}
 	return (g_exit_value = 0);
 }
 
@@ -97,26 +94,4 @@ char	*ft_strrchr(const char *str, int c)
 		len--;
 	}
 	return (0);
-}
-
-int		ft_strcmp(const char *s1, const char *s2)
-{
-	int		i;
-
-	i = 0;
-	while (*(s1 + i) && *(s1 + i) == *(s2 + i))
-		i++;
-	return (*((unsigned char *)s1 + i) - *((unsigned char *)s2 + i));
-}
-
-
-char	*ft_strcpy(char *dst, const char *src)
-{
-	int		i;
-
-	i = -1;
-	while (*(src + ++i))
-		*(dst + i) = *(src + i);
-	*(dst + i) = '\0';
-	return (dst);
 }
