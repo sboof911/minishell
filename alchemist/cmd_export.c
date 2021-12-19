@@ -27,8 +27,17 @@ char 			**convert_env_to_arr(t_env *lst)
 	idx = 0;
 	while (lst)
 	{
-		keytmp =   ft_sdtrjoin( (char *)lst->key, "=\"");
-		valuetmp = ft_sdtrjoin( (char *)lst->value, "\"");
+		if (ft_strlen(lst->value))
+			{
+				keytmp =   ft_sdtrjoin( (char *)lst->key, "=\"");
+				valuetmp = ft_sdtrjoin( (char *)lst->value, "\"");
+			}
+		else
+			{
+				keytmp =   ft_sdtrjoin( (char *)lst->key, "");
+				valuetmp = ft_sdtrjoin( (char *)lst->value, "");
+			}
+
 		arr[idx] = ft_sdtrjoin(keytmp, valuetmp);
 		free(keytmp);
 		free(valuetmp);
@@ -83,23 +92,23 @@ static void		update_value(t_env *env, t_env **envs)
 	free(env);
 }
 
-static int		add_env_or_modify_value(int i ,char **argv, t_env **envs)
+static int		add_env_or_modify_value(char **argv, t_env **envs)
 {
 	t_env	*env;
 	t_env	*curr;
 	int		pos;
-	int index = 0;
 
+	pos = 0;
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		return 0;
 
 	pos = ft_strchr(*argv, '=') - *argv;
-	if (pos < 1)
+	if (pos < 1 || pos > (ft_strlen(*argv)))
 	{
 		env->key = ft_ssubstr(*argv, 0, ft_strlen(*argv));
-		env->value = ft_ssubstr("", 0, 1);
+		env->value = ft_strdup("");
 	}
-	else 
+	else
 	{
 		env->key = ft_ssubstr(*argv, 0, pos);
 		env->value = ft_ssubstr(*argv, pos + 1, ft_strlen(*argv) - pos - 1);
@@ -149,14 +158,11 @@ void 			ft_export(char **cmd, t_env *env)
 					return;
 				}
 			else 
-				{
-					add_env_or_modify_value(index, cmd, &env);
-					cmd++;
-					continue;
-				}
+				add_env_or_modify_value(cmd, &env);
 		}
 		else 
-			add_env_or_modify_value(index,cmd, &env);
+			add_env_or_modify_value(cmd, &env);
+
 		cmd++;
 	}
 }

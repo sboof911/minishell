@@ -201,8 +201,6 @@ t_sashell		*red_open(t_sashell *sashell);
 void			quit_handler(int num);
 
 
-
-
 /* --------------------- minishell ------------------------------*/
 int	ft_token_count(t_token *token, t_sashell *sashell);
 int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
@@ -282,7 +280,7 @@ char			*ft_ssubstr(char const *s, unsigned int start, size_t len);
 
 /* ---------------------------- cmd_export -------------------------- */
 
-static int		add_env_or_modify_value(int index, char **argv, t_env **envs);
+static int		add_env_or_modify_value(char **argv, t_env **envs);
 void			sort_double_arr(char **arr);
 static void		update_value(t_env *env, t_env **envs);
 void			add_declare_for_export(char **arr);

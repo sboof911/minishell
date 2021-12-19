@@ -74,9 +74,8 @@ int		print(t_env *head) {
 	{
 		if (current_node->key == NULL || !current_node)
 			return 0;
-		if (current_node->value == NULL)
-			current_node->value = "";
-        printf("%s=%s\n", current_node->key, current_node->value);
+		if (ft_strlen(current_node->value) > 0)
+        	printf("%s=%s\n", current_node->key, current_node->value);
         current_node = current_node->next;
     }
 	return (g_exit_value = 0);
