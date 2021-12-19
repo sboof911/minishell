@@ -103,8 +103,6 @@ int			exec_others(char **argv, t_env *envs, char **g_envp)
 		exit(ft_puterror_fd(argv[0], ": command not found", 2));
 	free(path);
 	// free_double_arr(argv);
-	g_exit_value = status % 256;
-	printf("cmd executed\n");
 	exit(EXIT_SUCCESS);
 }
 

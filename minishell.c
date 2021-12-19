@@ -128,7 +128,7 @@ int	main(int argc, char **argv, char **envp)
 				minishell(sashell, env, line);
 				free_sashell(sashell);
 			}
-			system("leaks minishell");
+			// system("leaks minishell");
 		}
 	}
 	free_env(env);

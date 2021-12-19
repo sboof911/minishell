@@ -6,14 +6,17 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/19 01:18:47 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/18 23:55:14 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LEAKS = #-g3 --std=c99 #-fsanitize=address
+LEAKS = -g3 --std=c99 #-fsanitize=address
 
-FLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include\
-		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror # change to your goinfree 
+AFLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include\
+		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror 
+
+MFLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
+		-L/goinfre/eelaazmi/.brew/opt/readline/lib #-Wall -Wextra -Werror
 
 NAME = minishell
 
@@ -34,7 +37,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc  $(FLAGS) $(SRC) -o $(NAME) $(LEAKS)
+	gcc  $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)
