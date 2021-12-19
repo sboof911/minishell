@@ -129,6 +129,8 @@ typedef struct  s_redir
 	int					out;
 	int					index_in;
 	int					index_out;
+	int					tmp_fd;
+	int					count;
 }					t_redir;
 
 /* --------------------- libft outils ------------------------------*/
@@ -311,6 +313,23 @@ int				redir_ou(t_redir *redir, char *file_name, t_sashell *sashell, int p);
 int				redirection(t_sashell *sashell, t_redir *redir, char *file_name, int p);
 int				exec_redirection(t_sashell *sashell, t_redir *redir);
 
+/* ---------------------------- exec_pipe -------------------------- */
+int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
+void			init_redir(t_redir *redir);
+int				pipe_process(t_redir *redir, t_env *envs, t_sashell *sashell, pid_t *pid);
+int				process(t_redir *redir, t_sashell *sashell, int *pfd, int i);
+int				pipe_child(t_sashell *sashell, t_redir *redir, int i);;
+
+
+/* ---------------------------- exec_pipe2 -------------------------- */
+int				pipe_redirection(t_sashell *sashell, t_redir *redir);
+int				pipe_redire_out(t_redir *redir, char *file_name);
+int				pipe_redire_in(t_redir *redir, char *file_name);
+
+
+
+
+
 
 
 /* ----------------------- 	ft_cd	------------------------------ */
@@ -333,9 +352,6 @@ void 			ft_export(char **cmd, t_env *env);
 /* ---------------------------- exec_pipe -------------------------- */
 // void			exec_pipe(char *line, t_env *envs, t_sashell *sashell);
 int				exec_pipe(char *line, t_env *envs, t_sashell *sashell, int count);
- int			has_redir(char *str);
-
-
-
+int			has_redir(char *str);
 
 #endif
