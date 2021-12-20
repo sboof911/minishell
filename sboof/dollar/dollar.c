@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:18:55 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/18 03:57:10 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 14:26:32 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 	return (sashell);
 }
 
-int	help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
+int	help_cdollar(t_sashell *sashell, char *tab, t_env *env, int i)
 {
 	int		compt;
 	char	*help;
@@ -93,7 +93,7 @@ t_sashell	*check_dollar(t_sashell *sashell, char *tab, t_env *env, int i)
 			continue ;
 		else if (tab[i] == '$' && s_quotes == 0)
 		{
-			i = help_check_dollar(sashell, tab, env, i + 1);
+			i = help_cdollar(sashell, tab, env, i + 1);
 			if (tab[i] == '\0')
 			{
 				sashell->tokens[sashell->compt.tokens]

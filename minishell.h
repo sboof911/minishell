@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/20 14:20:37 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 14:31:02 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,58 +62,56 @@
 # define DREDIR	6
 # define BREDIR	60
 
-int				 g_exit_value;
-char			**g_envp;
+int		g_exit_value;
+char	**g_envp;
 
-typedef struct	s_token
+typedef struct s_token
 {
-	int 	token_count;
+	int	token_count;
 
 }				t_token;
 
-typedef struct	s_quote
+typedef struct s_quote
 {
-	int			type;
-	int			start;
-	int			end;
+	int	type;
+	int	start;
+	int	end;
 }				t_quote;
 
-
-typedef struct	s_pipe
+typedef struct s_pipe
 {
-	char		*line;
-	char		**argv;
+	char	*line;
+	char	**argv;
 }				t_pipe;
 
-typedef struct	s_has
+typedef struct s_has
 {
-	int		red;
-	int		arg;
-	int		option;
+	int	red;
+	int	arg;
+	int	option;
 }				t_has;
 
 typedef struct s_compt
 {
-	int		red;
-	int		dollar;
-	int		tokens;
-	int		position;
+	int	red;
+	int	dollar;
+	int	tokens;
+	int	position;
 }				t_compt;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }				t_env;
 
-typedef struct	s_sashell 
+typedef struct s_sashell
 {
 	char				**tokens;
 	char				**red;
 	int					error;
 	int					count;
-	int 			g_exit_value;
 
 	struct s_sashell	*first;
 	struct s_has		has;
@@ -121,39 +119,39 @@ typedef struct	s_sashell
 	struct s_sashell	*next;
 }					t_sashell;
 
-typedef struct  s_redir
+typedef struct s_redir
 {
-	int					fd;
-	int					in;
-	int					out;
-	int					index_in;
-	int					index_out;
-	int					tmp_fd;
-	int					count;
+	int	fd;
+	int	in;
+	int	out;
+	int	index_in;
+	int	index_out;
+	int	tmp_fd;
+	int	count;
 }					t_redir;
 
 /* --------------------- libft outils ------------------------------*/
-char	    	**protection_malloc2(char **str, int compt);
-char	    	*protection_malloc1(char *str, int compt);
-void	    	*ft_free(char **s, int i);
-char	    	**ft_split(char const *s, char c);
-char	    	*ft_strdup(const char *s);
-int		    	ft_strlen(char *str);
-int		    	ft_isalpha(int c);
+char			**protection_malloc2(char **str, int compt);
+char			*protection_malloc1(char *str, int compt);
+void			*ft_free(char **s, int i);
+char			**ft_split(char const *s, char c);
+char			*ft_strdup(const char *s);
+int				ft_strlen(char *str);
+int				ft_isalpha(int c);
 int				ft_isalnum(int c);
-void	    	ft_putchar(char c);
-void	    	ft_putstr(char *s);
+void			ft_putchar(char c);
+void			ft_putstr(char *s);
 char			*ft_charjoin(char *str, char c);
-char	    	*ft_strjoin(char *s1, char *s2);
-void	    	ft_putnbr(int n);
-char	    	*ft_strchr(const char *s, int c);
-char	    	*ft_substr(char const *s, unsigned int start, size_t len);
-int		    	ft_strncmp(const char *s1, const char *s2, size_t n);
+char			*ft_strjoin(char *s1, char *s2);
+void			ft_putnbr(int n);
+char			*ft_strchr(const char *s, int c);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_itoa(int n);
 char			*ft_strrev(char *str);
 
 /* --------------------- parsing outils ------------------------------*/
-char	    	**split_pipe(char const *s, char c);
+char			**split_pipe(char const *s, char c);
 int				ft_count_tab(char **tab);
 void			free_sashell(t_sashell *sashell);
 
@@ -181,7 +179,7 @@ t_sashell		*parse_red(t_sashell *sashell, char **tab, int i, int remember);
 /* --------------------- dollar ------------------------------*/
 t_sashell		*dollar_parse(t_sashell *sashell, char *tab, t_env *env);
 int				help_num_dollar(t_sashell *sashell, char *tab, int i);
-int				help_check_dollar(t_sashell *sashell, char *tab, t_env *env, int i);
+int				help_cdollar(t_sashell *sashell, char *tab, t_env *env, int i);
 int				help_dollar_quotes(int d_q);
 t_sashell		*help_norm_dollar(t_sashell *sashell, char *tab, int i);
 int				some_shit(int *d_quotes, int *s_quotes, char *tab, int i);
@@ -218,16 +216,16 @@ void			minishell(t_sashell *sashell, t_env *env, char *str);
 /* --------------------- minishell_outis ------------------------------*/
 t_env			*fill_env(t_env *env, char *envp);
 t_env			*split_env(t_env *env, char **envp);
-void 			print_sashell(t_sashell *sashell);
+void			print_sashell(t_sashell *sashell);
 void			free_sashell(t_sashell *sashell);
 
 /* -------------------------- _builtin ------------------------------- */
 
 int				is_builtin(char *command);
-int     		exec_builtin(char **cmd, t_env *env);
+int				exec_builtin(char **cmd, t_env *env);
 
 /* ----------------------- 	_cd	------------------------------ */
-void 			ft_cd(char  **cmd, t_env *env);
+void			ft_cd(char **cmd, t_env *env);
 char			*find_value(char *key, t_env *envs);
 
 /* ----------------------- 	_cd_outils ------------------------------ */
@@ -238,7 +236,7 @@ int				env_add(const char *value, t_env *env);
 
 /* ----------------------- 	ft_echo	------------------------------ */
 void			ft_putstr_fd(char *s, int fd);
-int 			nb_args(char **argv);
+int				nb_args(char **argv);
 int				ft_echo(char **args, int fd);
 
 /* ----------------------- 	ft_pwd	------------------------------ */
@@ -251,8 +249,8 @@ int				ft_atoi(const char *str);
 /* ---------------------cmd_export_outil --------------------- */
 int				is_valid_env(char *arg);
 int				is_exist_key(char *key, t_env *envs);
-void	    	ft_lstadd_back(t_env **lst, t_env *new);
-t_env	    	*ft_lstnew(t_env *content);
+void			ft_lstadd_back(t_env **lst, t_env *new);
+t_env			*ft_lstnew(t_env *content);
 char			*ft_ssubstr(char const *s, unsigned int start, size_t len);
 
 /* ---------------------cmd_export_outil2 --------------------- */
@@ -293,7 +291,7 @@ int				is_exist_keyy(char *key, t_env *envs);
 char			*ft_sstrjoin(char const *s1, char const *s2);
 void			*ft_memdel(void *ptr);
 void			ft_putendl_fd(char *s, int fd);
-int 			print(t_env *head);
+int				print(t_env *head);
 char			*ft_strrchr(const char *str, int c);
 
 /* --------------------- _tools2.c ------------------------------*/
@@ -313,8 +311,7 @@ int				exec_pipe(t_env *envs, t_sashell *sashell, int count);
 void			init_redir(t_redir *redir);
 int				pipe_process(t_redir *redir, t_env *envs, t_sashell *sashell, pid_t *pid);
 int				process(t_redir *redir, t_sashell *sashell, int *pfd, int i);
-int				pipe_child(t_sashell *sashell, t_redir *redir, int i);;
-
+int				pipe_child(t_sashell *sashell, t_redir *redir, int i);
 
 /* ---------------------------- exec_pipe2 -------------------------- */
 int				pipe_redirection(t_sashell *sashell, t_redir *redir);

@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/20 14:17:42 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 14:27:20 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	minishell(t_sashell *sashell, t_env *env, char *str)
 	index = 0;
 	token.token_count = 0;
 	cmd = sashell->tokens;
-	sashell->g_exit_value = 0;
+	g_exit_value = 0;
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
 		g_exit_value = exec_pipe(env, sashell, token.token_count);
