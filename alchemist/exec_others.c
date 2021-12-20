@@ -56,19 +56,22 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	char	*path;
 
+	g_.exit_value = 127;
 	path = find_path(argv[0], envs);
 	if (*argv[0] == '.' || *argv[0] == '/')
 		if (check_path(path, argv[0]))
 			return (EXIT_FAILURE);
 	if (!path)
 	{
-		ft_puterror_fd(argv[0], ": command not found", 2);
-		return (EXIT_FAILURE);
+		ft_puterror_fd(argv[0], ": command not found1", 2);
+		return (127);
 	}
 	if (execve(path, argv, g_envp) == -1)
-		exit(ft_puterror_fd(argv[0], ": command not found", 2));
+		exit(ft_puterror_fd(argv[0], ": command not found2", 2));
+	else
+		g_.exit_value = 0;
 	free(path);
-	exit(EXIT_SUCCESS);
+	exit(g_.exit_value);
 }
 
 int	check_path(char *path, char *argv)
@@ -90,23 +93,25 @@ int	execo_others(char **argv, t_env *envs, char **g_envp)
 	char	*path;
 	pid_t	child;
 
+	g_.exit_value = 127;
 	path = find_path(argv[0], envs);
 	if (*argv[0] == '.' || *argv[0] == '/')
 		if (check_path(path, argv[0]))
 			return (EXIT_FAILURE);
 	if (!path)
 	{
-		ft_puterror_fd(argv[0], ": command not found", 2);
-		return (g_.exit_value = EXIT_FAILURE);
+		ft_puterror_fd(argv[0], ": command not found3", 2);
+		return (g_.exit_value);
 	}
 	child = fork();
 	if (child == 0)
 	{
 		if (execve(path, argv, g_envp) == -1)
-			exit(ft_puterror_fd(argv[0], ": command not found", 2));
+			exit(ft_puterror_fd(argv[0], ": command not found4", 2));
+		g_.exit_value = EXIT_SUCCESS;
 		exit(EXIT_SUCCESS);
 	}
 	wait(&status);
 	free(path);
-	return (g_.exit_value = status % 256);
+	return (g_.exit_value);
 }
