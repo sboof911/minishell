@@ -22,5 +22,7 @@ SASHELL : Syntax error-------
 
 #### execution
 
-- export po | env 
+- export po | env
+- << EOF      Seg fault
 - echo -n | /bin/ls | grep l
+- pjgeqpijgpeqjigpeqj | echo $?   must show 127 but it shows 0
