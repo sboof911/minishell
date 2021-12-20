@@ -45,12 +45,12 @@ t_sashell	*help_final(t_sashell *sashell, int i, int j)
 				break ;
 			while (sashell-> tokens[i] && sashell->tokens[i][0] == '-')
 			{
-				j = 0;
+				j = 1;
 				while (sashell->tokens[i][j] == 'n')
 					j++;
 				if (sashell->tokens[i][j])
 					break ;
-				else if (j > 1)
+				else if (j > 2)
 				{
 					free(sashell->tokens[i]);
 					sashell->tokens[i] = ft_strdup("-n");

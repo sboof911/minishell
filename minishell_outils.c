@@ -58,8 +58,12 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 		ft_putstr("minishell: command not found: ");
 		g_.exit_value = 127;
 	}
+		printf("- %d\n", g_.exit_value);
+
 	if (redir.index_in || redir.index_out)
 		reset_redirection(&redir.in, &redir.out, &redir.fd);
+
+	printf("%d\n", g_.exit_value);
 	return (g_.exit_value);
 }
 

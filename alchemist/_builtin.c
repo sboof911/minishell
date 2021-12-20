@@ -51,5 +51,6 @@ int	exec_builtin(char **cmd, t_env *env)
 		ft_unset(cmd, env);
 	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
 		ft_exit(cmd);
+	printf("g_.exit_value = %d\n", g_.exit_value);
 	return (1);
 }

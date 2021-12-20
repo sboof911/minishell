@@ -37,7 +37,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc -g3  $(AFLAGS) $(LEAKS) $(SRC) -o $(NAME)
+	gcc -g $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

@@ -64,12 +64,12 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 			return (EXIT_FAILURE);
 	if (!path)
 	{
-		ft_puterror_fd(argv[0], ": command not found1", 2);
+		ft_puterror_fd(argv[0], ": command not found", 2);
 		return (127);
 	}
 	if (execve(path, argv, g_envp) == -1)
 	{
-		ft_puterror_fd(argv[0], ": command not found2", 2);
+		ft_puterror_fd(argv[0], ": command not found", 2);
 		exit(127);
 	}
 	else
@@ -105,14 +105,14 @@ int	execo_others(char **argv, t_env *envs, char **g_envp)
 			return (EXIT_FAILURE);
 	if (!path)
 	{
-		ft_puterror_fd(argv[0], ": command not found3", 2);
+		ft_puterror_fd(argv[0], ": command not found", 2);
 		return (g_.exit_value);
 	}
 	child = fork();
 	if (child == 0)
 	{
 		if (execve(path, argv, g_envp) == -1)
-			exit(ft_puterror_fd(argv[0], ": command not found4", 2));
+			exit(ft_puterror_fd(argv[0], ": command not found", 2));
 		g_.exit_value = EXIT_SUCCESS;
 		exit(EXIT_SUCCESS);
 	}
