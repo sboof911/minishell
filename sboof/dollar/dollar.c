@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:18:55 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/20 14:26:32 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 19:17:47 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 {
+	char	*tmp;
+
 	while (env != NULL)
 	{
 		if (ft_strncmp(env->key, tab, ft_strlen(tab)) == 0
@@ -26,9 +28,11 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 		}
 		if (!ft_strncmp(tab, "?", 1))
 		{
+			tmp = ft_itoa(g_.exit_value);
 			sashell->tokens[sashell->compt.tokens]
 				= ft_strjoin(sashell->tokens[sashell->compt.tokens],
-					ft_itoa(g_.exit_value));
+					tmp);
+			free (tmp);
 			break ;
 		}
 		env = env->next;

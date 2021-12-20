@@ -6,7 +6,7 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/20 14:26:40 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/20 19:14:36 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc -g3  $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
+	gcc -g3  $(AFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)
