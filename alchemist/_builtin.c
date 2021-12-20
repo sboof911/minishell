@@ -36,13 +36,13 @@ int	exec_builtin(char **cmd, t_env *env)
 	if (!env || !cmd)
 		return (-1);
 	if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
-		g_exit_value = ft_pwd();
+		g_.exit_value = ft_pwd();
 	else if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
-		g_exit_value = ft_echo(cmd, 1);
+		g_.exit_value = ft_echo(cmd, 1);
 	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
 		ft_cd(cmd, env);
 	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
-		g_exit_value = print(env);
+		g_.exit_value = print(env);
 	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
 		ft_export(cmd, env);
 	else if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))

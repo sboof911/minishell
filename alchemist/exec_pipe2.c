@@ -18,7 +18,7 @@ int	pipe_redire_in(t_redir *redir, char *file_name)
 	if ((redir->fd) < 0)
 	{
 		printf("no such file or directory: %s\n", file_name);
-		g_exit_value = 1;
+		g_.exit_value = 1;
 		close(redir->fd);
 		dup2(redir->in, 0);
 		close(redir->in);
@@ -39,7 +39,7 @@ int	pipe_redire_out(t_redir *redir, char *file_name)
 	if ((redir->fd) < 0)
 	{
 		printf("no such file or directory: %s\n", file_name);
-		g_exit_value = 1;
+		g_.exit_value = 1;
 		close(redir->fd);
 		dup2(redir->out, 1);
 		close(redir->out);
@@ -49,7 +49,7 @@ int	pipe_redire_out(t_redir *redir, char *file_name)
 	if ((dup2(redir->fd, 1) < 0))
 	{
 		ft_putstr("minishell: command not found: ");
-		g_exit_value = 1;
+		g_.exit_value = 1;
 		close(redir->fd);
 		dup2(redir->out, 1);
 		close(redir->out);
@@ -86,4 +86,10 @@ int	pipe_redirection(t_sashell *sashell, t_redir *redir)
 		p++;
 	}
 	return (0);
+}
+
+void	pipe_end(t_redir *redir)
+{
+	if (redir->tmp_fd != 0)
+		close(redir->tmp_fd);
 }

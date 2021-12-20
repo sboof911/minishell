@@ -1,47 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_outils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/20 18:54:22 by eelaazmi          #+#    #+#             */
+/*   Updated: 2021/12/20 18:54:24 by eelaazmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-t_env	*fill_env(t_env *env, char *envp)
-{
-	char	**help;
-
-	help = ft_split(envp, '=');
-	env->key = ft_strdup(help[0]);
-	env->value = ft_strdup(help[1]);
-	ft_free(help, 0);
-	return (env);
-}
-
-t_env	*split_env(t_env *env, char **envp)
-{
-	t_env	*tmp;
-	int		i;
-
-	env = (t_env *)malloc(sizeof(t_env));
-	i = 1;
-	env = fill_env(env, envp[0]);
-	tmp = env;
-	env->next = (t_env *)malloc(sizeof(t_env));
-	if (!env->next)
-		return (NULL);
-	env = env->next;
-	while (envp[i])
-	{
-		env = fill_env(env, envp[i]);
-		if (envp[i + 1])
-		{
-			env->next = (t_env *)malloc(sizeof(t_env));
-			if (!env->next)
-				return (NULL);
-			env = env->next;
-		}
-		i++;
-	}
-	env->next = NULL;
-	env = tmp;
-	return (env);
-}
-
-void			free_sashell(t_sashell *sashell)
+void	free_sashell(t_sashell *sashell)
 {
 	t_sashell	*tmp;
 	int			i;
@@ -55,29 +26,58 @@ void			free_sashell(t_sashell *sashell)
 		free(sashell);
 		sashell = tmp;
 	}
-	// free(sashell);
 }
 
-void 			print_sashell(t_sashell *sashell)
+int	ft_token_count(t_token *token, t_sashell *sashell)
 {
-	int i = 0;
-	t_sashell	*tmp;
-	int compt;
-
-	tmp = sashell;
-	compt = 1;
 	while (sashell)
 	{
-		i = -1;
-		printf("*********************************\n");
-		while (sashell->tokens[++i])
-			printf("pipe[%d]...tokens[%d] = |%s\n", compt, i, sashell->tokens[i]);
-		i = -1;
-		while (sashell->red[++i])
-			printf("pipe[%d]...red[%d] = |%s\n", compt, i, sashell->red[i]);
+		token->token_count++;
 		sashell = sashell->next;
-		compt++;
 	}
-	printf("*********************************\n");
-	sashell = tmp;
+	return (token->token_count);
+}
+
+int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
+{
+	int		ret;
+	t_redir	redir;
+
+	redir.index_in = 0;
+	redir.index_out = 0;
+	ret = 0;
+	if (sashell->red)
+		if (exec_redirection(sashell, &redir))
+			return (1);
+	if (cmd && is_builtin(cmd[0]))
+		exec_builtin(cmd, env);
+	else if (cmd && i > 1)
+		ret = exec_others(cmd, env, g_.envp);
+	else if (cmd && i == 1)
+		ret = execo_others(cmd, env, g_.envp);
+	else
+	{
+		ft_putstr("minishell: command not found: ");
+		ret = 127;
+	}
+	if (redir.index_in || redir.index_out)
+		reset_redirection(&redir.in, &redir.out, &redir.fd);
+	return (ret);
+}
+
+void	minishell(t_sashell *sashell, t_env *env)
+{
+	char	**cmd;
+	int		index;
+	t_token	token;
+
+	index = 0;
+	token.token_count = 0;
+	cmd = sashell->tokens;
+	g_.exit_value = 0;
+	ft_token_count(&token, sashell);
+	if (token.token_count > 1)
+		g_.exit_value = exec_pipe(env, sashell, token.token_count);
+	else if (cmd)
+		g_.exit_value = exec_cmd(sashell, cmd, env, 1);
 }

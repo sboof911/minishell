@@ -97,7 +97,7 @@ int	execo_others(char **argv, t_env *envs, char **g_envp)
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
-		return (g_exit_value = EXIT_FAILURE);
+		return (g_.exit_value = EXIT_FAILURE);
 	}
 	child = fork();
 	if (child == 0)
@@ -108,5 +108,5 @@ int	execo_others(char **argv, t_env *envs, char **g_envp)
 	}
 	wait(&status);
 	free(path);
-	return (g_exit_value = status % 256);
+	return (g_.exit_value = status % 256);
 }

@@ -85,7 +85,8 @@ char	*ft_ssubstr(char const *s, unsigned int start, size_t len)
 	if (!s || !(modified_s))
 		return (NULL);
 	idx = 0;
-	while (start < (unsigned int)ft_strlen((char *)s) && s[start + idx] && idx < len)
+	while (start < (unsigned int)ft_strlen((char *)s) && s[start + \
+	idx] && idx < len)
 	{
 		modified_s[idx] = s[start + idx];
 		idx++;

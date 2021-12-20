@@ -72,7 +72,7 @@ int	export_process(t_env *env)
 	add_declare_for_export(tmp);
 	print_arr(tmp);
 	free_arr(tmp);
-	g_exit_value = 0;
+	g_.exit_value = 0;
 	return (1);
 }
 

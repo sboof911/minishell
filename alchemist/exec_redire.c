@@ -19,7 +19,7 @@ int	redir_in(t_redir *redir, char *file_name)
 	if ((redir->fd) < 0)
 	{
 		printf("no such file or directory: %s\n", file_name);
-		g_exit_value = 1;
+		g_.exit_value = 1;
 		close(redir->fd);
 		dup2(redir->in, 0);
 		close(redir->in);
@@ -51,7 +51,7 @@ int	redir_ou(t_redir *redir, char *file_name, t_sashell *sashell, int p)
 	if (redir->fd < 0)
 	{
 		printf("no such file or directory: %s\n", file_name);
-		g_exit_value = 1;
+		g_.exit_value = 1;
 		close(redir->fd);
 		dup2(redir->out, 1);
 		close(redir->out);
@@ -61,7 +61,7 @@ int	redir_ou(t_redir *redir, char *file_name, t_sashell *sashell, int p)
 	if ((dup2(redir->fd, 1) < 0))
 	{
 		ft_putstr("minishell: command not found: ");
-		g_exit_value = 1;
+		g_.exit_value = 1;
 		close(redir->fd);
 		dup2(redir->out, 1);
 		close(redir->out);

@@ -28,7 +28,7 @@ t_sashell	*dollar_parse(t_sashell *sashell, char *tab, t_env *env)
 		{
 			sashell->tokens[sashell->compt.tokens]
 				= ft_strjoin(sashell->tokens[sashell->compt.tokens],
-					ft_itoa(g_exit_value));
+					ft_itoa(g_.exit_value));
 			break ;
 		}
 		env = env->next;

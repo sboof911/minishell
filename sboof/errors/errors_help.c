@@ -16,13 +16,13 @@ int	help_check_sytax(char *line, int i)
 {
 	if (check_quotes(line, i) != 1)
 	{
-		g_exit_value = 258;
+		g_.exit_value = 258;
 		ft_putstr("SASHELL : Syntax error\n");
 		return (0);
 	}
 	if (check_red(line, i - 1) != 1)
 	{
-		g_exit_value = 258;
+		g_.exit_value = 258;
 		ft_putstr("SASHELL : Syntax error near unexpected token\n");
 		return (0);
 	}

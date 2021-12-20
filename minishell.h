@@ -62,9 +62,6 @@
 # define DREDIR	6
 # define BREDIR	60
 
-int		g_exit_value;
-char	**g_envp;
-
 typedef struct s_token
 {
 	int	token_count;
@@ -106,18 +103,25 @@ typedef struct s_env
 	struct s_env	*next;
 }				t_env;
 
+typedef struct s_g
+{
+	int		exit_value;
+	char	**envp;
+}				t_g;
+t_g				g_;
+
 typedef struct s_sashell
 {
 	char				**tokens;
 	char				**red;
 	int					error;
 	int					count;
-
+	char				**g_envp;
 	struct s_sashell	*first;
 	struct s_has		has;
 	struct s_compt		compt;
 	struct s_sashell	*next;
-}					t_sashell;
+}				t_sashell;
 
 typedef struct s_redir
 {
@@ -129,6 +133,22 @@ typedef struct s_redir
 	int	tmp_fd;
 	int	count;
 }					t_redir;
+
+/* --------------------- minishell ------------------------------*/
+char			*prompet(void);
+int				init_shell(int argc, char **envp, t_env **env, char **argv);
+void			main_process(char *line, t_sashell *sashell, t_env *env);
+int				find_shlvl(t_env *env);
+
+/* --------------------- minishell_outis ------------------------------*/
+void			minishell(t_sashell *sashell, t_env *env);
+int				exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
+int				ft_token_count(t_token *token, t_sashell *sashell);
+void			free_sashell(t_sashell *sashell);
+
+/* --------------------- minishell_outis ------------------------------*/
+t_env			*fill_env(t_env *env, char *envp);
+t_env			*split_env(t_env *env, char **envp);
 
 /* --------------------- libft outils ------------------------------*/
 char			**protection_malloc2(char **str, int compt);
@@ -207,17 +227,6 @@ t_sashell		*red_open(t_sashell *sashell);
 
 /* --------------------- signals ------------------------------*/
 void			quit_handler(int num);
-
-/* --------------------- minishell ------------------------------*/
-int				ft_token_count(t_token *token, t_sashell *sashell);
-int				exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i);
-void			minishell(t_sashell *sashell, t_env *env, char *str);
-
-/* --------------------- minishell_outis ------------------------------*/
-t_env			*fill_env(t_env *env, char *envp);
-t_env			*split_env(t_env *env, char **envp);
-void			print_sashell(t_sashell *sashell);
-void			free_sashell(t_sashell *sashell);
 
 /* -------------------------- _builtin ------------------------------- */
 
@@ -302,14 +311,17 @@ void			reset_redirection(int *in, int *out, int *fd);
 /* ---------------------------- exec_redir -------------------------- */
 int				exec_redirection(t_sashell *sashell, t_redir *redir);
 int				open_file(char *file_name, t_sashell *sashell, int p);
-int				redir_ou(t_redir *redir, char *file_name, t_sashell *sashell, int p);
-int				redirection(t_sashell *sashell, t_redir *redir, char *file_name, int p);
+int				redir_ou(t_redir *redir, char *file_name, t_sashell \
+*sashell, int p);
+int				redirection(t_sashell *sashell, t_redir *redir, char \
+*file_name, int p);
 int				exec_redirection(t_sashell *sashell, t_redir *redir);
 
 /* ---------------------------- exec_pipe -------------------------- */
 int				exec_pipe(t_env *envs, t_sashell *sashell, int count);
 void			init_redir(t_redir *redir);
-int				pipe_process(t_redir *redir, t_env *envs, t_sashell *sashell, pid_t *pid);
+int				pipe_process(t_redir *redir, t_env *envs, t_sashell \
+*sashell, pid_t *pid);
 int				process(t_redir *redir, t_sashell *sashell, int *pfd, int i);
 int				pipe_child(t_sashell *sashell, t_redir *redir, int i);
 
@@ -318,5 +330,6 @@ int				pipe_redirection(t_sashell *sashell, t_redir *redir);
 int				pipe_redire_out(t_redir *redir, char *file_name);
 int				pipe_redire_in(t_redir *redir, char *file_name);
 int				ft_isdigit(int c);
+void			pipe_end(t_redir *redir);
 
 #endif

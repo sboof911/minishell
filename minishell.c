@@ -12,62 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_token_count(t_token *token, t_sashell *sashell)
-{
-	while (sashell)
-	{
-		token->token_count++;
-		sashell = sashell->next;
-	}
-	return (token->token_count);
-}
-
-int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
-{
-	int	ret;
-	t_redir redir;
-
-	redir.index_in = 0;
-	redir.index_out = 0;
-	ret = 0;
-	if (sashell->red)
-		if (exec_redirection(sashell, &redir))
-			return (1);
-	if (cmd && is_builtin(cmd[0]))
-		exec_builtin(cmd, env);
-	else if (cmd && i > 1)
-		ret = exec_others(cmd, env, g_envp);
-	else if (cmd && i == 1)
-		ret = execo_others(cmd, env, g_envp);
-	else
-	{
-		ft_putstr("minishell: command not found: ");
-		ret = 127;
-	}
-	if (redir.index_in || redir.index_out)
-		reset_redirection(&redir.in, &redir.out, &redir.fd);
-	return (ret);
-}
-
-void	minishell(t_sashell *sashell, t_env *env, char *str)
-{
-	char	**cmd;
-	int		index;
-	t_token	token;
-
-	index = 0;
-	token.token_count = 0;
-	cmd = sashell->tokens;
-	g_exit_value = 0;
-	ft_token_count(&token, sashell);
-	if (token.token_count > 1)
-		g_exit_value = exec_pipe(env, sashell, token.token_count);
-	else if (cmd)
-		g_exit_value = exec_cmd(sashell, cmd, env, 1);
-	//free_arr(cmd);
-}
-
-int		find_shlvl(t_env *env)
+int	find_shlvl(t_env *env)
 {
 	t_env	*tmp;
 	int		i;
@@ -86,43 +31,59 @@ int		find_shlvl(t_env *env)
 	return (-1);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	main_process(char *line, t_sashell *sashell, t_env *env)
 {
-	char		*line;
-	t_sashell	*sashell;
-	t_env		*env;
-	char		cwd[PATH_MAX];
+	add_history(line);
+	sashell = parse_function(sashell, env, line);
+	if (sashell)
+	{
+		minishell(sashell, env);
+		free_sashell(sashell);
+	}
+}
 
+int	init_shell(int argc, char **envp, t_env **env, char **argv)
+{
+	argv = NULL;
 	if (argc > 1)
 	{
 		printf("usage: ./minishell\n");
 		return (1);
 	}
-	g_envp = envp;
+	g_.envp = envp;
 	signal(SIGQUIT, &quit_handler);
 	signal(SIGINT, &quit_handler);
-	env = split_env(env, envp);
+	*env = split_env(*env, envp);
+	return (0);
+}
+
+char	*prompet(void)
+{
+	char		cwd[PATH_MAX];
+
+	getcwd(cwd, PATH_MAX);
+	printf("\e[48;5;098m~%s", cwd);
+	return (readline("\e[48;5;098m $> \033[0m"));
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char		*line;
+	t_sashell	*sashell;
+	t_env		*env;
+
+	sashell = NULL;
+	if (init_shell(argc, envp, &env, argv))
+		return (1);
 	while (1)
 	{
-		getcwd(cwd, PATH_MAX);
-		printf("\e[48;5;098m~%s", cwd);
-
-		line = readline("\e[48;5;098m $> \033[0m");
+		line = prompet();
 		if (line == NULL)
 			break ;
-		if (strcmp(line , "") == 0)
-			continue;
+		if (strcmp(line, "") == 0)
+			continue ;
 		else
-		{
-			add_history(line);
-			sashell = parse_function(sashell, env, line);
-			if (sashell)
-			{
-				minishell(sashell, env, line);
-				free_sashell(sashell);
-			}
-			system("leaks minishell");
-		}
+			main_process(line, sashell, env);
 	}
 	free_env(env);
 	return (0);

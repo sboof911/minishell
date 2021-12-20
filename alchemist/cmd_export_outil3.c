@@ -91,6 +91,6 @@ int	error_display(char **cmd)
 	ft_putstr_fd("export: `", 1);
 	ft_putstr_fd(*cmd, 1);
 	ft_putendl_fd("': not a valid identifier", 1);
-	g_exit_value = 127;
+	g_.exit_value = 127;
 	return (1);
 }

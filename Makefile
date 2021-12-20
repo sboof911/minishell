@@ -23,7 +23,7 @@ SRC =  	minishell.c\
 		alchemist/cmd_export.c alchemist/cmd_export_outil.c alchemist/cmd_unset.c alchemist/cmd_exit.c\
 		alchemist/exec_others.c alchemist/exec_pipe.c alchemist/exec_redire.c minishell_outils.c\
 		alchemist/cmd_export_outil2.c alchemist/cmd_export_outil3.c alchemist/exec_others_outils.c\
-		alchemist/_tools2.c alchemist/exec_pipe2.c\
+		alchemist/_tools2.c alchemist/exec_pipe2.c minishell_outils2.c\
 		sboof/outils/ft_split.c sboof/outils/outils_help.c sboof/outils/ft_strdup.c sboof/outils/ft_strlen.c \
 		sboof/outils/ft_isalpha.c sboof/outils/ft_putchar.c sboof/outils/ft_putstr.c sboof/outils/ft_strjoin.c \
 		sboof/outils/ft_putnbr.c sboof/outils/split_pipe.c sboof/outils/ft_strchr.c sboof/outils/ft_substr.c \
@@ -37,7 +37,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc  $(AFLAGS) $(LEAKS) $(SRC) -o $(NAME)
+	gcc -g3  $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

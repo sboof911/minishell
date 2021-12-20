@@ -51,15 +51,15 @@ int	pipe_process(t_redir *redir, t_env *envs, t_sashell *sashell, pid_t *pid)
 			return (1 && (printf("fork failed\n")));
 		if (pid[i] == 0)
 		{
-			process(redir, sashell, pfd, i);
+			if (process(redir, sashell, pfd, i))
+				return (1);
 			exec_cmd(sashell, sashell->tokens, envs, 2);
 			exit(EXIT_FAILURE);
 		}
-		if (redir->tmp_fd != 0)
-			close(redir->tmp_fd);
-		sashell = sashell->next;
+		pipe_end(redir);
 		redir->tmp_fd = pfd[0];
 		close(pfd[1]);
+		sashell = sashell->next;
 	}
 	close(pfd[0]);
 	return (0);
@@ -92,5 +92,5 @@ int	exec_pipe(t_env *envs, t_sashell *sashell, int count)
 	while (i < count)
 		waitpid(pid[i++], &status, 0);
 	free(pid);
-	return (g_exit_value = status);
+	return (g_.exit_value = status);
 }

@@ -118,7 +118,7 @@ int	check_sytaxerr(char *line)
 		return (0);
 	if (check_pipe(line, i, 0, 0) != 1)
 	{
-		g_exit_value = 127;
+		g_.exit_value = 127;
 		ft_putstr("SASHELL : Syntax error\n");
 		return (0);
 	}
