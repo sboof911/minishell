@@ -13,7 +13,7 @@ taking bash as a reference to made a little nasty one that include :
 ## to do liste  : 
 
 #### parsing
-- echo -n | /bin/ls | grep l
+
 
 #### execution
 

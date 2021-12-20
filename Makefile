@@ -6,12 +6,12 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/20 19:14:36 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/20 22:08:38 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 AFLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include\
-		-L/goinfre/amaach/.brew/opt/readline/lib #-Wall -Wextra -Werror 
+		-L/goinfre/amaach/.brew/opt/readline/lib -g -fsanitize=address #-Wall -Wextra -Werror 
 
 MFLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
 		-L/goinfre/eelaazmi/.brew/opt/readline/lib -Wall -Wextra -Werror
@@ -37,7 +37,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc -g3  $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
+	gcc -g3  $(AFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

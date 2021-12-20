@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:22:17 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/20 10:32:29 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 22:21:04 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ t_sashell	*help_final(t_sashell *sashell, int i, int j)
 	{
 		if (!ft_strncmp(sashell->tokens[i], "echo", 4))
 		{
-			i++;
-			if (!sashell->tokens[i])
+			if (!sashell->tokens[++i])
 				break ;
-			while (sashell->tokens[i][0] == '-')
+			while (sashell-> tokens[i] && sashell->tokens[i][0] == '-')
 			{
-				j = 1;
+				j = 0;
 				while (sashell->tokens[i][j] == 'n')
 					j++;
 				if (sashell->tokens[i][j])
@@ -59,7 +58,8 @@ t_sashell	*help_final(t_sashell *sashell, int i, int j)
 				i++;
 			}
 		}
-		i++;
+		else
+			i++;
 	}
 	return (sashell);
 }
