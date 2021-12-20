@@ -84,7 +84,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		else
 			main_process(line, sashell, env);
-		system("leaks minishell");
 	}
 	free_env(env);
 	return (0);

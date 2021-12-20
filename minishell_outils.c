@@ -78,6 +78,16 @@ void	minishell(t_sashell *sashell, t_env *env)
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
 		g_.exit_value = exec_pipe(env, sashell, token.token_count);
-	else if (cmd)
+	else if (cmd[0])
 		g_.exit_value = exec_cmd(sashell, cmd, env, 1);
+	else if (sashell->red[0])
+	{
+		if (sashell->red[0][4] == 't')
+		{
+			cmd[0] = ft_strdup("cat");
+			cmd[1] = NULL;
+			sashell->tokens[0] = cmd[0];
+		}
+		g_.exit_value = exec_cmd(sashell, cmd, env, 1);
+	}
 }

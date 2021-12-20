@@ -17,6 +17,5 @@ taking bash as a reference to made a little nasty one that include :
 
 #### execution
 
-- delete g_envp !!                                              [done]
 - << EOF      Seg fault                                         [...]
 - pjgeqpijgpeqjigpeqj | echo $?   must show 127 but it shows 0  [...]
