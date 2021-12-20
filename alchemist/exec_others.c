@@ -55,6 +55,7 @@ char	*find_path(char *argv, t_env *envs)
 int	exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	char	*path;
+	int		status;
 
 	g_.exit_value = 127;
 	path = find_path(argv[0], envs);
@@ -67,11 +68,15 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 		return (127);
 	}
 	if (execve(path, argv, g_envp) == -1)
-		exit(ft_puterror_fd(argv[0], ": command not found2", 2));
+	{
+		ft_puterror_fd(argv[0], ": command not found2", 2);
+		exit(127);
+	}
 	else
 		g_.exit_value = 0;
+	wait(&status);
 	free(path);
-	exit(g_.exit_value);
+	exit(status % 255);
 }
 
 int	check_path(char *path, char *argv)

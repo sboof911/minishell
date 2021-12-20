@@ -40,29 +40,27 @@ int	ft_token_count(t_token *token, t_sashell *sashell)
 
 int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 {
-	int		ret;
 	t_redir	redir;
 
 	redir.index_in = 0;
 	redir.index_out = 0;
-	ret = 0;
 	if (sashell->red)
 		if (exec_redirection(sashell, &redir))
 			return (1);
 	if (cmd && is_builtin(cmd[0]))
-		exec_builtin(cmd, env);
+		g_.exit_value = exec_builtin(cmd, env);
 	else if (cmd && i > 1)
-		ret = exec_others(cmd, env, g_.envp);
+		g_.exit_value = exec_others(cmd, env, g_.envp);
 	else if (cmd && i == 1)
-		ret = execo_others(cmd, env, g_.envp);
+		g_.exit_value = execo_others(cmd, env, g_.envp);
 	else
 	{
 		ft_putstr("minishell: command not found: ");
-		ret = 127;
+		g_.exit_value = 127;
 	}
 	if (redir.index_in || redir.index_out)
 		reset_redirection(&redir.in, &redir.out, &redir.fd);
-	return (ret);
+	return (g_.exit_value);
 }
 
 void	minishell(t_sashell *sashell, t_env *env)
@@ -74,7 +72,6 @@ void	minishell(t_sashell *sashell, t_env *env)
 	index = 0;
 	token.token_count = 0;
 	cmd = sashell->tokens;
-	g_.exit_value = 0;
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
 		g_.exit_value = exec_pipe(env, sashell, token.token_count);
