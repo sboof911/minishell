@@ -48,7 +48,10 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 		if (exec_redirection(sashell, &redir))
 			return (1);
 	if (cmd && is_builtin(cmd[0]))
-		g_.exit_value = exec_builtin(cmd, env);
+	{
+		if (exec_builtin(cmd, env) < 0)
+			return (1);
+	}
 	else if (cmd && i > 1)
 		g_.exit_value = exec_others(cmd, env, g_.envp);
 	else if (cmd && i == 1)
@@ -58,8 +61,6 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 		ft_putstr("minishell: command not found: ");
 		g_.exit_value = 127;
 	}
-		printf("- %d\n", g_.exit_value);
-
 	if (redir.index_in || redir.index_out)
 		reset_redirection(&redir.in, &redir.out, &redir.fd);
 

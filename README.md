@@ -18,3 +18,5 @@ taking bash as a reference to made a little nasty one that include :
 #### execution
 
 - pjgeqpijgpeqjigpeqj | echo $?   must show 127 but it shows 0  [...]
+- Built-in exit value 
+- non-built-in exit value

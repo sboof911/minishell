@@ -44,16 +44,6 @@ void	quit_handler(int num)
 	rl_redisplay();
 }
 
-void	quit_handlerherdoc(int num)
-{
-	if (num == SIGQUIT)
-		return ;
-	ft_putchar('\n');
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
 char	*heredoc(t_sashell *sashell, int i)
 {
 	int		fd;
