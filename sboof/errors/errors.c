@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:35:20 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/20 10:29:31 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 22:26:34 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	check_sytaxerr(char *line)
 		return (0);
 	if (check_pipe(line, i, 0, 0) != 1)
 	{
-		g_exit_value = 127;
+		g_.exit_value = 127;
 		ft_putstr("SASHELL : Syntax error\n");
 		return (0);
 	}
