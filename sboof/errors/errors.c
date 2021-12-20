@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:35:20 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/19 00:19:00 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 10:29:31 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	help_check_pipe(char *line, int i, int compt1, int compt2)
 			i++;
 		if (line[i] != '>' && line[i] != '<')
 		{
-			if (!ft_isalnum(line[i]))
+			if (line[i] == '|')
 				return (-1);
 		}
 	}
@@ -92,7 +92,7 @@ int	check_pipe(char *line, int i, int pipe, int compt1)
 		compt1 += (line[i] == '"');
 		compt2 += (line[i] == '\'');
 		pipe += (line[i] == '|' && compt1 % 2 == 0 && compt2 % 2 == 0);
-		if (ft_isalnum(line[i]) && pipe < 2)
+		if (line[i] != '|' && pipe < 2)
 			pipe = 0;
 		i++;
 	}

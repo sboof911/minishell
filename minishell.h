@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/19 00:22:42 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 10:41:40 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void			free_sashell(t_sashell *sashell);
 
 /* --------------------- parsing ------------------------------*/
 t_sashell		*command_parse(t_sashell *sashell, char **tab, t_env *env);
-t_sashell		*count_every(t_sashell *sashell, char *tab);
+t_sashell		*count_every(t_sashell *sashell);
 t_sashell		*initialize(t_sashell *sashell);
 t_sashell		*fill_in_the_blank(t_sashell *sashell, char *tab, t_env *env);
 t_sashell		*next_sashell(t_sashell *sashell, t_env *env, char **tab);
@@ -172,6 +172,7 @@ t_sashell		*parse_function(t_sashell *sashell, t_env *env, char *line);
 t_sashell		*check_file(t_sashell *sashell, char *tab, int i);
 int				count_quotes(char *tab);
 char			*delete_quotes(char *tab);
+char			*help_delete_quotes(char *str, char *tab, int i, int j);
 t_sashell		*rederiction_parse(t_sashell *sashell, char *tab, char red);
 char			rederiction_sign(char *tab);
 int				help_rederiction(t_sashell *sashell, char **tab, int i);

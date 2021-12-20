@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:22:17 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/19 02:42:15 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 10:32:29 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,12 @@ t_sashell	*final_check(t_sashell *sashell)
 {
 	t_sashell	*tmp;
 	int			i;
-	int			j;
 
 	tmp = sashell;
 	while (sashell)
 	{
 		i = 0;
-		sashell = help_final(sashell, i, j);
+		sashell = help_final(sashell, i, 0);
 		i = -1;
 		while (sashell->red[++i])
 			sashell->red[i] = delete_quotes(sashell->red[i]);

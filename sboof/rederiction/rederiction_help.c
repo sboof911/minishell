@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:47:19 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/19 02:51:58 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 10:41:27 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,28 @@ int	help_red(char **tab, int i, t_sashell *sashell, int remember)
 	if (tab[sashell->compt.position][i] != '\0')
 		remember = i;
 	return (remember);
+}
+
+char	*help_delete_quotes(char *str, char *tab, int i, int j)
+{
+	int		compt1;
+	int		compt2;
+
+	compt1 = 0;
+	compt2 = 0;
+	while (tab[++i] != '\0')
+	{
+		if (tab[i] == '"')
+			compt1++;
+		else if (tab[i] == '\'')
+			compt2++;
+		if (tab[i] != '"' && tab[i] != '\'')
+			str[++j] = tab[i];
+		else if (tab[i] == '"' && compt2 % 2 == 1)
+			str[++j] = tab[i];
+		else if (tab[i] == '\'' && compt1 % 2 == 1)
+			str[++j] = tab[i];
+	}
+	str[++j] = '\0';
+	return (str);
 }

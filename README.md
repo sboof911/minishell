@@ -13,11 +13,11 @@ taking bash as a reference to made a little nasty one that include :
 ## to do liste  : 
 
 #### parsing
-- echo -   "asdasdasdas "dasas "dsadas "                                      [CHECK]
-- ls -l | cat '"Makefile"'                                                    [CHECK]
+- echo -   "asdasdasdas "dasas "dsadas "                                        [CHECK]
+- ls -l | cat '"Makefile"'                                                      [CHECK]
 - ls< README.md 
 
-- /bin/cat | /bin/ls
+- /bin/cat | /bin/ls                                                            [CHECK]
 SASHELL : Syntax error-------
 
 #### execution
