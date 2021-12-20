@@ -13,16 +13,10 @@ taking bash as a reference to made a little nasty one that include :
 ## to do liste  : 
 
 #### parsing
-- echo -   "asdasdasdas "dasas "dsadas "                                        [CHECK]
-- ls -l | cat '"Makefile"'                                                      [CHECK]
-- ls< README.md 
-
-- /bin/cat | /bin/ls                                                            [CHECK]
-SASHELL : Syntax error-------
+- echo -n | /bin/ls | grep l
 
 #### execution
 
-- export po | env
+- delete g_envp !!
 - << EOF      Seg fault
-- echo -n | /bin/ls | grep l
 - pjgeqpijgpeqjigpeqj | echo $?   must show 127 but it shows 0

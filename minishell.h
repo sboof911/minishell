@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/20 10:41:40 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/20 14:20:37 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@
 # define REDIR	62
 # define DREDIR	6
 # define BREDIR	60
-
 
 int				 g_exit_value;
 char			**g_envp;
@@ -247,7 +246,6 @@ int				ft_pwd(void);
 
 /* ---------------------------- cmd_exit -------------------------- */
 void			ft_exit(char **argv);
-// static int		ft_isdigit_str(char *str);
 int				ft_atoi(const char *str);
 
 /* ---------------------cmd_export_outil --------------------- */
@@ -273,21 +271,17 @@ void			assign_key_value(t_env *lst, char **keytmp, char **valuetmp);
 /* --------------------- cmd_export --------------------- */
 int				export_process(t_env *env);
 void			ft_export(char **cmd, t_env *env);
-// static void		update_value(t_env *env, t_env **envs);
-// static void		assigne_value(char **argv, t_env *env);
-// static int		add_env_or_modify_value(char **argv, t_env **envs);
 
 /* ---------------------------- cmd_unset -------------------------- */
 
 void			ft_unset(char **argv, t_env *envs);
-// static void		delete_key(char *argv, t_env *envs);
 
 /* --------------------- exec_others ------------------------------*/
-char		*find_valuee(char *key, t_env *envs);
-char		*find_path(char *argv, t_env *envs);
-int			exec_others(char **argv, t_env *envs, char **g_envp);
-int			check_path(char *path, char *argv);
-int			execo_others(char **argv, t_env *envs, char **g_envp);
+char			*find_valuee(char *key, t_env *envs);
+char			*find_path(char *argv, t_env *envs);
+int				exec_others(char **argv, t_env *envs, char **g_envp);
+int				check_path(char *path, char *argv);
+int				execo_others(char **argv, t_env *envs, char **g_envp);
 
 /* --------------------- exec_others_outils ------------------------------*/
 void			free_double_arr(char **arr);
@@ -305,7 +299,7 @@ char			*ft_strrchr(const char *str, int c);
 /* --------------------- _tools2.c ------------------------------*/
 int				ft_strcmp(const char *s1, const char *s2);
 char			*ft_strcpy(char *dst, const char *src);
-void	reset_redirection(int *in, int *out, int *fd);
+void			reset_redirection(int *in, int *out, int *fd);
 
 /* ---------------------------- exec_redir -------------------------- */
 int				exec_redirection(t_sashell *sashell, t_redir *redir);
