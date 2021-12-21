@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/21 16:49:18 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:01:56 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ typedef struct s_redir
 }					t_redir;
 
 /* --------------------- minishell ------------------------------*/
-char			*prompet(void);
 int				init_shell(int argc, char **envp, t_env **env, char **argv);
 void			main_process(char *line, t_sashell *sashell, t_env *env);
 int				find_shlvl(t_env *env);

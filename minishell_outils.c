@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_outils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:54:22 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/20 18:54:24 by eelaazmi         ###   ########.fr       */
+/*   Updated: 2021/12/21 18:01:21 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 	}
 	if (redir.index_in || redir.index_out)
 		reset_redirection(&redir.in, &redir.out, &redir.fd);
-
-	printf("%d\n", g_.exit_value);
+	printf("%d\n", g_.exit_value);     // delete this
 	return (g_.exit_value);
 }
 

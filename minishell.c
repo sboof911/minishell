@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/21 16:48:37 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:02:37 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,6 @@ int	init_shell(int argc, char **envp, t_env **env, char **argv)
 	return (0);
 }
 
-char	*prompet(void)
-{
-	char		cwd[PATH_MAX];
-
-	// getcwd(cwd, PATH_MAX);
-	// printf("\e[48;5;098m~%s", cwd);
-	return (readline("Sashell > "));
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
@@ -79,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-		line = prompet();
+		line = readline("Sashell ?> ");
 		if (!line)
 			break ;
 		if (strcmp(line, "") == 0)
