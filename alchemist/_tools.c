@@ -70,11 +70,15 @@ int	print(t_env *head)
 	while (current_node != NULL)
 	{
 		if (current_node->key == NULL || !current_node)
+		{
+			g_.exit_value = 0;
 			return (0);
+		}
 		if (ft_strlen(current_node->value) > 0)
 			printf("%s=%s\n", current_node->key, current_node->value);
 		current_node = current_node->next;
 	}
+	g_.exit_value = 0;
 	return (0);
 }
 

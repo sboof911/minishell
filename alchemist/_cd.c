@@ -33,18 +33,31 @@ void	ft_cd(char **argv, t_env *envs)
 	{
 		path = find_value("HOME", envs);
 		if (chdir(path) == -1)
+		{
 			ft_putendl_fd(strerror(errno), 2);
-			g_.exit_value = 127;
+			g_.exit_value = 1;
+		}
+		else 
+			g_.exit_value = 0;
 		return ;
 	}
 	else if (*argv[1] == '$')
 	{
 		path = find_value(argv[1] + 1, envs);
 		if (chdir(path) == -1)
+		{
 			ft_putendl_fd(strerror(errno), 2);
-			g_.exit_value = 127;
+			g_.exit_value = 1;
+		}
+		else 
+			g_.exit_value = 0;
 		return ;
 	}
 	if (chdir(argv[1]) == -1)
+	{
 		ft_putendl_fd(strerror(errno), 2);
+		g_.exit_value = 1;
+	}
+	else 
+		g_.exit_value = 0;
 }

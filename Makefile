@@ -11,7 +11,11 @@
 # **************************************************************************** #
 
 AFLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include\
+<<<<<<< HEAD
 		-L/goinfre/amaach/.brew/opt/readline/lib -Wall -Wextra -Werror 
+=======
+		-L/goinfre/amaach/.brew/opt/readline/lib -g -fsanitize=address -Wall -Wextra -Werror 
+>>>>>>> 6cf38441f9df1329b8fa59035b07558502e2e621
 
 MFLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
 		-L/goinfre/eelaazmi/.brew/opt/readline/lib -Wall -Wextra -Werror
@@ -37,7 +41,7 @@ OBJS = $(SRCS:%.c=%.o)
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc  $(AFLAGS) $(LEAKS) $(SRC) -o $(NAME)
+	gcc  $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

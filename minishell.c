@@ -77,7 +77,12 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		else
 			main_process(line, sashell, env);
+<<<<<<< HEAD
 		system("leaks minishell");
+=======
+			
+		printf("$? = %d\n", g_.exit_value);
+>>>>>>> 6cf38441f9df1329b8fa59035b07558502e2e621
 	}
 	free_env(env);
 	return (0);

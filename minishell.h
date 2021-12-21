@@ -250,7 +250,7 @@ int				nb_args(char **argv);
 int				ft_echo(char **args, int fd);
 
 /* ----------------------- 	ft_pwd	------------------------------ */
-int				ft_pwd(void);
+int				ft_pwd(char **cmd);
 
 /* ---------------------------- cmd_exit -------------------------- */
 void			ft_exit(char **argv);
@@ -281,7 +281,8 @@ int				export_process(t_env *env);
 void			ft_export(char **cmd, t_env *env);
 
 /* ---------------------------- cmd_unset -------------------------- */
-
+size_t			ft_strlcpy(char *dst, const char *src, size_t size);
+size_t			ft_strlcat(char *dst, const char *src, size_t size);
 void			ft_unset(char **argv, t_env *envs);
 
 /* --------------------- exec_others ------------------------------*/

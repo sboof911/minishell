@@ -61,12 +61,20 @@ void	ft_exit(char **argv)
 	if (argc == 1)
 	{
 		ft_putendl_fd("exit", 1);
+		g_.exit_value = 0;
 		exit(EXIT_SUCCESS);
 	}
 	else if (argc == 2 && ft_isdigit_str(argv[1]))
+	{
+		ft_putendl_fd("exit", 1);
+		g_.exit_value = ft_atoi(argv[1]);
 		exit(ft_atoi(argv[1]));
+	}
 	else if (argc > 2 && ft_isdigit_str(argv[1]))
+	{
+		g_.exit_value = 1;
 		ft_putendl_fd("bash: exit: too many arguments", 1);
+	}
 	else
 	{
 		ft_putstr_fd("bash: exit: numeric argument required", 1);

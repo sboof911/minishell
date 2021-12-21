@@ -92,6 +92,6 @@ int	exec_pipe(t_env *envs, t_sashell *sashell, int count)
 	while (i < count)
 		waitpid(pid[i++], &status, 0);
 	free(pid);
-	g_.exit_value = status % 255;
+	g_.exit_value = 0;
 	return (g_.exit_value);
 }
