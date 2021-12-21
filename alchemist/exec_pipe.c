@@ -83,15 +83,19 @@ int	exec_pipe(t_env *envs, t_sashell *sashell, int count)
 	int			i;
 
 	i = 0;
+
 	pid = (pid_t *)malloc(sizeof(pid_t) * count);
 	init_redir(&redir);
 	redir.count = count;
 	if (pipe_process(&redir, envs, sashell, pid))
+	{
+		g_.exit_value = 1;
 		return (1);
+	}
 	i = 0;
 	while (i < count)
 		waitpid(pid[i++], &status, 0);
 	free(pid);
-	g_.exit_value = 0;
+	g_.exit_value = (status) % 255;
 	return (g_.exit_value);
 }

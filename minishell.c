@@ -77,8 +77,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		else
 			main_process(line, sashell, env);
-			
-		printf("$? = %d\n", g_.exit_value);
 	}
 	free_env(env);
 	return (0);

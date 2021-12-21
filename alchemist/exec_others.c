@@ -56,25 +56,27 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	char	*path;
 	int		status;
+	// g_.exit_value = 80;
 
 	path = find_path(argv[0], envs);
 	if (*argv[0] == '.' || *argv[0] == '/')
 		if (check_path(path, argv[0]))
-			return (1);
+			return ((g_.exit_value = 127));
 	if (!path)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
-		return (127);
+		g_.exit_value = 127;
+		return 127 ;
 	}
 	if (execve(path, argv, g_envp) == -1)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
+		g_.exit_value = 127;
 		exit(127);
 	}
 	wait(&status);
 	free(path);
-	g_.exit_value = WEXITSTATUS(status);
-	exit(status % 255);
+	exit((g_.exit_value = status % 255));
 }
 
 int	check_path(char *path, char *argv)
