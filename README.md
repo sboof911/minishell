@@ -20,3 +20,13 @@ taking bash as a reference to made a little nasty one that include :
 - pjgeqpijgpeqjigpeqj | echo $?   must show 127 but it shows 0  [...]
 - Built-in exit value 
 - non-built-in exit value
+
+- exit status and message with bad args
+- heardoc $PWD
+- leaks  no_cmd 3 enter  and export
+
+- strcmp  and other functions
+
+cat >> filename ==> (entree or without) 
+command not found $envvar
+change pwd and oldPWD  in env

@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = prompet();
-		if (line == NULL)
+		if (!line)
 			break ;
 		if (strcmp(line, "") == 0)
 			continue ;
