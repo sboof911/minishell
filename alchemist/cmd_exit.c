@@ -51,6 +51,13 @@ static int	ft_isdigit_str(char *str)
 	return (1);
 }
 
+void	exit_succes(void)
+{
+	ft_putendl_fd("exit", 1);
+	g_.exit_value = 0;
+	exit(EXIT_SUCCESS);
+}
+
 void	ft_exit(char **argv)
 {
 	int	argc;
@@ -59,11 +66,7 @@ void	ft_exit(char **argv)
 	while (argv[argc] != NULL)
 		argc++;
 	if (argc == 1)
-	{
-		ft_putendl_fd("exit", 1);
-		g_.exit_value = 0;
-		exit(EXIT_SUCCESS);
-	}
+		exit_succes();
 	else if (argc == 2 && ft_isdigit_str(argv[1]))
 	{
 		ft_putendl_fd("exit", 1);

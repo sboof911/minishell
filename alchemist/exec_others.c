@@ -56,7 +56,6 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 {
 	char	*path;
 	int		status;
-	// g_.exit_value = 80;
 
 	path = find_path(argv[0], envs);
 	if (*argv[0] == '.' || *argv[0] == '/')
@@ -66,7 +65,7 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 	{
 		ft_puterror_fd(argv[0], ": command not found", 2);
 		g_.exit_value = 127;
-		return 127 ;
+		return (127);
 	}
 	if (execve(path, argv, g_envp) == -1)
 	{
@@ -112,10 +111,7 @@ int	execo_others(char **argv, t_env *envs, char **g_envp)
 	if (child == 0)
 	{
 		if (execve(path, argv, g_envp) == -1)
-		{
-			ft_puterror_fd(argv[0], ": command not found", 2);
-			exit(127);
-		}
+			exit_error(argv[0]);
 		exit(EXIT_SUCCESS);
 	}
 	wait(&status);

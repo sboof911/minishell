@@ -15,8 +15,9 @@
 int	ft_pwd(char **cmd)
 {
 	char	cwd[PATH_MAX];
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	while (cmd[i])
 		i++;
 	if (i > 1)

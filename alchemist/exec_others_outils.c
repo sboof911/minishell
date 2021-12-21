@@ -12,6 +12,12 @@
 
 #include "../minishell.h"
 
+void	exit_error(char *str)
+{
+	ft_puterror_fd(str, ": command not found", 2);
+	exit(127);
+}
+
 void	free_double_arr(char **arr)
 {
 	int		idx;

@@ -83,7 +83,6 @@ int	exec_pipe(t_env *envs, t_sashell *sashell, int count)
 	int			i;
 
 	i = 0;
-
 	pid = (pid_t *)malloc(sizeof(pid_t) * count);
 	init_redir(&redir);
 	redir.count = count;

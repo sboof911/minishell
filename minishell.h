@@ -297,6 +297,7 @@ void			free_double_arr(char **arr);
 void			free_env(t_env *env);
 int				ft_puterror_fd(char *s1, char *s2, int fd);
 int				is_exist_keyy(char *key, t_env *envs);
+void			exit_error(char *str);
 
 /* --------------------- _tools.c ------------------------------*/
 char			*ft_sstrjoin(char const *s1, char const *s2);
