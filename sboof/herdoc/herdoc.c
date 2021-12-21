@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:37:32 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/21 18:02:42 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:12:58 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static void	processe(int signum)
 
 void	quit_handler(int signum)
 {
-	char	cwd[PATH_MAX];
-
 	if ((signum == SIGINT || signum == SIGQUIT) && g_.pid != 0)
 		processe(signum);
 	else

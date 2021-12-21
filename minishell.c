@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/21 18:02:37 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 18:05:35 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		else
 			main_process(line, sashell, env);
+		system("leaks minishell");
 	}
 	free_env(env);
 	return (0);
