@@ -6,7 +6,7 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/20 22:08:38 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/21 16:49:38 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,14 +30,14 @@ SRC =  	minishell.c\
 		sboof/outils/ft_strncmp.c sboof/outils/ft_charjoin.c sboof/outils/ft_itoa.c sboof/outils/ft_strrev.c \
 		sboof/rederiction/rederiction.c sboof/rederiction/rederiction_help.c sboof/parsing/parsing.c \
 		sboof/parsing/parsing_help.c sboof/dollar/dollar.c sboof/dollar/dollar_help.c sboof/args/args.c \
-		sboof/errors/errors.c sboof/errors/errors_help.c sboof/herdoc/herdoc.c
+		sboof/errors/errors.c sboof/errors/errors_help.c sboof/herdoc/herdoc.c sboof/outils/ft_putchar_fd.c
 		
 OBJS = $(SRCS:%.c=%.o)
 
 all:	$(NAME)
 
 $(NAME) : $(SRC)
-	gcc  $(MFLAGS) $(LEAKS) $(SRC) -o $(NAME)
+	gcc  $(AFLAGS) $(LEAKS) $(SRC) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)

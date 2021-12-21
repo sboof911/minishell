@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:54:26 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/20 14:31:02 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 16:49:18 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_g
 {
 	int		exit_value;
 	char	**envp;
+	int		pid;
 }				t_g;
 t_g				g_;
 
@@ -169,6 +170,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_itoa(int n);
 char			*ft_strrev(char *str);
+void			ft_putchar_fd(char c, int fd);
 
 /* --------------------- parsing outils ------------------------------*/
 char			**split_pipe(char const *s, char c);

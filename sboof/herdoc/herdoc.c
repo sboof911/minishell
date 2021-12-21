@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:37:32 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/20 10:53:31 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 16:47:18 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,45 @@ char	*generate_random_value(void)
 	return (r_string);
 }
 
-void	quit_handler(int num)
+static void	processe(int signum)
+{
+	if (signum == SIGQUIT)
+	{
+		printf("Quit :\n");
+		g_.exit_value = 131;
+		exit (0);
+	}
+	else if (signum == SIGINT)
+	{
+		ft_putchar('\n');
+		g_.exit_value = 130;
+	}
+	g_.pid = 0;
+}
+
+void	quit_handler(int signum)
 {
 	char	cwd[PATH_MAX];
 
-	if (num == SIGQUIT)
-		return ;
-	ft_putchar('\n');
-	rl_on_new_line();
-	getcwd(cwd, PATH_MAX);
-	printf("\e[48;5;098m~%s", cwd);
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if ((signum == SIGINT || signum == SIGQUIT) && g_.pid != 0)
+		processe(signum);
+	else
+	{
+		if (signum == SIGINT)
+		{
+			ft_putchar('\n');
+			rl_on_new_line();
+			rl_replace_line("", STDIN_FILENO);
+			rl_redisplay();
+			g_.exit_value = 1;
+		}
+		else if (signum == SIGQUIT)
+		{
+			ft_putchar_fd('\r', STDERR_FILENO);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+	}
 }
 
 char	*heredoc(t_sashell *sashell, int i)

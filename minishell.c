@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/20 14:27:20 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/21 16:48:37 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	main_process(char *line, t_sashell *sashell, t_env *env)
 	sashell = parse_function(sashell, env, line);
 	if (sashell)
 	{
+		g_.pid = 1;
 		minishell(sashell, env);
+		g_.pid = 0;
 		free_sashell(sashell);
 	}
 }
@@ -61,9 +63,9 @@ char	*prompet(void)
 {
 	char		cwd[PATH_MAX];
 
-	getcwd(cwd, PATH_MAX);
-	printf("\e[48;5;098m~%s", cwd);
-	return (readline("\e[48;5;098m $> \033[0m"));
+	// getcwd(cwd, PATH_MAX);
+	// printf("\e[48;5;098m~%s", cwd);
+	return (readline("Sashell > "));
 }
 
 int	main(int argc, char **argv, char **envp)
