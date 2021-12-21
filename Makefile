@@ -6,12 +6,12 @@
 #    By: amaach <amaach@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/27 17:50:42 by eelaazmi          #+#    #+#              #
-#    Updated: 2021/12/21 16:49:38 by amaach           ###   ########.fr        #
+#    Updated: 2021/12/21 18:12:41 by amaach           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 AFLAGS =  -lreadline -ledit -I/goinfre/amaach/.brew/opt/readline/include\
-		-L/goinfre/amaach/.brew/opt/readline/lib -g -fsanitize=address -Wall -Wextra -Werror 
+		-L/goinfre/amaach/.brew/opt/readline/lib -Wall -Wextra -Werror 
 
 MFLAGS =  -lreadline -ledit -I/goinfre/eelaazmi/.brew/opt/readline/include\
 		-L/goinfre/eelaazmi/.brew/opt/readline/lib -Wall -Wextra -Werror
