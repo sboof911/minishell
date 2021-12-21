@@ -1,0 +1,9 @@
+echo with sq inside dq
+empty command using dq or sq
+exit 53 bgd
+
+ctrl C+D exit status
+ctrl \ not quit 
+echo * 'ls '|'< dd**d*
+export an existing variable with avalue 
+relative_path 
