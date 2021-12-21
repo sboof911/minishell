@@ -45,7 +45,7 @@ int	ft_echo(char **args, int fd)
 	n_option = 0;
 	if (nb_args(args) > 1)
 	{
-		while (args[i] && strcmp(args[i], "-n") == 0)
+		while (args[i] && ft_strcmp(args[i], "-n") == 0)
 		{
 			n_option = 1;
 			i++;
@@ -60,5 +60,6 @@ int	ft_echo(char **args, int fd)
 	}
 	if (n_option == 0)
 		write(fd, "\n", 1);
+	g_.exit_value = 0;
 	return (SUCCESS);
 }

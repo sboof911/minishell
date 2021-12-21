@@ -48,8 +48,6 @@ static void	processe(int signum)
 
 void	quit_handler(int signum)
 {
-	char	cwd[PATH_MAX];
-
 	if ((signum == SIGINT || signum == SIGQUIT) && g_.pid != 0)
 		processe(signum);
 	else

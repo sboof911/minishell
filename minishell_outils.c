@@ -44,6 +44,8 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 
 	redir.index_in = 0;
 	redir.index_out = 0;
+	g_.exit_value = 0;
+
 	if (sashell->red)
 		if (exec_redirection(sashell, &redir))
 			return (1);
@@ -63,7 +65,6 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 	}
 	if (redir.index_in || redir.index_out)
 		reset_redirection(&redir.in, &redir.out, &redir.fd);
-	printf("%d\n", g_.exit_value);     // delete this
 	return (g_.exit_value);
 }
 
@@ -78,17 +79,16 @@ void	minishell(t_sashell *sashell, t_env *env)
 	cmd = sashell->tokens;
 	ft_token_count(&token, sashell);
 	if (token.token_count > 1)
-		g_.exit_value = exec_pipe(env, sashell, token.token_count);
+		exec_pipe(env, sashell, token.token_count);
 	else if (cmd[0])
-		g_.exit_value = exec_cmd(sashell, cmd, env, 1);
+		exec_cmd(sashell, cmd, env, 1);
 	else if (sashell->red[0])
-	{
-		if (sashell->red[0][4] == 't')
+		if (sashell->red[0][4] == 't' && sashell->red[0][1 == '<'])
 		{
 			cmd[0] = ft_strdup("cat");
 			cmd[1] = NULL;
 			sashell->tokens[0] = cmd[0];
+			exec_cmd(sashell, cmd, env, 1);
+			g_.exit_value = 0;
 		}
-		g_.exit_value = exec_cmd(sashell, cmd, env, 1);
-	}
 }
