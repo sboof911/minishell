@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("Sashell ?> ");
 		if (!line)
 			break ;
-		if (strcmp(line, "") == 0)
+		if (ft_strcmp(line, "") == 0)
 			continue ;
 		else
 			main_process(line, sashell, env);

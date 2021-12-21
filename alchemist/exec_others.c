@@ -86,6 +86,7 @@ int	check_path(char *path, char *argv)
 	count = ft_strlen(path);
 	if (ft_strncmp(path, argv, count))
 	{
+		free (path);
 		ft_puterror_fd(argv, ": no such file or directory", 2);
 		return (1);
 	}
