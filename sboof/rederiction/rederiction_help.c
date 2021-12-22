@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 23:47:19 by amaach            #+#    #+#             */
-/*   Updated: 2021/12/20 10:41:27 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/22 15:16:50 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ char	*help_delete_quotes(char *str, char *tab, int i, int j)
 	compt2 = 0;
 	while (tab[++i] != '\0')
 	{
-		if (tab[i] == '"')
+		if (tab[i] == '"' && compt2 % 2 != 1)
 			compt1++;
-		else if (tab[i] == '\'')
+		else if (tab[i] == '\'' && compt1 % 2 != 1)
 			compt2++;
 		if (tab[i] != '"' && tab[i] != '\'')
 			str[++j] = tab[i];

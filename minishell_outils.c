@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:54:22 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/21 18:01:21 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/22 15:57:12 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 	if (sashell->red)
 		if (exec_redirection(sashell, &redir))
 			return (1);
-	if (cmd && is_builtin(cmd[0]))
+	if (cmd && is_builtin(cmd[0]) && cmd[0][0])			// I did some changes here
 	{
 		if (exec_builtin(cmd, env) < 0)
 			return (1);
 	}
-	else if (cmd && i > 1)
+	else if (cmd && i > 1 && cmd[0][0])			// I did some changes here
 		exec_others(cmd, env, g_.envp);
-	else if (cmd && i == 1)
+	else if (cmd && i == 1 && cmd[0][0])			// I did some changes here
 		g_.exit_value = execo_others(cmd, env, g_.envp);
 	else
 	{
