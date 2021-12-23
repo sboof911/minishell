@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/22 15:12:22 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/23 16:30:25 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		if (ft_strcmp(line, "") == 0)
-			continue ;		else
+			continue ;
+		else
 			main_process(line, sashell, env);
 	}
 	free_env(env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_others.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaazmi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 16:51:08 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/19 16:51:10 by eelaazmi         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:31:06 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 	int		status;
 
 	path = find_path(argv[0], envs);
-	if ((*argv[0] == '.')  || *argv[0] == '/')
+	if ((*argv[0] == '.') || *argv[0] == '/')
 		if (check_path(path, argv[0]))
 			return ((g_.exit_value = 127));
 	if (!path)
