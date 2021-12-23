@@ -77,7 +77,10 @@ int	main(int argc, char **argv, char **envp)
 			exit (g_.exit_value);
 		}
 		if (ft_strcmp(line, "") == 0)
+		{
+			free (line);
 			continue ;
+		}
 		else
 			main_process(line, sashell, env);
 	}

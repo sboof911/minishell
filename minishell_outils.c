@@ -88,6 +88,7 @@ void	minishell(t_sashell *sashell, t_env *env)
 			cmd[1] = NULL;
 			sashell->tokens[0] = cmd[0];
 			exec_cmd(sashell, cmd, env, 1);
+			unlink(sashell->red[0] + 3);
 			g_.exit_value = 0;
 		}
 	}

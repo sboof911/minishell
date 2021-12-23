@@ -38,7 +38,7 @@ static void	assigne_value(char **argv, t_env *env)
 	}
 }
 
-static int	add_env_or_modify_value(char **argv, t_env **envs)
+int	add_env_or_modify_value(char **argv, t_env **envs)
 {
 	t_env	*env;
 	t_env	*curr;

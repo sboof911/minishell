@@ -279,6 +279,7 @@ void			assign_key_value(t_env *lst, char **keytmp, char **valuetmp);
 /* --------------------- cmd_export --------------------- */
 int				export_process(t_env *env);
 void			ft_export(char **cmd, t_env *env);
+int				add_env_or_modify_value(char **argv, t_env **envs);
 
 /* ---------------------------- cmd_unset -------------------------- */
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);

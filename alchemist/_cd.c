@@ -55,7 +55,11 @@ void	to_env_path(t_env *envs, char *str)
 void	ft_cd(char **argv, t_env *envs)
 {
 	char	*path;
+	char	cwd[PATH_MAX];
+	char	*cmd;
 
+	cmd = ft_sstrjoin("OLPWD=", cwd);
+	add_env_or_modify_value(&cmd, &envs);
 	path = 0;
 	if (argv[1] == NULL || ((argv[1] != NULL) && \
 		(ft_strlen(argv[1]) == 1) && (argv[1][0] == '~')))
