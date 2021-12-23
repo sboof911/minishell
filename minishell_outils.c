@@ -58,7 +58,7 @@ int	exec_cmd(t_sashell *sashell, char **cmd, t_env *env, int i)
 		g_.exit_value = execo_others(cmd, env, g_.envp);
 	else
 	{
-		ft_putstr("minishell: command not found: ");
+		ft_putstr("minishell: command not found: \n");
 		g_.exit_value = 127;
 	}
 	if (redir.index_in || redir.index_out)

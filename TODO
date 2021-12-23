@@ -1,9 +1,13 @@
-echo with sq inside dq  [CHECK]
-empty command using dq or sq  [CHECK BUT CHECK IT WITH NORME THEN U LL GONNA SEE WHERE I DID THE CHANGES]
-exit 53 bgd
 
 ctrl C+D exit status  {THINKING OF IT}
 ctrl \ not quit [DOING THE NORMAL BEHAVIOUR ?]
+
+
+export an existing variable with avalue + leaks 
+
+
+exit 53 bgd
+echo with sq inside dq  [CHECK]
+empty command using dq or sq  [CHECK BUT CHECK IT WITH NORME THEN U LL GONNA SEE WHERE I DID THE CHANGES]
 echo * 'ls '|'< dd**d*  [KHDAMA]
-export an existing variable with avalue 
 relative_path {DIDN T UNDERSTAND}

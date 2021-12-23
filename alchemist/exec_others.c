@@ -58,7 +58,7 @@ int	exec_others(char **argv, t_env *envs, char **g_envp)
 	int		status;
 
 	path = find_path(argv[0], envs);
-	if (*argv[0] == '.' || *argv[0] == '/')
+	if ((*argv[0] == '.')  || *argv[0] == '/')
 		if (check_path(path, argv[0]))
 			return ((g_.exit_value = 127));
 	if (!path)
@@ -83,7 +83,7 @@ int	check_path(char *path, char *argv)
 	int	count;
 
 	count = ft_strlen(path);
-	if (ft_strncmp(path, argv, count))
+	if (ft_strncmp(path, argv, count) && argv[0] != '.')
 	{
 		free (path);
 		ft_puterror_fd(argv, ": no such file or directory", 2);

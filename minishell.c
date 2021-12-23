@@ -74,8 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		if (ft_strcmp(line, "") == 0)
-			continue ;
-		else
+			continue ;		else
 			main_process(line, sashell, env);
 	}
 	free_env(env);
