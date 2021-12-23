@@ -26,6 +26,10 @@ char	*ft_strcpy(char *dst, const char *src)
 {
 	int		i;
 
+	if (!dst)
+		return (NULL);
+	if (!src)
+		return (dst);
 	i = -1;
 	while (*(src + ++i))
 		*(dst + i) = *(src + i);

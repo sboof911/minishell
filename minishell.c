@@ -6,7 +6,7 @@
 /*   By: amaach <amaach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 17:50:55 by eelaazmi          #+#    #+#             */
-/*   Updated: 2021/12/23 16:30:25 by amaach           ###   ########.fr       */
+/*   Updated: 2021/12/22 15:12:22 by amaach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline("Sashell ?> ");
 		if (!line)
-			break ;
+		{
+			free_env(env);
+			exit (g_.exit_value);
+		}
 		if (ft_strcmp(line, "") == 0)
 			continue ;
 		else

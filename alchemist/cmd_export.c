@@ -15,8 +15,9 @@
 static void	update_value(t_env *env, t_env **envs)
 {
 	free((*envs)->value);
-	(*envs)->value = env->value;
+	(*envs)->value = ft_strdup(env->value);
 	free(env->key);
+	free(env->value);
 	free(env);
 }
 
@@ -25,7 +26,7 @@ static void	assigne_value(char **argv, t_env *env)
 	int	pos;
 
 	pos = ft_strchr(*argv, '=') - *argv;
-	if (pos < 1 || pos > (ft_strlen(*argv)))
+	if (pos < 1 || pos > (ft_strlen(*argv)) || (pos == (ft_strlen(*argv))))
 	{
 		env->key = ft_ssubstr(*argv, 0, ft_strlen(*argv));
 		env->value = ft_strdup("");
@@ -41,9 +42,7 @@ static int	add_env_or_modify_value(char **argv, t_env **envs)
 {
 	t_env	*env;
 	t_env	*curr;
-	int		pos;
 
-	pos = 0;
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!(env))
 		return (0);
@@ -53,13 +52,17 @@ static int	add_env_or_modify_value(char **argv, t_env **envs)
 	{
 		if (is_exist_key(env->key, curr))
 		{
-			update_value(env, &curr);
+			if (ft_strlen(env->value) > 0)
+				update_value(env, &curr);
+			else
+				free_env(env);
 			return (0);
 		}
 		curr = curr->next;
 	}
 	if (curr == NULL)
 		ft_lstadd_back(envs, ft_lstnew(env));
+	free(env);
 	return (0);
 }
 
